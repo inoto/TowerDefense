@@ -9,7 +9,7 @@ namespace TowerDefense
 		
 		public void UpdateCounterText(int soldierCount)
 		{
-			CounterText.text = string.Format("{0}", soldierCount);
+			CounterText.text = $"{soldierCount}";
 		}
 	}
 }

@@ -77,6 +77,7 @@ namespace TowerDefense
 			ResetSpecButton.interactable = false;
 			
 			UpdateSoldiersCount();
+			UpdateDesiredCount();
 			UpdatePriority();
 			UpdateStats();
 			UpdateSpec();
@@ -126,14 +127,14 @@ namespace TowerDefense
 		public void DesiredAdd()
 		{
 			_tower.AddDesired();
-			UpdateDesiredCountText();
+			UpdateDesiredCount();
 		}
 
 		// using by button
 		public void DesiredRemove()
 		{
 			_tower.RemoveDesired();
-			UpdateDesiredCountText();
+			UpdateDesiredCount();
 		}
 
 		// using by button
@@ -155,7 +156,7 @@ namespace TowerDefense
 			ValueText.text = $"{_tower.SoldiersCountInBuilding}/{_tower.DesiredCount}";
 		}
 		
-		void UpdateDesiredCountText()
+		void UpdateDesiredCount()
 		{
 			UpdateSoldiersCount();
 			if (_tower.DesiredCount <= 0)

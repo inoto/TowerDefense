@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2163378095494506603}
   - component: {fileID: 8901014661639907564}
   - component: {fileID: 8486752623184486061}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ PrefabInstance:
     - target: {fileID: 1789851920244350453, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
@@ -201,22 +201,17 @@ PrefabInstance:
     - target: {fileID: 7577494756837341265, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
-      propertyPath: backgroundImage
-      value: 
-      objectReference: {fileID: 7856265324488881917}
-    - target: {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541,
-        type: 3}
-      propertyPath: fillImage
+      propertyPath: FillImage
       value: 
       objectReference: {fileID: 6837362944526704882}
     - target: {fileID: 5610273780042859558, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54297fae1dc332847b94eb0d7fc8d541, type: 3}
@@ -226,18 +221,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 114352862156269913}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7856265324488881917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7823118562486083492, guid: 54297fae1dc332847b94eb0d7fc8d541,
-    type: 3}
-  m_PrefabInstance: {fileID: 114352862156269913}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6837362944526704882 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
@@ -265,7 +248,7 @@ PrefabInstance:
     - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 623510334883479825, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
@@ -380,7 +363,7 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 274
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

@@ -20,9 +20,15 @@ namespace TowerDefense
 
 		void Update() //TODO: replace with coroutine
 		{
+			if (target == null || target.IsDied)
+			{
+				Destroy(gameObject);
+				return;
+			}
+			
 			velocityMultiplier += 0.01f;
-			diff = target.Point - (Vector2)trans.position;
-			trans.position += (Vector3)diff.normalized * velocityMultiplier * Time.fixedDeltaTime * Speed / 100;
+			diff = target.Point - (Vector2)_transform.position;
+			_transform.position += (Vector3)diff.normalized * velocityMultiplier * Time.fixedDeltaTime * (1/Speed);
 			if (diff.magnitude < 0.1f)
 				CheckHit();
 		}

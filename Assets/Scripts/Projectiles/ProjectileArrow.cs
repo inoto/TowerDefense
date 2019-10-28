@@ -36,7 +36,7 @@ namespace TowerDefense
 //			Debug.Log("# Arc");
 			float time = 0f;
 
-			Vector3 startPoint = trans.position;
+			Vector3 startPoint = _transform.position;
 			Vector3 endPoint = target.Point;
 			float distance = 0f;
 
@@ -53,7 +53,7 @@ namespace TowerDefense
 					distance = Vector3.Distance(startPoint, endPoint);
 				}
 
-				time += Time.fixedDeltaTime * Speed * speedMultiplier / 100;
+				time += Time.fixedDeltaTime * Speed * speedMultiplier;
  
 				linearT = time * duration;
 				height = curve.Evaluate(linearT);
@@ -64,9 +64,9 @@ namespace TowerDefense
 
 				if (time < duration * 0.99)
 				{
-					angleRad = Mathf.Atan2(newPoint.y - trans.position.y, newPoint.x - trans.position.x);
+					angleRad = Mathf.Atan2(newPoint.y - _transform.position.y, newPoint.x - _transform.position.x);
 					angleDeg = (180 / Mathf.PI) * angleRad;
-					trans.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
+					_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
 				}
 
 				transform.position = newPoint;
@@ -81,9 +81,9 @@ namespace TowerDefense
 
 		protected override void CheckHit()
 		{
-			if (target.Collider.bounds.Contains(trans.position))
+			if (target.Collider.bounds.Contains(_transform.position))
 			{
-				target.Damage(weapon);
+				target.Damage(_weapon);
 				Destroy(gameObject);
 			}
 			else

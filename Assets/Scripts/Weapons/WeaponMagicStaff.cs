@@ -1,29 +1,37 @@
-﻿using UnityEditor;
+﻿using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace TowerDefense
 {
 	public class WeaponMagicStaff : Weapon
 	{
-//		[Header("WeaponMagicStaff")]
-
-		//		Collider2D[] colliders = new Collider2D[20];
-
-		//		protected override void OnDrawGizmos()
-		//		{
-		//			
-		//			if (Target != null)
-		//			{
-		//				Gizmos.color = Color.red;
-		//				Vector2 point = (Target.WaypointPoint - Target.Point);
-		//				Gizmos.DrawSphere(point+Target.Point, 0.1f);
-		//				Gizmos.DrawLine(Target.Point, point+Target.Point);
-		//				
-		//				GUIStyle style = new GUIStyle();
-		//				style.normal.textColor = Color.red;
-		//				style.fontSize = 20;
-		//				Handles.Label(Target.Point, Target.PathIndex.ToString(), style);
-		//			}
-		//		}
+		[ProgressBar("LaunchProgress")][SerializeField]
+		float LaunchProgress;
+		void Update()
+		{
+			LaunchProgress += 1/AttackSpeed * Time.deltaTime;
+			while (LaunchProgress >= 1f)
+			{
+				if (TrackTarget() || AcquireTarget())
+				{
+					ReleaseMissile();
+					LaunchProgress -= 1f;
+				}
+				else
+				{
+					LaunchProgress = 0.999f;
+				}
+			}
+		}
+		
+		protected override void ReleaseMissile()
+		{
+			// TODO: Object Pool for projectiles
+			Projectile proj = Instantiate(ProjectilePrefab,
+			                              (Vector2)transform.position+ProjectileStartPointOffset,
+			                              _transform.rotation).GetComponent<Projectile>();
+			proj.Init(this);
+		}
 	}
 }

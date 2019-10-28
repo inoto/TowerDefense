@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEditor;
+using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Debug = UnityEngine.Debug;
-using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
@@ -21,7 +19,14 @@ namespace TowerDefense
 			LargestBunch
 		}
 
-		[FormerlySerializedAs("showDebug")] [SerializeField] bool debug = false;
+		const int MOB_LAYER_MASK = 1 << 10;
+		
+		protected Transform _transform;
+		protected Collider2D _collider;
+		static Collider2D[] _targetsBuffer = new Collider2D[50];
+		int _targetsCount;
+		
+		[SerializeField] bool debug = false;
 		
 		[Header("Weapon")]
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
@@ -29,72 +34,62 @@ namespace TowerDefense
 		public Priority TargetingTo = Priority.RandomTarget;
 
 		public int Range = 200;
-		public int AttackSpeed = 20;
+		public float AttackSpeed = 2f;
 		public int DamageMin = 2;
 		public int DamageMax = 4;
-		public int Damage
-		{
-			get { return Random.Range(DamageMin, DamageMax); }
-		}
+		public int Damage => UnityEngine.Random.Range(DamageMin, DamageMax);
+		[ShowNativeProperty] float DamagePerSecond => (float)(DamageMin + DamageMax) / 2 / AttackSpeed;
 
 		public ITargetable Target = null;
-		List<ITargetable> targetsInRange = new List<ITargetable>();
-		
-		public bool IsAttacking = false;
-		bool isCoroutineActive = false;
-		ITargetable possibleTarget = null;
 
-		[SerializeField] GameObject projectilePrefab;
+		[SerializeField] protected GameObject ProjectilePrefab;
 		public Vector2 ProjectileStartPointOffset;
 		public Tower Tower;
 
 		protected virtual void Awake()
 		{
 			Tower = GetComponentInParent<Tower>();
+			_transform = GetComponent<Transform>();
+			_collider = GetComponent<Collider2D>();
 		}
 
 		void OnDisable()
 		{
-			StopAttacking();
-			StopAllCoroutines();
-			isCoroutineActive = false;
 			Target = null;
-			targetsInRange.Clear();
 		}
 
-		void OnTriggerEnter2D(Collider2D other)
+		protected bool AcquireTarget()
 		{
-			ITargetable t = other.GetComponent<ITargetable>();
-			targetsInRange.Add(t);
-			t.InRangeByWeapon(this);
-			
-			if (debug) Debug.Log(String.Format("# {0} OnTriggerEnter2D {1}", gameObject.GetInstanceID(), t.GameObj.GetInstanceID()));
-		}
-
-		void OnTriggerExit2D(Collider2D other)
-		{
-			ITargetable t = other.GetComponent<ITargetable>();
-			targetsInRange.Remove(t);
-			t.NotInRangeByWeapon(this);
-			
-			if (t == Target)
+			ContactFilter2D filter = new ContactFilter2D();
+			filter.layerMask = MOB_LAYER_MASK;
+			filter.useLayerMask = true;
+			_targetsBuffer = new Collider2D[25];
+			_targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
+			if (_targetsCount > 0)
 			{
-				if (debug) Debug.Log(String.Format("# {0} OnTriggerExit2D {1}", gameObject.GetInstanceID(), t.GameObj.GetInstanceID()));
-				
-				StopAttacking();
+				Target = DefineTarget();
+				return true;
 			}
-		}
-
-		void NewTarget(ITargetable target)
-		{
-			if (debug) Debug.Log(String.Format("# {0} NewTarget {1}", gameObject.GetInstanceID(), target.GameObj.GetInstanceID()));
-			Target = target;
-
-			
-			
-			StartCoroutine(Attack());
+			Target = null;
+			return false;
 		}
 		
+		protected bool TrackTarget()
+		{
+			if (Target == null)
+			{
+				return false;
+			}
+
+			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
+			{
+				Target = null;
+				return false;
+			}
+			
+			return true;
+		}
+
 		ITargetable DefineTarget()
 		{
 			switch (TargetingTo)
@@ -119,9 +114,9 @@ namespace TowerDefense
 			ITargetable bestTarget = null;
 			int biggestPathIndex = -1;
 			float closestDistToWaypoint = float.MaxValue;
-			for (int i = 0; i < targetsInRange.Count; i++)
+			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = targetsInRange[i];
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 
 				if (possibleTarget != null && !possibleTarget.IsDied)
 				{
@@ -150,9 +145,9 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float lowestValue = float.MaxValue;
-			foreach (var t in targetsInRange)
+			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = t;
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
 				{
 					if (possibleTarget.Health < lowestValue)
@@ -169,9 +164,9 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float highestMaxHealth = 0;
-			foreach (var t in targetsInRange)
+			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = t;
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
 				{
 					if (possibleTarget.MaxHealth > highestMaxHealth)
@@ -188,14 +183,15 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float bunchRange = 1f;
-			Dictionary<ITargetable, ITargetable[]> targetsWithBunches = new Dictionary<ITargetable, ITargetable[]>();
-			foreach (var t in targetsInRange)
+			Dictionary<ITargetable, Collider2D[]> targetsWithBunches = new Dictionary<ITargetable, Collider2D[]>();
+			for (int i = 0; i < _targetsCount; i++)
 			{
-				targetsWithBunches.Add(t, targetsInRange.FindAll((e) => Vector2.Distance(t.Point, e.Point) <= bunchRange).ToArray());
+				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
+				targetsWithBunches.Add(t, _targetsBuffer.Where((e) => Vector2.Distance(t.Point, e.transform.position) <= bunchRange).ToArray());
 			}
 
 			int maxCountInBunch = 0;
-			foreach (KeyValuePair<ITargetable,ITargetable[]> kvp in targetsWithBunches)
+			foreach (KeyValuePair<ITargetable,Collider2D[]> kvp in targetsWithBunches)
 			{
 				if (kvp.Value.Length > maxCountInBunch)
 				{
@@ -211,60 +207,21 @@ namespace TowerDefense
 
 		public void OnTargetDied(ITargetable target)
 		{
-			if (debug) Debug.Log(String.Format("# {0} OnTargetDied {1}", gameObject.GetInstanceID(), target.GameObj.GetInstanceID()));
-			targetsInRange.Remove(target);
-			target.NotInRangeByWeapon(this);
 
-			if (Target == target)
-				StopAttacking();
-			
 			Tower.ModifySpecValue(20); // TODO: replace with event
-		}
-
-		IEnumerator Attack()
-		{
-			if (debug) Debug.Log(String.Format("# {0} Attack {1}", gameObject.GetInstanceID(), Target.GameObj.GetInstanceID()));
-			IsAttacking = true;
-			isCoroutineActive = true;
-			while (IsAttacking)
-			{
-				ReleaseMissile();
-
-				yield return new WaitForSecondsRealtime(1 / (float)AttackSpeed * 40);
-			}
-			if (debug) Debug.Log(string.Format("# {0} Attack end", gameObject.GetInstanceID()));
-			isCoroutineActive = false;
-
-			possibleTarget = DefineTarget();
-			if (possibleTarget != null)
-				NewTarget(possibleTarget);
-		}
-
-		void StopAttacking()
-		{
-			IsAttacking = false;
-//			StopAllCoroutines();
 		}
 
 		protected virtual void ReleaseMissile()
 		{
-			// TODO: Object Pool for projectiles
-			Projectile proj = Instantiate(projectilePrefab, (Vector2)transform.position+ProjectileStartPointOffset, transform.rotation).GetComponent<Projectile>();
-			proj.Init(this);
 		}
 
-		protected virtual void OnDrawGizmosSelected()
+		protected virtual void OnDrawGizmos()
 		{
-			Gizmos.DrawSphere((Vector2)transform.position+ProjectileStartPointOffset, 0.05f);
-			Gizmos.color = Color.yellow;
-			for (int i = 0; i < targetsInRange.Count; i++)
-			{
-				Gizmos.DrawLine(transform.position, targetsInRange[i].Point);
-			}
+			Gizmos.DrawSphere((Vector2)transform.position+ProjectileStartPointOffset, 0.02f);
 			Gizmos.color = Color.red;
 			if (Target != null)
 			{
-				Gizmos.DrawLine(transform.position, Target.Point);
+				Gizmos.DrawLine(_transform.position, Target.Point);
 			}
 		}
 	}

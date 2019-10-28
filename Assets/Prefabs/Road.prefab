@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Curve: {fileID: 0}
-  mesh: {fileID: 33891790181477688}
-  meshRenderer: {fileID: 23374169464929294}
-  spacing: 0.623
-  roadWidth: 1.5
-  autoUpdate: 0
+  Mesh: {fileID: 33891790181477688}
+  MeshRenderer: {fileID: 23374169464929294}
+  Spacing: 1
+  RoadWidth: 1
+  AutoUpdate: 0
   Tiling: 3.16
-  texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}
+  Texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}

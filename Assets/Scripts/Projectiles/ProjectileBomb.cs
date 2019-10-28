@@ -28,11 +28,14 @@ namespace TowerDefense
 		IEnumerator Arc()
 		{
 			if (target == null || target.IsDied)
-				yield return null;
-			
+			{
+				Destroy(gameObject);
+				yield break;
+			}
+
 			float time = 0f;
 
-			Vector3 startPoint = trans.position;
+			Vector3 startPoint = _transform.position;
 			endPoint = target.Point;
 
 			float linearT, height;
@@ -41,7 +44,7 @@ namespace TowerDefense
      
 			while (time < duration)
 			{
-				time += Time.fixedDeltaTime * Speed * speedMultiplier / 100;
+				time += Time.fixedDeltaTime * (1 / Speed) * speedMultiplier;
  
 				linearT = time * duration;
 				height = curve.Evaluate(linearT);
@@ -51,9 +54,9 @@ namespace TowerDefense
 
 				if (time < duration * 0.99)
 				{
-					angleRad = Mathf.Atan2(newPoint.y - trans.position.y, newPoint.x - trans.position.x);
+					angleRad = Mathf.Atan2(newPoint.y - _transform.position.y, newPoint.x - _transform.position.x);
 					angleDeg = (180 / Mathf.PI) * angleRad;
-					trans.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
+					_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
 				}
 
 				transform.position = newPoint;
@@ -69,14 +72,14 @@ namespace TowerDefense
 			float damageDelay = 0.1f;
 			
 			GameObject go = Instantiate(ExplosionPrefab);
-			go.transform.position = trans.position;
+			go.transform.position = _transform.position;
 			
-			WeaponCannon wc = weapon as WeaponCannon;
+			WeaponCannon wc = _weapon as WeaponCannon;
 			if (wc == null)
 				return;
 			
 			Collider2D[] colliders = new Collider2D[20];
-			int count = Physics2D.OverlapCircleNonAlloc(trans.position, wc.FullDamageRange, colliders);
+			int count = Physics2D.OverlapCircleNonAlloc(_transform.position, wc.FullDamageRange, colliders);
 			for (int i = 0; i < count; i++)
 			{
 				ITargetable t = colliders[i].GetComponent<ITargetable>();
@@ -84,7 +87,7 @@ namespace TowerDefense
 					LeanTween.delayedCall(damageDelay, () => t.Damage(wc.Damage));
 			}
 //			Debug.Log("colliders count: " + count);
-			count = Physics2D.OverlapCircleNonAlloc(trans.position, wc.SplashDamageRange, colliders);
+			count = Physics2D.OverlapCircleNonAlloc(_transform.position, wc.SplashDamageRange, colliders);
 			for (int i = 0; i < count; i++)
 			{
 				ITargetable t = colliders[i].GetComponent<ITargetable>();
@@ -97,10 +100,10 @@ namespace TowerDefense
 
 		void OnDrawGizmos()
 		{
-			if (trans != null && endPoint != null)
+			if (_transform != null && endPoint != null)
 			{
 				Gizmos.color = Color.cyan;
-				Gizmos.DrawLine(trans.position, endPoint);
+				Gizmos.DrawLine(_transform.position, endPoint);
 				Gizmos.DrawSphere(endPoint, Vector3.one.x * 0.05f);
 			}
 		}

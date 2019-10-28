@@ -47,21 +47,21 @@ MonoBehaviour:
   Active: 1
   StartDelay: 5
   WaveData:
-  - MobPrefab: {fileID: 7990922790765674767, guid: 7b8a602fa99023f4d9b67c13a3f9852a,
+  - MobPrefab: {fileID: 1993218058550423989, guid: 5ecb095d2deb2cc439d674c5b619de24,
       type: 3}
     MobCount: 50
-    Interval: 2
-    PathName: 
+    Interval: 2.5
+    PathName: 1
   - MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
       type: 3}
     MobCount: 50
     Interval: 2
-    PathName: 
-  - MobPrefab: {fileID: 1993218058550423989, guid: 5ecb095d2deb2cc439d674c5b619de24,
+    PathName: 0
+  - MobPrefab: {fileID: 7990922790765674767, guid: 7b8a602fa99023f4d9b67c13a3f9852a,
       type: 3}
     MobCount: 50
-    Interval: 2
-    PathName: 
+    Interval: 3
+    PathName: 2
 --- !u!1 &5626906073761719310
 GameObject:
   m_ObjectHideFlags: 0

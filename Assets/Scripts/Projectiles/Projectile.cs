@@ -8,32 +8,29 @@ namespace TowerDefense
 	{
 		public static event Action<Projectile> MissedEvent;
 		
-		protected Transform trans;
-		protected Rigidbody2D rigid;
-		protected Weapon weapon;
+		protected Transform _transform;
+		protected Weapon _weapon;
 		protected ITargetable target;
-		protected bool isActive;
 		
 		[Header("Projectile")]
-		public float Speed = 1;
+		public float Speed = 1f;
 
 		protected virtual void Awake()
 		{
-			trans = GetComponent<Transform>();
-			rigid = GetComponent<Rigidbody2D>();
+			_transform = GetComponent<Transform>();
 		}
 
 		public virtual void Init(Weapon weapon)
 		{
-			this.weapon = weapon;
+			this._weapon = weapon;
 			target = weapon.Target;
 		}
 
 		protected virtual void CheckHit()
 		{
-			if (target.Collider.bounds.Contains(trans.position))
+			if (target.Collider.bounds.Contains(_transform.position))
 			{
-				target.Damage(weapon);
+				target.Damage(_weapon);
 				Destroy(gameObject);
 			}
 			else

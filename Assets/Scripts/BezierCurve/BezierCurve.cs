@@ -9,14 +9,14 @@ namespace TowerDefense
 	{
 	    [HideInInspector] public BezierCurveCreator Creator;
 	    
-		[SerializeField][HideInInspector] List<Vector2> points = new List<Vector2>();
+		[SerializeField][HideInInspector] List<Vector2> Points = new List<Vector2>();
 	    bool _isClosed;
 	    bool _autoSetControlPoints;
 		
 		public void Init(Vector2 centre, BezierCurveCreator creator)
 		{
 		    Creator = creator;
-			points = new List<Vector2>
+			Points = new List<Vector2>
 			{
 				centre + Vector2.left,
 				centre + (Vector2.left + Vector2.up) * .5f,
@@ -27,36 +27,34 @@ namespace TowerDefense
 		
 		public Vector2 this[int i]
         {
-            get { return points[i]; }
-            set { points[i] = value; }
+            get => Points[i];
+            set => Points[i] = value;
         }
 
         public bool IsClosed
         {
-            get { return _isClosed; }
+            get => _isClosed;
             set
             {
-                if (_isClosed != value)
-                {
-                    _isClosed = value;
+                if (_isClosed == value) return;
+                
+                _isClosed = value;
 
-                    if (_isClosed)
+                if (_isClosed)
+                {
+                    Points.Add(Points[Points.Count - 1] * 2 - Points[Points.Count - 2]);
+                    Points.Add(Points[0] * 2 - Points[1]);
+                    if (!_autoSetControlPoints) return;
+                        
+                    AutoSetAnchorControlPoints(0);
+                    AutoSetAnchorControlPoints(Points.Count - 3);
+                }
+                else
+                {
+                    Points.RemoveRange(Points.Count - 2, 2);
+                    if (_autoSetControlPoints)
                     {
-                        points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
-                        points.Add(points[0] * 2 - points[1]);
-                        if (_autoSetControlPoints)
-                        {
-                            AutoSetAnchorControlPoints(0);
-                            AutoSetAnchorControlPoints(points.Count - 3);
-                        }
-                    }
-                    else
-                    {
-                        points.RemoveRange(points.Count - 2, 2);
-                        if (_autoSetControlPoints)
-                        {
-                            AutoSetStartAndEndControls();
-                        }
+                        AutoSetStartAndEndControls();
                     }
                 }
             }
@@ -64,55 +62,45 @@ namespace TowerDefense
 
         public bool AutoSetControlPoints
         {
-            get { return _autoSetControlPoints; }
+            get => _autoSetControlPoints;
             set
             {
-                if (_autoSetControlPoints != value)
+                if (_autoSetControlPoints == value) return;
+                
+                _autoSetControlPoints = value;
+                if (_autoSetControlPoints)
                 {
-                    _autoSetControlPoints = value;
-                    if (_autoSetControlPoints)
-                    {
-                        AutoSetAllControlPoints();
-                    }
+                    AutoSetAllControlPoints();
                 }
             }
         }
 
-        public int NumPoints
-        {
-            get { return points.Count; }
-        }
+        public int NumPoints => Points.Count;
 
-        public int NumSegments
-        {
-            get { return points.Count / 3; }
-        }
+        public int NumSegments => Points.Count / 3;
 
         public Vector2[] Anchors
         {
-            get { return points.Where((e, i) => i % 3 == 0).ToArray(); }
+            get { return Points.Where((e, i) => i % 3 == 0).ToArray(); }
         }
         
-        public Vector2 FirstSegment
-        {
-            get { return points[0]; }
-        }
+        public Vector2 FirstSegment => Points[0];
 
         public void AddSegment(Vector2 anchorPos)
         {
-            points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
-            points.Add((points[points.Count - 1] + anchorPos) * .5f);
-            points.Add(anchorPos);
+            Points.Add(Points[Points.Count - 1] * 2 - Points[Points.Count - 2]);
+            Points.Add((Points[Points.Count - 1] + anchorPos) * .5f);
+            Points.Add(anchorPos);
 
             if (_autoSetControlPoints)
             {
-                AutoSetAllAffectedControlPoints(points.Count - 1);
+                AutoSetAllAffectedControlPoints(Points.Count - 1);
             }
         }
 
         public void SplitSegment(Vector2 anchorPos, int segmentIndex)
         {
-            points.InsertRange(segmentIndex * 3 + 2, new Vector2[] {Vector2.zero, anchorPos, Vector2.zero});
+            Points.InsertRange(segmentIndex * 3 + 2, new Vector2[] {Vector2.zero, anchorPos, Vector2.zero});
             if (_autoSetControlPoints)
             {
                 AutoSetAllAffectedControlPoints(segmentIndex * 3 + 3);
@@ -125,72 +113,70 @@ namespace TowerDefense
 
         public void DeleteSegment(int anchorIndex)
         {
-            if (NumSegments > 2 || !_isClosed && NumSegments > 1)
+            if (NumSegments <= 2 && (_isClosed || NumSegments <= 1)) return;
+            
+            if (anchorIndex == 0)
             {
-                if (anchorIndex == 0)
+                if (_isClosed)
                 {
-                    if (_isClosed)
-                    {
-                        points[points.Count - 1] = points[2];
-                    }
+                    Points[Points.Count - 1] = Points[2];
+                }
 
-                    points.RemoveRange(0, 3);
-                }
-                else if (anchorIndex == points.Count - 1 && !_isClosed)
-                {
-                    points.RemoveRange(anchorIndex - 2, 3);
-                }
-                else
-                {
-                    points.RemoveRange(anchorIndex - 1, 3);
-                }
+                Points.RemoveRange(0, 3);
+            }
+            else if (anchorIndex == Points.Count - 1 && !_isClosed)
+            {
+                Points.RemoveRange(anchorIndex - 2, 3);
+            }
+            else
+            {
+                Points.RemoveRange(anchorIndex - 1, 3);
             }
         }
 
         public Vector2[] GetPointsInSegment(int i)
         {
-            return new Vector2[] {points[i * 3], points[i * 3 + 1], points[i * 3 + 2], points[LoopIndex(i * 3 + 3)]};
+            return new Vector2[] {Points[i * 3], Points[i * 3 + 1], Points[i * 3 + 2], Points[LoopIndex(i * 3 + 3)]};
         }
 
         public void MovePoint(int i, Vector2 pos)
         {
-            Vector2 deltaMove = pos - points[i];
+            Vector2 deltaMove = pos - Points[i];
 
-            if (i % 3 == 0 || !_autoSetControlPoints)
+            if (i % 3 != 0 && _autoSetControlPoints) return;
+            
+            Points[i] = pos;
+
+            if (_autoSetControlPoints)
             {
-                points[i] = pos;
+                AutoSetAllAffectedControlPoints(i);
+            }
+            else
+            {
 
-                if (_autoSetControlPoints)
+                if (i % 3 == 0)
                 {
-                    AutoSetAllAffectedControlPoints(i);
+                    if (i + 1 < Points.Count || _isClosed)
+                    {
+                        Points[LoopIndex(i + 1)] += deltaMove;
+                    }
+
+                    if (i - 1 >= 0 || _isClosed)
+                    {
+                        Points[LoopIndex(i - 1)] += deltaMove;
+                    }
                 }
                 else
                 {
+                    bool nextPointIsAnchor = (i + 1) % 3 == 0;
+                    int correspondingControlIndex = (nextPointIsAnchor) ? i + 2 : i - 2;
+                    int anchorIndex = (nextPointIsAnchor) ? i + 1 : i - 1;
 
-                    if (i % 3 == 0)
+                    if (correspondingControlIndex >= 0 && correspondingControlIndex < Points.Count || _isClosed)
                     {
-                        if (i + 1 < points.Count || _isClosed)
-                        {
-                            points[LoopIndex(i + 1)] += deltaMove;
-                        }
-
-                        if (i - 1 >= 0 || _isClosed)
-                        {
-                            points[LoopIndex(i - 1)] += deltaMove;
-                        }
-                    }
-                    else
-                    {
-                        bool nextPointIsAnchor = (i + 1) % 3 == 0;
-                        int correspondingControlIndex = (nextPointIsAnchor) ? i + 2 : i - 2;
-                        int anchorIndex = (nextPointIsAnchor) ? i + 1 : i - 1;
-
-                        if (correspondingControlIndex >= 0 && correspondingControlIndex < points.Count || _isClosed)
-                        {
-                            float dst = (points[LoopIndex(anchorIndex)] - points[LoopIndex(correspondingControlIndex)]).magnitude;
-                            Vector2 dir = (points[LoopIndex(anchorIndex)] - pos).normalized;
-                            points[LoopIndex(correspondingControlIndex)] = points[LoopIndex(anchorIndex)] + dir * dst;
-                        }
+                        float dst = (Points[LoopIndex(anchorIndex)] - Points[LoopIndex(correspondingControlIndex)]).magnitude;
+                        Vector2 dir = (Points[LoopIndex(anchorIndex)] - pos).normalized;
+                        Points[LoopIndex(correspondingControlIndex)] = Points[LoopIndex(anchorIndex)] + dir * dst;
                     }
                 }
             }
@@ -199,8 +185,8 @@ namespace TowerDefense
         public Vector2[] CalculateEvenlySpacedPoints(float spacing, float resolution = 1)
         {
             List<Vector2> evenlySpacedPoints = new List<Vector2>();
-            evenlySpacedPoints.Add(points[0]);
-            Vector2 previousPoint = points[0];
+            evenlySpacedPoints.Add(Points[0]);
+            Vector2 previousPoint = Points[0];
             float dstSinceLastEvenPoint = 0;
 
             for (int segmentIndex = 0; segmentIndex < NumSegments; segmentIndex++)
@@ -237,7 +223,7 @@ namespace TowerDefense
         {
             for (int i = updatedAnchorIndex - 3; i <= updatedAnchorIndex + 3; i += 3)
             {
-                if (i >= 0 && i < points.Count || _isClosed)
+                if (i >= 0 && i < Points.Count || _isClosed)
                 {
                     AutoSetAnchorControlPoints(LoopIndex(i));
                 }
@@ -248,7 +234,7 @@ namespace TowerDefense
 
         void AutoSetAllControlPoints()
         {
-            for (int i = 0; i < points.Count; i += 3)
+            for (int i = 0; i < Points.Count; i += 3)
             {
                 AutoSetAnchorControlPoints(i);
             }
@@ -258,20 +244,20 @@ namespace TowerDefense
 
         void AutoSetAnchorControlPoints(int anchorIndex)
         {
-            Vector2 anchorPos = points[anchorIndex];
+            Vector2 anchorPos = Points[anchorIndex];
             Vector2 dir = Vector2.zero;
             float[] neighbourDistances = new float[2];
 
             if (anchorIndex - 3 >= 0 || _isClosed)
             {
-                Vector2 offset = points[LoopIndex(anchorIndex - 3)] - anchorPos;
+                Vector2 offset = Points[LoopIndex(anchorIndex - 3)] - anchorPos;
                 dir += offset.normalized;
                 neighbourDistances[0] = offset.magnitude;
             }
 
             if (anchorIndex + 3 >= 0 || _isClosed)
             {
-                Vector2 offset = points[LoopIndex(anchorIndex + 3)] - anchorPos;
+                Vector2 offset = Points[LoopIndex(anchorIndex + 3)] - anchorPos;
                 dir -= offset.normalized;
                 neighbourDistances[1] = -offset.magnitude;
             }
@@ -281,25 +267,24 @@ namespace TowerDefense
             for (int i = 0; i < 2; i++)
             {
                 int controlIndex = anchorIndex + i * 2 - 1;
-                if (controlIndex >= 0 && controlIndex < points.Count || _isClosed)
+                if (controlIndex >= 0 && controlIndex < Points.Count || _isClosed)
                 {
-                    points[LoopIndex(controlIndex)] = anchorPos + dir * neighbourDistances[i] * .5f;
+                    Points[LoopIndex(controlIndex)] = anchorPos + dir * neighbourDistances[i] * .5f;
                 }
             }
         }
 
         void AutoSetStartAndEndControls()
         {
-            if (!_isClosed)
-            {
-                points[1] = (points[0] + points[2]) * .5f;
-                points[points.Count - 2] = (points[points.Count - 1] + points[points.Count - 3]) * .5f;
-            }
+            if (_isClosed) return;
+            
+            Points[1] = (Points[0] + Points[2]) * .5f;
+            Points[Points.Count - 2] = (Points[Points.Count - 1] + Points[Points.Count - 3]) * .5f;
         }
 
         int LoopIndex(int i)
         {
-            return (i + points.Count) % points.Count;
+            return (i + Points.Count) % Points.Count;
         }
 	}
 }

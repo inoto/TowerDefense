@@ -21,13 +21,7 @@ namespace TowerDefense
 			}
 		}
 		
-		public override int AttackSpeed
-		{
-			get
-			{
-				return weapon.AttackSpeed;
-			}
-		}
+		public override float AttackSpeed => weapon.AttackSpeed;
 
 		public override void ActivateSoldier()
 		{

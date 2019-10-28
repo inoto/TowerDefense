@@ -45,7 +45,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -392,7 +392,7 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 142
+      value: 234
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

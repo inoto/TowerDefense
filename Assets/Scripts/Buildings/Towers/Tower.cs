@@ -53,12 +53,8 @@ namespace TowerDefense
 			}
 		}
 
-		public virtual int AttackSpeed
-		{
-			get { return weapon.AttackSpeed; }
-		}
+		public virtual float AttackSpeed => weapon.AttackSpeed;
 
-		
 
 		void Awake()
 		{
