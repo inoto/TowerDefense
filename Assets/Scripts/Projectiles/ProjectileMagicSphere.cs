@@ -5,17 +5,17 @@ namespace TowerDefense
 {
 	public class ProjectileMagicSphere : Projectile
 	{
-		Vector2 desired;
-		Vector2 diff;
-		float velocityMultiplier;
+		Vector2 _desired;
+		Vector2 _diff;
+		float _velocityMultiplier;
 		
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
 
-			desired = Vector2.zero;
-			diff = Vector2.zero;
-			velocityMultiplier = 1f;
+			_desired = Vector2.zero;
+			_diff = Vector2.zero;
+			_velocityMultiplier = 1f;
 		}
 
 		void Update() //TODO: replace with coroutine
@@ -26,10 +26,10 @@ namespace TowerDefense
 				return;
 			}
 			
-			velocityMultiplier += 0.01f;
-			diff = target.Point - (Vector2)_transform.position;
-			_transform.position += (Vector3)diff.normalized * velocityMultiplier * Time.fixedDeltaTime * (1/Speed);
-			if (diff.magnitude < 0.1f)
+			_velocityMultiplier += 0.01f;
+			_diff = target.Point - (Vector2)_transform.position;
+			_transform.position += (Vector3)_diff.normalized * _velocityMultiplier * Time.fixedDeltaTime * (1/TravelTime);
+			if (_diff.magnitude < 0.1f)
 				CheckHit();
 		}
 	}

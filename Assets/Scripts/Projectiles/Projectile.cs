@@ -13,7 +13,7 @@ namespace TowerDefense
 		protected ITargetable target;
 		
 		[Header("Projectile")]
-		public float Speed = 1f;
+		public float TravelTime = 1f;
 
 		protected virtual void Awake()
 		{
@@ -22,7 +22,7 @@ namespace TowerDefense
 
 		public virtual void Init(Weapon weapon)
 		{
-			this._weapon = weapon;
+			_weapon = weapon;
 			target = weapon.Target;
 		}
 
@@ -39,8 +39,7 @@ namespace TowerDefense
 
 		protected void RaiseMissedEvent()
 		{
-			if (MissedEvent != null)
-				MissedEvent(this);
+			MissedEvent?.Invoke(this);
 		}
 	}
 }

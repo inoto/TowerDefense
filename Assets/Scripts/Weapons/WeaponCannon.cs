@@ -11,7 +11,8 @@ namespace TowerDefense
 		public float SplashDamageRange = 1f;
 		public float SplashDamageFactor = 0.5f;
 
-		[ProgressBar("LaunchProgress")][SerializeField]
+		[ProgressBar("LaunchProgress", 1f)]
+		[SerializeField]
 		float LaunchProgress;
 		void Update()
 		{

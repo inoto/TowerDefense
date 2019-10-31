@@ -299,7 +299,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 753262029
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &5572468923497841754
 MonoBehaviour:
@@ -428,7 +428,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 753262029
   m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingOrder: 11
 --- !u!114 &5572468924060092527
 MonoBehaviour:
   m_ObjectHideFlags: 0

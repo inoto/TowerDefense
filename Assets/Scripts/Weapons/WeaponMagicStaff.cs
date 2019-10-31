@@ -6,7 +6,8 @@ namespace TowerDefense
 {
 	public class WeaponMagicStaff : Weapon
 	{
-		[ProgressBar("LaunchProgress")][SerializeField]
+		[ProgressBar("LaunchProgress", 1f)]
+		[SerializeField]
 		float LaunchProgress;
 		void Update()
 		{

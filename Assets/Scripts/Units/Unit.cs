@@ -22,7 +22,6 @@ namespace TowerDefense
 		Vector2 waypoint;
 		Vector2 waypointOffset;
 		Vector2 desired;
-		List<Weapon> rangedWeapons = new List<Weapon>();
 
 		[Header("Unit")]
 		[SerializeField] Transform rotationTrans;
@@ -173,11 +172,6 @@ namespace TowerDefense
 		
 		void Die(Weapon weapon)
 		{
-			for (int i = 0; i < rangedWeapons.Count; i++)
-			{
-				rangedWeapons[i].OnTargetDied(this);
-			}
-			
 			DeInit();
 			Corpse();
 			IsDead = true;
@@ -291,16 +285,6 @@ namespace TowerDefense
 		public Vector2 PointToDamage
 		{
 			get { return trans.position; }
-		}
-
-		public void InRangeByWeapon(Weapon weapon)
-		{
-			rangedWeapons.Add(weapon);
-		}
-		
-		public void NotInRangeByWeapon(Weapon weapon)
-		{
-			rangedWeapons.Remove(weapon);
 		}
 #endregion
 	}

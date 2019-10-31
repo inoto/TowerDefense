@@ -97,26 +97,27 @@ MonoBehaviour:
   SpeedMultiplierMax: 1.1
   ExplosionPrefab: {fileID: 1647542194161262, guid: 59eb8bd0340a0f541b8655e77d154000,
     type: 3}
-  curve:
+  DamageDelay: 0.1
+  Curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 4.5294595
-      outSlope: 4.5294595
+      inSlope: 3.618011
+      outSlope: 3.618011
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.03740214
+      outWeight: 0.02868557
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -4.6171947
-      outSlope: -4.6171947
+      inSlope: -3.4428742
+      outSlope: -3.4428742
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.027208447
+      inWeight: 0.032466173
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

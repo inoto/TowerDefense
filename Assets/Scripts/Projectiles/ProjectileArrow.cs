@@ -7,76 +7,63 @@ namespace TowerDefense
 	public class ProjectileArrow : Projectile
 	{
 		[Header("ProjectileArrow")]
-		public float SpeedMultiplierMin = 0.9f;
-		public float SpeedMultiplierMax = 1.1f;
-		public float HeightMultiplierMin = 0.9f;
-		public float HeightMultiplierMax = 1.1f;
-
-		const float duration = 1f;
+		[SerializeField] float SpeedMultiplierMin = 0.9f;
+		[SerializeField] float SpeedMultiplierMax = 1.1f;
+		[SerializeField] float HeightMultiplierMin = 0.9f;
+		[SerializeField] float HeightMultiplierMax = 1.1f;
+		[SerializeField] AnimationCurve Curve;
 		
-		[SerializeField] AnimationCurve curve;
-		Vector3 newPoint;
-		Vector3 lookPoint;
+		Vector3 _newPoint, _startPoint, _endPoint;
+		float _time = 0f, _duration = 1f;
+		float _height, _multipliedSpeed, _heightMultiplier;
+		float _angleRad, _angleDeg;
+		Vector2 _direction;
 
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
+			
+			_startPoint = _transform.position;
+			_endPoint = target.Point;
 
-			if (target == null || target.IsDied)
-			{
-				Destroy(gameObject);
-				return;
-			}
-
-			StartCoroutine(Arc());
+			StartCoroutine(MoveByArc());
 		}
 		
-		IEnumerator Arc()
+		IEnumerator MoveByArc()
 		{
-//			Debug.Log("# Arc");
-			float time = 0f;
+			_multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
+			_heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
+			_duration = Vector2.Distance(_startPoint, _endPoint); // duration is a distance for now
+			if (_duration < 1f) _duration = 1f; // clamp
 
-			Vector3 startPoint = _transform.position;
-			Vector3 endPoint = target.Point;
-			float distance = 0f;
-
-			float linearT, height;
-			float angleRad, angleDeg;
-			float speedMultiplier = Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
-			float heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
-     
-			while (time < duration)
+			while (_time < _duration)
 			{
 				if (!target.IsDied)
 				{
-					endPoint = target.Point;
-					distance = Vector3.Distance(startPoint, endPoint);
+					_endPoint = target.Point;
+					_direction = _transform.position - _startPoint;
 				}
-
-				time += Time.fixedDeltaTime * Speed * speedMultiplier;
- 
-				linearT = time * duration;
-				height = curve.Evaluate(linearT);
-//				height = Mathf.Lerp(0f, distance, linearT); // change 3 to however tall you want the arc to be
-
-				newPoint = Vector2.Lerp(startPoint, endPoint, linearT) + new Vector2(0f, height * heightMultiplier);
-				// Debug.Log(string.Format("linearT: {0} - height: {1} - distance: {2}", linearT, height, distance));
-
-				if (time < duration * 0.99)
-				{
-					angleRad = Mathf.Atan2(newPoint.y - _transform.position.y, newPoint.x - _transform.position.x);
-					angleDeg = (180 / Mathf.PI) * angleRad;
-					_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
-				}
-
-				transform.position = newPoint;
 				
+				_time += Time.fixedDeltaTime * 1/_multipliedSpeed;
+				_height = Curve.Evaluate(_time/_duration);
+
+				_newPoint = Vector2.Lerp(_startPoint, _endPoint, _time/_duration) + new Vector2(0f, _height);
+
+				if (_time < _duration * 0.99)
+				{
+					_direction = _newPoint - _transform.position;
+					_angleRad = Mathf.Atan2(_direction.y, _direction.x);
+					_angleDeg = (180 / Mathf.PI) * _angleRad;
+				
+					_transform.rotation = Quaternion.AngleAxis(_angleDeg, Vector3.forward);
+				}
+
+				transform.position = _newPoint;
+ 
 				yield return new WaitForSeconds(0.01f);
 			}
 
 			CheckHit();
-			
-			yield break;
 		}
 
 		protected override void CheckHit()
@@ -90,7 +77,7 @@ namespace TowerDefense
 			{
 				RaiseMissedEvent();
 				
-				LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => Destroy(gameObject));
+				LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => Destroy(gameObject));
 			}
 		}
 	}

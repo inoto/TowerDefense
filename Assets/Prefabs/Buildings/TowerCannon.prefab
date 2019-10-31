@@ -100,13 +100,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  DebugUnitTransform: {fileID: 0}
   CanAttackTarget: 2
   DamageType: 0
   TargetingTo: 1
   Range: 200
   AttackSpeed: 2
-  DamageMin: 5
-  DamageMax: 5
+  DamageMin: 3
+  DamageMax: 3
   ProjectilePrefab: {fileID: 1697831707011706, guid: 2dc20243cbc5cb64187bbeb662d40138,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
@@ -212,6 +213,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: CounterText
+      value: 
+      objectReference: {fileID: 8051600204211560339}
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: NoSpecIcon
+      value: 
+      objectReference: {fileID: 2871712740010274918}
     - target: {fileID: 5572468923497841755, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -322,31 +333,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1531949484816759908, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: CounterText
-      value: 
-      objectReference: {fileID: 8051600204211560339}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: NoSpecIcon
-      value: 
-      objectReference: {fileID: 2871712740010274918}
-    - target: {fileID: 5572468924060092497, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3065940594092437539, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092527, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_textInfo.textComponent
@@ -357,6 +343,21 @@ PrefabInstance:
       propertyPath: m_renderer
       value: 
       objectReference: {fileID: 8051600204211560338}
+    - target: {fileID: 1531949484816759908, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572468924060092497, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065940594092437539, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092525, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_Mesh
@@ -551,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingOrder
-      value: -310
+      value: -312
       objectReference: {fileID: 0}
     - target: {fileID: 3135269945718432484, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

@@ -16,7 +16,5 @@ namespace TowerDefense
 		int MaxHealth { get; }
 		Collider2D Collider { get; }
 		Vector2 PointToDamage { get; }
-		void InRangeByWeapon(Weapon weapon);
-		void NotInRangeByWeapon(Weapon weapon);
 	}
 }

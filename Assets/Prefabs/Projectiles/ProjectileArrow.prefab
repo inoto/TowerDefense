@@ -97,35 +97,26 @@ MonoBehaviour:
   SpeedMultiplierMax: 1.1
   HeightMultiplierMin: 0.9
   HeightMultiplierMax: 1.1
-  curve:
+  Curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 4.864612
-      outSlope: 4.864612
+      inSlope: 4.5294595
+      outSlope: 4.5294595
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.06184313
+      outWeight: 0.03740214
     - serializedVersion: 3
-      time: 0.49970156
-      value: 1.00018
-      inSlope: 0.00012731331
-      outSlope: 0.00012731331
+      time: 1
+      value: 0
+      inSlope: -4.6171947
+      outSlope: -4.6171947
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1.0006036
-      value: 0.00012739014
-      inSlope: -6.0080323
-      outSlope: -6.0080323
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.049911104
+      inWeight: 0.027208447
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

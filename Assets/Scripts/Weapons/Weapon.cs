@@ -27,6 +27,7 @@ namespace TowerDefense
 		int _targetsCount;
 		
 		[SerializeField] bool debug = false;
+		[SerializeField] Transform DebugUnitTransform;
 		
 		[Header("Weapon")]
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
@@ -51,6 +52,12 @@ namespace TowerDefense
 			Tower = GetComponentInParent<Tower>();
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
+			OnValidate();
+		}
+
+		void OnValidate()
+		{
+			
 		}
 
 		void OnDisable()
