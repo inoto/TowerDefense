@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
@@ -24,11 +26,12 @@ namespace TowerDefense
 			base.Init(weapon);
 			
 			_startPoint = _transform.position;
-			_endPoint = target.Point;
+			_endPoint = _target.Point;
+			_time = 0f;
 
 			StartCoroutine(MoveByArc());
 		}
-		
+
 		IEnumerator MoveByArc()
 		{
 			_multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
@@ -38,9 +41,9 @@ namespace TowerDefense
 
 			while (_time < _duration)
 			{
-				if (!target.IsDied)
+				if (!_target.IsDied)
 				{
-					_endPoint = target.Point;
+					_endPoint = _target.Point;
 					_direction = _transform.position - _startPoint;
 				}
 				
@@ -58,7 +61,7 @@ namespace TowerDefense
 					_transform.rotation = Quaternion.AngleAxis(_angleDeg, Vector3.forward);
 				}
 
-				transform.position = _newPoint;
+				_transform.position = _newPoint;
  
 				yield return new WaitForSeconds(0.01f);
 			}
@@ -68,16 +71,16 @@ namespace TowerDefense
 
 		protected override void CheckHit()
 		{
-			if (target.Collider.bounds.Contains(_transform.position))
+			if (_target.Collider.bounds.Contains(_transform.position))
 			{
-				target.Damage(_weapon);
-				Destroy(gameObject);
+				_target.Damage(_weapon);
+				SimplePool.Despawn(gameObject);
 			}
 			else
 			{
 				RaiseMissedEvent();
 				
-				LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => Destroy(gameObject));
+				LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => SimplePool.Despawn(gameObject));
 			}
 		}
 	}

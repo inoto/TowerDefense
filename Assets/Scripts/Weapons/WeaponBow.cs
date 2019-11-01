@@ -29,7 +29,7 @@ namespace TowerDefense
 		protected override void ReleaseMissile()
 		{
 			// TODO: Object Pool for projectiles
-			Projectile proj = Instantiate(ProjectilePrefab,
+			Projectile proj = SimplePool.Spawn(ProjectilePrefab,
 			                              (Vector2)transform.position+ProjectileStartPointOffset,
 			                              _transform.rotation).GetComponent<Projectile>();
 			proj.Init(this);

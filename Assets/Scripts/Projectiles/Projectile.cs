@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace TowerDefense
@@ -10,7 +11,7 @@ namespace TowerDefense
 		
 		protected Transform _transform;
 		protected Weapon _weapon;
-		protected ITargetable target;
+		protected ITargetable _target;
 		
 		[Header("Projectile")]
 		public float TravelTime = 1f;
@@ -23,18 +24,21 @@ namespace TowerDefense
 		public virtual void Init(Weapon weapon)
 		{
 			_weapon = weapon;
-			target = weapon.Target;
+			_target = weapon.Target;
+			
+			// StopAllCoroutines();
+			// LeanTween.cancelAll(gameObject);
 		}
 
 		protected virtual void CheckHit()
 		{
-			if (target.Collider.bounds.Contains(_transform.position))
+			if (_target.Collider.bounds.Contains(_transform.position))
 			{
-				target.Damage(_weapon);
-				Destroy(gameObject);
+				_target.Damage(_weapon);
+				SimplePool.Despawn(gameObject);
 			}
 			else
-				LeanTween.delayedCall(2f, () => Destroy(gameObject));
+				LeanTween.delayedCall(1f, () => SimplePool.Despawn(gameObject));
 		}
 
 		protected void RaiseMissedEvent()

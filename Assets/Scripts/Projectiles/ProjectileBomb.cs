@@ -23,11 +23,12 @@ namespace TowerDefense
 			base.Init(weapon);
 			
 			_startPoint = _transform.position;
-			_endPoint = target.Point;
-
+			_endPoint = _target.Point;
+			_time = 0f;
+			
 			StartCoroutine(MoveByArc());
 		}
-		
+
 		IEnumerator MoveByArc()
 		{
 			// float angleRad, angleDeg;
@@ -53,7 +54,7 @@ namespace TowerDefense
 				// 	_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
 				// }
 
-				transform.position = _newPoint;
+				_transform.position = _newPoint;
  
 				yield return new WaitForSeconds(0.01f);
 			}
@@ -63,7 +64,7 @@ namespace TowerDefense
 
 		void MakeExplosion()
 		{
-			GameObject go = Instantiate(ExplosionPrefab, _transform.position, Quaternion.identity);
+			GameObject go = SimplePool.Spawn(ExplosionPrefab, _transform.position, Quaternion.identity);
 
 			WeaponCannon wc = _weapon as WeaponCannon;
 
@@ -87,7 +88,7 @@ namespace TowerDefense
 					LeanTween.delayedCall(DamageDelay, () => t.Damage(wc.Damage * wc.SplashDamageFactor));
 			}
 			
-			Destroy(gameObject);
+			SimplePool.Despawn(gameObject);
 		}
 		
 		// void OnDrawGizmos()

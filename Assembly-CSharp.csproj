@@ -125,6 +125,7 @@
     <Compile Include="Assets\Scripts\ITargetable.cs" />
     <Compile Include="Assets\Scripts\Path\Path.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
+    <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Projectiles\ProjectileArrow.cs" />
     <Compile Include="Assets\Scripts\Projectiles\ProjectileBomb.cs" />
