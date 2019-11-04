@@ -22,6 +22,12 @@ namespace TowerDefense
 
 		void Update() //TODO: replace with coroutine
 		{
+			if (_target == null)
+			{
+				SimplePool.Despawn(gameObject);
+				return;
+			}
+			
 			_velocityMultiplier += 0.01f;
 			_diff = _target.Point - (Vector2)_transform.position;
 			_transform.position += (Vector3)_diff.normalized * _velocityMultiplier * Time.fixedDeltaTime * (1/TravelTime);

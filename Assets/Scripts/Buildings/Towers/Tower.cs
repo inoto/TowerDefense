@@ -12,77 +12,69 @@ namespace TowerDefense
 {
 	public class Tower : Building
 	{
-		public static event Action<Tower, SoldiersDispenser.Priority, SoldiersDispenser.Priority> PriorityChangedEvent;
+		public static event Action<Tower, SoldiersDispenser.Priority> PriorityChangedEvent;
 		public static event Action<Tower> DesiredChangedEvent;
 
 		public event Action SpecChangedSingleEvent;
 		
-		public const int MAX_DESIRED_COUNT = 9;
-		
 		[Header("Tower")]
 		public int Cost = 0;
 		public Sprite Icon;
+		public int MaxDesired = 3;
 		public int DesiredCount = 0;
-		SoldiersDispenser.Priority priorityForDesired = SoldiersDispenser.Priority.Normal;
+		SoldiersDispenser.Priority _priorityForDesired = SoldiersDispenser.Priority.Normal;
 		public SoldiersDispenser.Priority PriorityForDesired
 		{
-			get { return priorityForDesired; }
+			get => _priorityForDesired;
 			set
 			{
-				SoldiersDispenser.Priority oldPriority = priorityForDesired;
-				priorityForDesired = value;
-				if (PriorityChangedEvent != null)
-				{
-					PriorityChangedEvent(this, oldPriority, priorityForDesired);
-				}
+				SoldiersDispenser.Priority oldPriority = _priorityForDesired;
+				_priorityForDesired = value;
+				PriorityChangedEvent?.Invoke(this, oldPriority);
 			}
 		}
 
 		public Specialization.Type Specialization;
 
-		BoxCollider coll;
-		protected Weapon weapon;
+		protected Weapon Weapon;
 		public TowerCanvas Canvas;
-		protected Transform spriteTransform;
+		protected Transform SpriteTransform;
 
 		public virtual int[] Damage
 		{
 			get
 			{
-				return new []{weapon.DamageMin, weapon.DamageMax};
+				return new []{Weapon.DamageMin, Weapon.DamageMax};
 			}
 		}
 
-		public virtual float AttackSpeed => weapon.AttackSpeed;
+		public virtual float AttackSpeed => Weapon.AttackSpeed;
 
 
-		void Awake()
+		protected virtual void Awake()
 		{
-			coll = GetComponent<BoxCollider>();
-			weapon = GetComponentInChildren<Weapon>();
+			Weapon = GetComponentInChildren<Weapon>();
 			Canvas = GetComponentInChildren<TowerCanvas>();
-			spriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
+			SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
 		}
 
 		public override void Init(Selectable fromSelectable = null)
 		{
 			base.Init(fromSelectable);
 
-			weapon.gameObject.SetActive(false);
-			Canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding), DesiredCount);
+			Weapon.gameObject.SetActive(false);
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 		}
 
 		public virtual void AddDesired()
 		{
-			// let's keep 9 for now
-			if (DesiredCount >= 9)
+			if (DesiredCount >= MaxDesired)
 				return;
-			
-			DesiredCount += 1;
-			Canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding), DesiredCount);
 
-			if (DesiredChangedEvent != null)
-				DesiredChangedEvent(this);
+			DesiredCount += 1;
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+
+			DesiredChangedEvent?.Invoke(this);
 		}
 
 		public virtual void RemoveDesired()
@@ -90,26 +82,26 @@ namespace TowerDefense
 			if (DesiredCount <= 0)
 				return;
 			
-			DesiredCount -= 1;
-			Canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding), DesiredCount);
+			Debug.Log("tower RemoveDesired");
 			
-			if (DesiredChangedEvent != null)
-				DesiredChangedEvent(this);
+			DesiredCount -= 1;
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+
+			DesiredChangedEvent?.Invoke(this);
 		}
 
 		public override void ActivateSoldier()
 		{
 			base.ActivateSoldier();
 			
-			Canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding), DesiredCount);
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 		}
 
 		public override Soldier RemoveSoldier()
 		{
 			Soldier soldier = base.RemoveSoldier();
-			Canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding), DesiredCount);
-
-//			soldier.transform.position = spriteTransform.position;
+			
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 			
 			return soldier;
 		}

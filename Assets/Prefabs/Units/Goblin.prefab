@@ -95,7 +95,7 @@ MonoBehaviour:
   ArmorType: 0
   Damaged: 0
   MoveSpeed: 30
-  FoodReward: 0
+  FoodReward: 1
   FootPoint: {x: 0, y: 0}
   HealthBar: {fileID: 8974507622515597745}
 --- !u!1001 &7619524975237950567
@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 215
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

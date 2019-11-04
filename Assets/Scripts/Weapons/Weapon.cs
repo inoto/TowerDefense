@@ -52,12 +52,6 @@ namespace TowerDefense
 			Tower = GetComponentInParent<Tower>();
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
-			OnValidate();
-		}
-
-		void OnValidate()
-		{
-			
 		}
 
 		void OnDisable()

@@ -32,7 +32,7 @@ namespace TowerDefense
 		public override void ActivateSoldier()
 		{
 			GameObject go = Instantiate(weaponPrefab, transform, true);
-			go.transform.position = spriteTransform.position;
+			go.transform.position = SpriteTransform.position;
 			go.SetActive(true);
 			Weapons.Add(go.GetComponent<Weapon>());
 			

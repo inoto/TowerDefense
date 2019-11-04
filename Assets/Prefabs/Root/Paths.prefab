@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BezierCurvePrefab: {fileID: 1365200768962170, guid: 12012b13aca8d0545a5d6d860c2afa2a,
     type: 3}
-  DefaultName: 
+  DefaultName: Path
   AnchorColor: {r: 1, g: 0, b: 0, a: 1}
   ControlColor: {r: 1, g: 0, b: 1, a: 1}
   LineColor: {r: 1, g: 1, b: 1, a: 1}

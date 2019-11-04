@@ -100,17 +100,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  DebugUnitTransform: {fileID: 0}
   CanAttackTarget: 2
   DamageType: 0
   TargetingTo: 1
   Range: 200
-  AttackSpeed: 1
-  DamageMin: 2
-  DamageMax: 4
+  AttackSpeed: 0.7
+  DamageMin: 3
+  DamageMax: 5
   ProjectilePrefab: {fileID: 1471061530720506, guid: e81c982555ff45c4d903a030978c5beb,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
   Tower: {fileID: 0}
+  LaunchProgress: 0
 --- !u!1 &1219004363690880
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,11 +206,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5572468923497841756, guid: c5cd0964165a69646a18d171796a62ae,
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
+      propertyPath: CounterText
+      value: 
+      objectReference: {fileID: 4808582045657871793}
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: NoSpecIcon
+      value: 
+      objectReference: {fileID: 782742158581602884}
     - target: {fileID: 5572468923497841755, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -313,36 +320,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 374426358496487322, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531949484816759908, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: CounterText
-      value: 
-      objectReference: {fileID: 4808582045657871793}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: NoSpecIcon
-      value: 
-      objectReference: {fileID: 782742158581602884}
-    - target: {fileID: 5572468924060092497, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3065940594092437539, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092527, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
@@ -524,6 +501,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

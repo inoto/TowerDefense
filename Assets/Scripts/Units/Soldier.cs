@@ -21,16 +21,6 @@ namespace TowerDefense
 			Specialization = GetComponent<Specialization>();
 		}
 
-		void OnEnable()
-		{
-			ArrivedDestinationInstanceEvent += ArrivedDestination;
-		}
-
-		void OnDisable()
-		{
-			ArrivedDestinationInstanceEvent -= ArrivedDestination;
-		}
-
 		void Start()
 		{
 			StartCoroutine(CheckCreatedManually());
@@ -38,38 +28,75 @@ namespace TowerDefense
 
 		IEnumerator CheckCreatedManually()
 		{
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(0.2f);
 			if (!IsActive)
 			{
-				if (FreeSoldierEvent != null)
-					FreeSoldierEvent(this);
+				FreeSoldierEvent?.Invoke(this);
 			}
+		}
+		
+		public override void Init(string pathName, bool isNew = true)
+		{
+			IsActive = true;
+			IsDead = false;
+			IsMoving = false;
+
+			if (isNew && CurrentHealth < MaxHealth)
+				CurrentHealth = MaxHealth;
+			HealthPercent = (float) CurrentHealth / MaxHealth;
+			
+			gameObject.SetActive(true);
+		}
+
+		public override void DeInit()
+		{
+			IsActive = false;
+			IsMoving = false;
+			StopAllCoroutines();
+			gameObject.SetActive(false);
 		}
 
 		public void AssignToBuilding(Building building)
 		{
-			if (this._building != null)
+			if (_building != null)
 				UnAssignFromBuilding();
 			
-			this._building = building;
+			_building = building;
 			building.AddSoldier(this);
-			if (ChangedBuildingEvent != null)
-				ChangedBuildingEvent(this, this._building);
-			
-			if (!gameObject.activeSelf)
-				gameObject.SetActive(true);
+			ChangedBuildingEvent?.Invoke(this, _building);
+
 			StartCoroutine(MoveByPoint(building.transform.position));
 		}
-
-		public void UnAssignFromBuilding()
+		
+		public void NowFree()
 		{
-			StopMoving();
-			_building = null;
-			InBuilding = false;
+			if (_building != null)
+				UnAssignFromBuilding();
+			
+			FreeSoldierEvent?.Invoke(this);
 		}
 
-		void ArrivedDestination()
+		void UnAssignFromBuilding()
 		{
+			_building = null;
+			
+			if (InBuilding)
+				ExitTower();
+			else
+				StopMoving();
+		}
+
+		void ExitTower()
+		{
+			InBuilding = false;
+			
+			Init("");
+		}
+
+		protected override void ArrivedDestination()
+		{
+			base.ArrivedDestination();
+			
 			if (_building != null)
 			{
 				InBuilding = true;
@@ -77,7 +104,6 @@ namespace TowerDefense
 			}
 
 			DeInit();
-			gameObject.SetActive(false);
 		}
 	}
 }

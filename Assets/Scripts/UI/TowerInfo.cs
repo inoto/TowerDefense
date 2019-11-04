@@ -127,14 +127,18 @@ namespace TowerDefense
 		public void DesiredAdd()
 		{
 			_tower.AddDesired();
+			UpdateSoldiersCount();
 			UpdateDesiredCount();
 		}
 
 		// using by button
 		public void DesiredRemove()
 		{
+			Debug.Log("DesiredRemove press");
 			_tower.RemoveDesired();
+			UpdateSoldiersCount();
 			UpdateDesiredCount();
+			Debug.Log("DesiredRemove end");
 		}
 
 		// using by button
@@ -158,12 +162,11 @@ namespace TowerDefense
 		
 		void UpdateDesiredCount()
 		{
-			UpdateSoldiersCount();
 			if (_tower.DesiredCount <= 0)
 			{
 				DesiredButtonsOutline[1].gameObject.SetActive(false);
 			}
-			else if (_tower.DesiredCount >= Tower.MAX_DESIRED_COUNT)
+			else if (_tower.DesiredCount >= _tower.MaxDesired)
 			{
 				DesiredButtonsOutline[0].gameObject.SetActive(false);
 			}
@@ -179,7 +182,7 @@ namespace TowerDefense
 		void UpdatePriority()
 		{
 			PriorityText.text = _tower.PriorityForDesired.ToString();
-			PriorityText.color = PriorityColors[(int)_tower.PriorityForDesired - 1];
+			PriorityText.color = PriorityColors[(int)_tower.PriorityForDesired];
 			if (_tower.PriorityForDesired <= SoldiersDispenser.Priority.Low)
 			{
 				PriorityButtonsOutline[1].gameObject.SetActive(false);
@@ -253,11 +256,6 @@ namespace TowerDefense
 			SpecNameText.gameObject.SetActive(true);
 			SpecNameText.text = _tower.Specialization.ToString().Substring(0, 3);
 			ResetSpecButton.gameObject.SetActive(true);
-
-			// for (int i = 0; i < _tower.Soldiers.Count; i++)
-			// {
-			// 	GameObject go = Instantiate(soldierPrefab, soldiersGrid.transform);
-			// }
 		}
 
 		void SpecIsEmpty()

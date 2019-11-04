@@ -95,7 +95,7 @@ MonoBehaviour:
   ArmorType: 0
   Damaged: 0
   MoveSpeed: 30
-  FoodReward: 0
+  FoodReward: 2
   FootPoint: {x: 0, y: 0}
   HealthBar: {fileID: 3849586610814057803}
 --- !u!1001 &2331277024091336861

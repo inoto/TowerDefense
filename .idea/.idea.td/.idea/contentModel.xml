@@ -287,6 +287,7 @@
             <e p="PathCreator.cs" t="Include" />
           </e>
           <e p="Projectiles" t="Include">
+            <e p="BombExplosion.cs" t="Include" />
             <e p="Projectile.cs" t="Include" />
             <e p="ProjectileArrow.cs" t="Include" />
             <e p="ProjectileBomb.cs" t="Include" />

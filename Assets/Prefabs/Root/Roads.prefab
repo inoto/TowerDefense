@@ -107,9 +107,9 @@ MonoBehaviour:
   Mesh: {fileID: 1294368978498788891}
   MeshRenderer: {fileID: 7214547113862730812}
   Spacing: 0.05
-  RoadWidth: 1.2
+  RoadWidth: 1
   AutoUpdate: 1
-  Tiling: 1.36
+  Tiling: 1.38
   Texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}
 --- !u!114 &3917053299481587630
 MonoBehaviour:
@@ -245,7 +245,7 @@ MonoBehaviour:
   Mesh: {fileID: 1986907311716460145}
   MeshRenderer: {fileID: 7794993040635096566}
   Spacing: 0.05
-  RoadWidth: 1.2
+  RoadWidth: 1
   AutoUpdate: 1
   Tiling: 1.34
   Texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BezierCurvePrefab: {fileID: 1869455815787014, guid: 268f0bcf080505c48b60d2eb7c7cb7df,
     type: 3}
-  DefaultName: 
+  DefaultName: Road
   AnchorColor: {r: 1, g: 0, b: 0, a: 1}
   ControlColor: {r: 1, g: 0, b: 1, a: 1}
   LineColor: {r: 1, g: 1, b: 1, a: 1}
@@ -444,7 +444,7 @@ MonoBehaviour:
   Mesh: {fileID: 8293278891226523247}
   MeshRenderer: {fileID: 4624890715291347412}
   Spacing: 0.05
-  RoadWidth: 1.2
+  RoadWidth: 1
   AutoUpdate: 1
   Tiling: 1.36
   Texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}

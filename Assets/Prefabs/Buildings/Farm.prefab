@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   Interval: 2
-  Amount: 2
+  Amount: 1
 --- !u!1001 &3536281748097864915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,10 +169,30 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingOrder
-      value: -309
+      value: -225
       objectReference: {fileID: 0}
     - target: {fileID: 3135269945718432484, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

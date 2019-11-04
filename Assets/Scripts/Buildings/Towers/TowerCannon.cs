@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace TowerDefense
@@ -9,31 +10,41 @@ namespace TowerDefense
 	public class TowerCannon : Tower
 	{
 		[Header("TowerCannon")]
-		[SerializeField] float attackMultiplierFromSoldiersCount = 1.75f;
-//		[SerializeField] GameObject WeaponPrefab;
-//		[SerializeField] Weapon weapon;
+		[SerializeField] float attackMultiplierFromSoldiersCount = 0.25f;
+		float attackSpeedOriginal;
 		
 		public override int[] Damage
 		{
 			get
 			{
-				return new []{weapon.DamageMin, weapon.DamageMax};
+				return new []{Weapon.DamageMin, Weapon.DamageMax};
 			}
 		}
 		
-		public override float AttackSpeed => weapon.AttackSpeed;
+		public override float AttackSpeed
+		{
+			get
+			{
+				if (Weapon.AttackSpeed <= 0 ) throw new Exception($"{Weapon} AttackSpeed could not be 0!");
+				return Weapon.AttackSpeed;
+			}
+		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+
+			attackSpeedOriginal = AttackSpeed;
+		}
 
 		public override void ActivateSoldier()
 		{
-//			GameObject go = Instantiate(WeaponPrefab, transform, true);
-//			go.transform.position = spriteTransform.position;
-			if (!weapon.gameObject.activeSelf && Soldiers.Count > 0)
-				weapon.gameObject.SetActive(true);
+			if (!Weapon.gameObject.activeSelf && Soldiers.Count > 0)
+				Weapon.gameObject.SetActive(true);
 			else
 			{
-				weapon.AttackSpeed = (int)(weapon.AttackSpeed * attackMultiplierFromSoldiersCount);
+				Weapon.AttackSpeed -= attackSpeedOriginal * attackMultiplierFromSoldiersCount;
 			}
-//			Weapons.Add(go.GetComponent<Weapon>());
 
 			base.ActivateSoldier();
 		}
@@ -44,14 +55,11 @@ namespace TowerDefense
 
 			if (soldier.InBuilding)
 			{
-//				Weapon last = Weapons[Weapons.Count - 1];
-//				Weapons.Remove(last);
-//				Destroy(last.gameObject);
 				if (Soldiers.Count <= 0)
-					weapon.gameObject.SetActive(false);
+					Weapon.gameObject.SetActive(false);
 				else
 				{
-					weapon.AttackSpeed = (int)(weapon.AttackSpeed / attackMultiplierFromSoldiersCount);
+					Weapon.AttackSpeed += attackSpeedOriginal * attackMultiplierFromSoldiersCount;
 				}
 			}
 

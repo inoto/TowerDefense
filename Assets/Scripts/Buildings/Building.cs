@@ -28,12 +28,11 @@ namespace TowerDefense
 
 		IEnumerator CheckCreatedManually()
 		{
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(0.1f);
 			if (!initialized)
 			{
 				Init();
-				if (BuiltEvent != null)
-					BuiltEvent(this);
+				BuiltEvent?.Invoke(this);
 			}
 		}
 
@@ -61,10 +60,10 @@ namespace TowerDefense
 		{
 			Soldier soldier = Soldiers[Soldiers.Count-1];
 			Soldiers.RemoveAt(Soldiers.Count-1);
-			
+
 			SoldiersCountChangedEvent?.Invoke(this);
 			SoldiersCountChangedSingleEvent?.Invoke();
-			
+
 			return soldier;
 		}
 	}

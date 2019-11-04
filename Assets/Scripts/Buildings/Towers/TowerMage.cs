@@ -17,22 +17,22 @@ namespace TowerDefense
 		{
 			get
 			{
-				return new []{weapon.DamageMin, weapon.DamageMax};
+				return new []{Weapon.DamageMin, Weapon.DamageMax};
 			}
 		}
 		
-		public override float AttackSpeed => weapon.AttackSpeed;
+		public override float AttackSpeed => Weapon.AttackSpeed;
 
 		public override void ActivateSoldier()
 		{
 			//			GameObject go = Instantiate(WeaponPrefab, transform, true);
 //			go.transform.position = spriteTransform.position;
-			if (!weapon.gameObject.activeSelf && Soldiers.Count > 0)
-				weapon.gameObject.SetActive(true);
+			if (!Weapon.gameObject.activeSelf && Soldiers.Count > 0)
+				Weapon.gameObject.SetActive(true);
 			else
 			{
-				weapon.DamageMin = (int)(weapon.DamageMin * damageMultiplierFromSoldiersCount);
-				weapon.DamageMax = (int)(weapon.DamageMax * damageMultiplierFromSoldiersCount);
+				Weapon.DamageMin = (int)(Weapon.DamageMin * damageMultiplierFromSoldiersCount);
+				Weapon.DamageMax = (int)(Weapon.DamageMax * damageMultiplierFromSoldiersCount);
 			}
 //			Weapons.Add(go.GetComponent<Weapon>());
 
@@ -49,11 +49,11 @@ base.ActivateSoldier();
 //				Weapons.Remove(last);
 //				Destroy(last.gameObject);
 				if (Soldiers.Count <= 0)
-					weapon.gameObject.SetActive(false);
+					Weapon.gameObject.SetActive(false);
 				else
 				{
-					weapon.DamageMin = (int)(weapon.DamageMin / damageMultiplierFromSoldiersCount);
-					weapon.DamageMax = (int)(weapon.DamageMax / damageMultiplierFromSoldiersCount);
+					Weapon.DamageMin = (int)(Weapon.DamageMin / damageMultiplierFromSoldiersCount);
+					Weapon.DamageMax = (int)(Weapon.DamageMax / damageMultiplierFromSoldiersCount);
 				}
 			}
 

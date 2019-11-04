@@ -12,13 +12,13 @@ namespace TowerDefense
 
 		void OnEnable()
 		{
-			Unit.LookingForPathEvent += ProvidePath;
+			Mob.LookingForPathEvent += ProvidePath;
 			Wave.LookingForSpawnPointsEvent += ProvideSpawnPoints;
 		}
 
 		void OnDisable()
 		{
-			Unit.LookingForPathEvent -= ProvidePath;
+			Mob.LookingForPathEvent -= ProvidePath;
 			Wave.LookingForSpawnPointsEvent -= ProvideSpawnPoints;
 		}
 

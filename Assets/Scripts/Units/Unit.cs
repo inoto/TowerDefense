@@ -10,7 +10,6 @@ namespace TowerDefense
 	{
 		public static event Action<Unit> DiedEvent;
 		public static event Action<Unit, Weapon> DamagedEvent;
-		public static event Action<Unit, string> LookingForPathEvent;
 		public static event Action<Unit> ArrivedDestinationEvent;
 		public event Action ArrivedDestinationInstanceEvent;
 
@@ -43,18 +42,6 @@ namespace TowerDefense
 			coll = GetComponent<Collider2D>();
 		}
 
-		void Start()
-		{
-			StartCoroutine(CheckCreatedManually());
-		}
-	
-		IEnumerator CheckCreatedManually()
-		{
-			yield return new WaitForSeconds(2f);
-				if (!IsActive)
-			Init("Path0", false);
-		}
-
 		public virtual void Init(string pathName, bool isNew = true)
 		{
 			IsActive = true;
@@ -72,17 +59,14 @@ namespace TowerDefense
 			Path = null;
 
 			initialized = true;
-			
-			if (LookingForPathEvent != null)
-				LookingForPathEvent(this, pathName);
 		}
 
-		public void DeInit()
+		public virtual void DeInit()
 		{
-			StopAllCoroutines();
 			IsActive = false;
 			IsMoving = false;
 			initialized = false;
+			StopAllCoroutines();
 		}
 		
 		public void AssignPath(Vector2[] path)
@@ -142,17 +126,20 @@ namespace TowerDefense
 				desired.Normalize();
 				if (distance < 0.1f)
 				{
-					if (ArrivedDestinationEvent != null)
-						ArrivedDestinationEvent(this);
-					if (ArrivedDestinationInstanceEvent != null)
-						ArrivedDestinationInstanceEvent();
-					StopMoving();
+					ArrivedDestination();
 					yield break;
 				}
 
 				trans.position += (Vector3) desired * Time.fixedDeltaTime * MoveSpeed / 100;
 				yield return null;
 			}
+		}
+
+		protected virtual void ArrivedDestination()
+		{
+			ArrivedDestinationEvent?.Invoke(this);
+			ArrivedDestinationInstanceEvent?.Invoke();
+			StopMoving();
 		}
 
 		protected void StopMoving()
@@ -188,7 +175,7 @@ namespace TowerDefense
 		public void Corpse()
 		{
 			// animator.enabled = false;
-			LeanTween.alpha(rotationTrans.gameObject, 0f, 2f).setDelay(1f).setOnComplete(() => SimplePool.Despawn(gameObject));
+			LeanTween.alpha(rotationTrans.gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 		
 		public virtual void Damage(Weapon weapon)

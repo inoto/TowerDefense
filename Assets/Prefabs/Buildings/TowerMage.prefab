@@ -100,13 +100,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+  DebugUnitTransform: {fileID: 0}
   CanAttackTarget: 2
   DamageType: 0
   TargetingTo: 1
   Range: 200
   AttackSpeed: 1.5
-  DamageMin: 5
-  DamageMax: 10
+  DamageMin: 8
+  DamageMax: 11
   ProjectilePrefab: {fileID: 1697831707011706, guid: 1bfad3bb73dbb8c4891865d46586de20,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
@@ -204,6 +205,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: CounterText
+      value: 
+      objectReference: {fileID: 5815440353192253143}
+    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: NoSpecIcon
+      value: 
+      objectReference: {fileID: 1788984638128503074}
     - target: {fileID: 5572468923497841755, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -309,16 +320,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: CounterText
-      value: 
-      objectReference: {fileID: 5815440353192253143}
-    - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: NoSpecIcon
-      value: 
-      objectReference: {fileID: 1788984638128503074}
     - target: {fileID: 5572468924060092527, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_textInfo.textComponent
@@ -389,6 +390,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

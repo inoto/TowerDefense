@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ca34cac67f4ae49b5f57a57f577ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
+  Debug: 0
 --- !u!1001 &5498855530330244846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3061066190461674440, guid: 2c97df3141a68474cba9464b90269c71,
         type: 3}
-      propertyPath: counterText
+      propertyPath: CounterText
       value: 
       objectReference: {fileID: 4151576217527291397}
     - target: {fileID: 8034429434556168172, guid: 2c97df3141a68474cba9464b90269c71,
@@ -261,6 +261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
@@ -367,6 +372,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingLayer
@@ -375,7 +395,7 @@ PrefabInstance:
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingOrder
-      value: -149
+      value: 259
       objectReference: {fileID: 0}
     - target: {fileID: 3135269945718432484, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

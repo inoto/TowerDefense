@@ -13,6 +13,7 @@ namespace TowerDefense
 		bool _locatorInUse = false;
 		[SerializeField] Color MissColor;
 		[SerializeField] Color FoodColor;
+		[SerializeField] Sprite FoodIconSprite;
 		
 		void OnEnable()
 		{
@@ -34,11 +35,16 @@ namespace TowerDefense
 			RangeIndicator.HideEvent -= HideLocator;
 		}
 
+		void Start()
+		{
+			SimplePool.Preload(FloatingTextPrefab, transform, 10);
+		}
+
 		void SpawnMissFloatingText(Projectile projectile)
 		{
-			FloatingText floatingText = Instantiate(FloatingTextPrefab, transform).GetComponent<FloatingText>();
+			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
 			floatingText.transform.position = projectile.transform.position;
-			floatingText.SetColor(MissColor);
+			floatingText.Color(MissColor);
 			
 			floatingText.StartMoving();
 		}
@@ -48,11 +54,11 @@ namespace TowerDefense
 			if (unit.FoodReward < 1)
 				return;
 			
-			FloatingText floatingText = Instantiate(FloatingTextPrefab, transform).GetComponent<FloatingText>();
+			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
 			floatingText.transform.position = unit.Point;
-			floatingText.SetColor(FoodColor);
-			floatingText.SetText("+" + unit.FoodReward);
-			
+			floatingText.Color(FoodColor);
+			floatingText.Text("+" + unit.FoodReward);
+
 			floatingText.StartMoving();
 		}
 		
@@ -61,20 +67,21 @@ namespace TowerDefense
 			if (amount < 1)
 				return;
 			
-			FloatingText floatingText = Instantiate(FloatingTextPrefab, transform).GetComponent<FloatingText>();
+			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
 			floatingText.transform.position = farm.transform.position;
-			floatingText.SetColor(FoodColor);
-			floatingText.SetText("+" + amount);
+			floatingText.Color(FoodColor);
+			floatingText.Text("+" + amount);
+			floatingText.Icon(FoodIconSprite, FoodColor);
 			
 			floatingText.StartMoving();
 		}
 
 		void ShowDamageFloatingText(Unit unit, Weapon weapon)
 		{
-			FloatingText floatingText = Instantiate(FloatingTextPrefab, transform).GetComponent<FloatingText>();
+			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
 			floatingText.transform.position = unit.Point;
-			floatingText.SetColor(Color.red);
-			floatingText.SetText("-" + weapon.Damage);
+			floatingText.Color(Color.red);
+			floatingText.Text("-" + weapon.Damage);
 			
 			floatingText.StartMovingAttached(-30, unit);
 		}

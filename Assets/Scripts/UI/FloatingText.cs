@@ -10,6 +10,7 @@ namespace TowerDefense
 	public class FloatingText : MonoBehaviour
 	{
 		TextMeshProUGUI _textMesh;
+		Image _icon;
 		[SerializeField] LeanTweenType TweenType = LeanTweenType.easeOutExpo;
 		[SerializeField] float MovingTime = 3;
 		[SerializeField] float MovingAdditionalYDistance = 30;
@@ -17,30 +18,43 @@ namespace TowerDefense
 
 		void Awake()
 		{
-			_textMesh = GetComponent<TextMeshProUGUI>();
+			_textMesh = GetComponentInChildren<TextMeshProUGUI>();
+			_icon = GetComponentInChildren<Image>();
 		}
 
-		public void SetColor(Color color)
+		void OnEnable()
 		{
-			_textMesh.color = color;
+			_icon.enabled = false;
 		}
 
-		public void SetText(string text)
+		public void Color(Color color) => _textMesh.color = color;
+
+		public void Text(string text) => _textMesh.text = text;
+
+		public void Icon(Sprite sprite, Color color)
 		{
-			_textMesh.text = text;
+			_icon.enabled = true;
+			_icon.sprite = sprite;
+			_icon.color = color;
 		}
 
-		public void StartMoving(float height = 0)
+		public void StartMoving(float height = 40)
 		{
 			float halfMovingTime = MovingTime / 2;
 //			LeanTween.alpha(TextMesh.gameObject, 0f, halfMovingTime).setDelay(halfMovingTime);
-			LeanTween.delayedCall(halfMovingTime / 4, () =>
+			LeanTween.delayedCall(halfMovingTime / 2, () =>
 			{
 				_textMesh.CrossFadeAlpha(0f, halfMovingTime, true);
+				if (_icon.enabled)
+					_icon.CrossFadeAlpha(0f, halfMovingTime, true);
 			});
-//			Vector3 endPoint = new Vector3(transform.position.x + Random.Range(-10f, 10f),
-//										transform.position.y + Random.Range(-20f, 20f), 0);
-			LeanTween.moveLocalY(gameObject, MovingAdditionalYDistance + height, MovingTime).setEase(TweenType).setOnComplete(() => Destroy(gameObject));
+			LeanTween.moveLocalY(gameObject, transform.localPosition.y + MovingAdditionalYDistance, 0f);
+			LeanTween.moveLocalY(gameObject, transform.localPosition.y + MovingAdditionalYDistance + height, MovingTime) 
+			         .setEase(TweenType)
+			         .setOnComplete(() =>
+			         {
+				         SimplePool.Despawn(gameObject);
+			         });
 		}
 
 		public void StartMovingAttached(float height = 0, Unit unit = null)

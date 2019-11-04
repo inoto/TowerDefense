@@ -106,8 +106,8 @@ MonoBehaviour:
   TargetingTo: 1
   Range: 200
   AttackSpeed: 2
-  DamageMin: 3
-  DamageMax: 3
+  DamageMin: 5
+  DamageMax: 5
   ProjectilePrefab: {fileID: 1697831707011706, guid: 2dc20243cbc5cb64187bbeb662d40138,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
@@ -167,10 +167,11 @@ MonoBehaviour:
   Soldiers: []
   Cost: 6
   Icon: {fileID: 0}
+  MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
   Canvas: {fileID: 673872371280203632}
-  attackMultiplierFromSoldiersCount: 1.75
+  attackMultiplierFromSoldiersCount: 0.25
 --- !u!114 &5996219702000148465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,11 +208,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5572468923497841756, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
@@ -328,11 +324,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 374426358496487322, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092527, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_textInfo.textComponent
@@ -343,21 +334,6 @@ PrefabInstance:
       propertyPath: m_renderer
       value: 
       objectReference: {fileID: 8051600204211560338}
-    - target: {fileID: 1531949484816759908, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5572468924060092497, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3065940594092437539, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092525, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_Mesh
@@ -532,17 +508,17 @@ PrefabInstance:
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
