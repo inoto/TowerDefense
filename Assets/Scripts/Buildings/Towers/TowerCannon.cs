@@ -25,7 +25,8 @@ namespace TowerDefense
 		{
 			get
 			{
-				if (Weapon.AttackSpeed <= 0 ) throw new Exception($"{Weapon} AttackSpeed could not be 0!");
+				if (Weapon.AttackSpeed <= 0 )
+					throw new Exception($"{Weapon} AttackSpeed could not be 0!");
 				return Weapon.AttackSpeed;
 			}
 		}

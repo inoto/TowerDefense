@@ -130,11 +130,12 @@ namespace TowerDefense
 
 		Soldier FindSoldier(Tower tower)
 		{
-			Tower bestTower = null;
 			if (debug) Debug.Log($"FindSoldier for tower: {tower.gameObject.name}");
 			Camp camp = FindClosestCamp(tower.transform, true);
 			if (camp != null)
 				return camp.RemoveSoldier();
+			
+			List<Tower> towers = new List<Tower>();
 			
 			foreach (int priority in _priorities.Keys)
 			{
@@ -146,26 +147,23 @@ namespace TowerDefense
 					if (debug) Debug.Log("tower candidate: " + t.gameObject.name);
 					if (t.SoldiersCount > 0)
 					{
-						if (bestTower == null)
-							bestTower = t;
-						else if (t.SoldiersCount > bestTower.SoldiersCount)
-							bestTower = t;
+						towers.Add(t);
 					}
 				}
 			}
-			if (bestTower != null)
-				return bestTower.RemoveSoldier();
+			if (towers.Count > 0)
+				return WeighLowPriority(tower.transform, towers).RemoveSoldier();
 
 			return null;
 		}
 		
 		void FreeSoldier(Soldier soldier)
 		{
-			if (debug) Debug.Log($"FreeSoldier: {soldier.gameObject.name}");
+			if (debug) Debug.Log($"FreeSoldier: {soldier.gameObject}");
 			Tower tower = FindTowerForFreeSoldier(soldier);
 			if (tower != null)
 			{
-				if (debug) Debug.Log($"FreeSoldier tower found: {tower.gameObject.name}");
+				if (debug) Debug.Log($"FreeSoldier tower found: {tower.gameObject}");
 				soldier.AssignToBuilding(tower);
 			}
 			else
@@ -180,33 +178,22 @@ namespace TowerDefense
 
 		Tower FindTowerForFreeSoldier(Soldier soldier)
 		{
-			if (debug) Debug.Log($"FindTowerForFreeSoldier: {soldier.gameObject.name}");
+			if (debug) Debug.Log($"FindTowerForFreeSoldier: {soldier.gameObject}");
 			List<Tower> bestTowers = new List<Tower>();
-			float lowestDistance = float.MaxValue;
-			Tower towerWithLowestDistance = null;
 			foreach (int priority in _priorities.Keys.Reverse())
 			{
 				foreach (Tower t in _priorities[priority])
 				{
 					if (t.DesiredCount > 0 && t.Soldiers.Count < t.DesiredCount)
 					{
-						if (debug) Debug.Log("tower candidate: " + t.gameObject);
+						// if (debug) Debug.Log("tower candidate: " + t.gameObject);
 						bestTowers.Add(t);
-						float distance = Vector2.Distance(soldier.transform.position, t.transform.position);
-						if (distance < lowestDistance)
-						{
-							lowestDistance = distance;
-							towerWithLowestDistance = t;
-						}
 					}
 				}
 			}
 
-			if (Balance && bestTowers.Count > 0)
-				return Rebalance(soldier.transform, bestTowers);
-			
-			if (towerWithLowestDistance != null)
-				return towerWithLowestDistance;
+			if (bestTowers.Count > 0)
+				return Weigh(soldier.transform, bestTowers);
 
 			return null;
 		}
@@ -233,12 +220,11 @@ namespace TowerDefense
 
 		Tower FindTowerWithHigherPriority(Tower tower)
 		{
-			Tower bestTower = null;
-			float lowestDistance = float.MaxValue;
+			if (debug) Debug.Log($"FindTowerWithHigherPriority: {tower.gameObject}");
 			List<Tower> bestTowers = new List<Tower>();
 			foreach (int priority in _priorities.Keys.Reverse())
 			{
-				if (debug) Debug.Log($"towers count in priority {(Priority)priority}: {_priorities[priority].Count}");
+				// if (debug) Debug.Log($"towers count in priority {(Priority)priority}: {_priorities[priority].Count}");
 				foreach (Tower t in _priorities[priority])
 				{
 					if (t == tower)
@@ -247,46 +233,64 @@ namespace TowerDefense
 					if (t.PriorityForDesired > tower.PriorityForDesired
 					    && t.DesiredCount > 0 && t.Soldiers.Count < t.DesiredCount)
 					{
-						if (debug) Debug.Log("tower candidate: " + t.gameObject);
+						// if (debug) Debug.Log("tower candidate: " + t.gameObject);
 						bestTowers.Add(t);
-						float distance = Vector2.Distance(tower.transform.position, t.transform.position);
-						if (distance < lowestDistance)
-						{
-							lowestDistance = distance;
-							bestTower = t;
-						}
 					}
 				}
 			}
 
-			if (Balance && bestTowers.Count > 0)
-				return Rebalance(tower.transform, bestTowers);
-
-			if (bestTower != null)
-				return bestTower;
+			if (bestTowers.Count > 0)
+				return Weigh(tower.transform, bestTowers);
 
 			return null;
 		}
 
-		Tower Rebalance(Transform trans, List<Tower> towers)
+		Tower Weigh(Transform trans, List<Tower> towers)
 		{
-			Tower bestTower = null;
-			int lowestCount = int.MaxValue;
-			float lowestDistance = float.MaxValue;
+			Dictionary<Tower, float> weights = new Dictionary<Tower, float>();
 			for (int i = 0; i < towers.Count; i++)
 			{
 				float distance = Vector2.Distance(trans.position, towers[i].transform.position);
-				if (towers[i].SoldiersCount < lowestCount && distance < lowestDistance)
+				weights.Add(towers[i], 1/distance);
+				if (Balance)
 				{
-					lowestCount = towers[i].SoldiersCount;
-					lowestDistance = distance;
-					bestTower = towers[i];
+					int diff = towers[i].DesiredCount - towers[i].SoldiersCount;
+					weights[towers[i]] += diff * 2;
+					if (diff > 0 && towers[i].SoldiersCount == 0)
+						weights[towers[i]] += diff;
 				}
+				int priority = (int)towers[i].PriorityForDesired;
+				weights[towers[i]] += priority*3;
+				if (debug) Debug.Log($"tower {towers[i].gameObject} weight: {weights[towers[i]]}");
 			}
-			if (bestTower != null)
-				return bestTower;
+			
+			float max = weights.Values.Max();
+			Tower bestTower = weights.FirstOrDefault(x => x.Value == max).Key;
+			Debug.Log($"Weigh best tower: {bestTower.gameObject}");
+			return bestTower;
+		}
 
-			return null;
+		Tower WeighLowPriority(Transform trans, List<Tower> towers)
+		{
+			Dictionary<Tower, float> weights = new Dictionary<Tower, float>();
+			for (int i = 0; i < towers.Count; i++)
+			{
+				float distance = Vector2.Distance(trans.position, towers[i].transform.position);
+				weights.Add(towers[i], 1/distance/10);
+				if (Balance)
+				{
+					int diff = towers[i].DesiredCount - towers[i].SoldiersCount;
+					weights[towers[i]] -= diff;
+				}
+				int priority = (int)towers[i].PriorityForDesired;
+				weights[towers[i]] -= priority;
+				if (debug) Debug.Log($"tower {towers[i].gameObject} weight: {weights[towers[i]]}");
+			}
+			
+			float max = weights.Values.Max();
+			Tower bestTower = weights.FirstOrDefault(x => x.Value == max).Key;
+			Debug.Log($"Weigh best tower: {bestTower.gameObject}");
+			return bestTower;
 		}
 	}
 }
