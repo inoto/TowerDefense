@@ -164,10 +164,11 @@ MonoBehaviour:
   Soldiers: []
   Cost: 6
   Icon: {fileID: 0}
+  MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
   Canvas: {fileID: 3914627328765478452}
-  damageMultiplierFromSoldiersCount: 2
+  damageMultiplierFromSoldiersCount: 0.25
 --- !u!114 &617141021059423018
 MonoBehaviour:
   m_ObjectHideFlags: 0

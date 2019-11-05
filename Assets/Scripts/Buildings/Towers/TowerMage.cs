@@ -9,9 +9,9 @@ namespace TowerDefense
 	public class TowerMage : Tower
 	{
 		[Header("TowerMage")]
-		[SerializeField] float damageMultiplierFromSoldiersCount = 2f;
-//		[SerializeField] GameObject WeaponPrefab;
-//		[SerializeField] Weapon weapon;
+		[SerializeField] float damageMultiplierFromSoldiersCount = 0.25f;
+
+		int[] damageOriginal;
 		
 		public override int[] Damage
 		{
@@ -23,20 +23,24 @@ namespace TowerDefense
 		
 		public override float AttackSpeed => Weapon.AttackSpeed;
 
+		protected override void Awake()
+		{
+			base.Awake();
+
+			damageOriginal = Damage;
+		}
+
 		public override void ActivateSoldier()
 		{
-			//			GameObject go = Instantiate(WeaponPrefab, transform, true);
-//			go.transform.position = spriteTransform.position;
 			if (!Weapon.gameObject.activeSelf && Soldiers.Count > 0)
 				Weapon.gameObject.SetActive(true);
 			else
 			{
-				Weapon.DamageMin = (int)(Weapon.DamageMin * damageMultiplierFromSoldiersCount);
-				Weapon.DamageMax = (int)(Weapon.DamageMax * damageMultiplierFromSoldiersCount);
+				Weapon.DamageMin += (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+				Weapon.DamageMax += (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 			}
-//			Weapons.Add(go.GetComponent<Weapon>());
 
-base.ActivateSoldier();
+			base.ActivateSoldier();
 		}
 
 		public override Soldier RemoveSoldier()
@@ -45,15 +49,12 @@ base.ActivateSoldier();
 
 			if (soldier.InBuilding)
 			{
-//				Weapon last = Weapons[Weapons.Count - 1];
-//				Weapons.Remove(last);
-//				Destroy(last.gameObject);
 				if (Soldiers.Count <= 0)
 					Weapon.gameObject.SetActive(false);
 				else
 				{
-					Weapon.DamageMin = (int)(Weapon.DamageMin / damageMultiplierFromSoldiersCount);
-					Weapon.DamageMax = (int)(Weapon.DamageMax / damageMultiplierFromSoldiersCount);
+					Weapon.DamageMin -= (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+					Weapon.DamageMax -= (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 				}
 			}
 

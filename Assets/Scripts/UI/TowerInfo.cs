@@ -215,6 +215,7 @@ namespace TowerDefense
 		// using by button
 		public void SpecChoose()
 		{
+			SpecChooseLabelText1.gameObject.SetActive(false);
 			ChooseSpecWheel.Instance.Show(ChooseSpecButton.transform, _tower);
 		}
 		
@@ -240,29 +241,35 @@ namespace TowerDefense
 		// using by button
 		public void SpecReset()
 		{
+			_tower.SetSpec(Specialization.Type.None);
 			_tower.Canvas.SetNoSpecIcon(true);
 
 			SpecIsEmpty();
 		}
 		
+		[Button("SpecIsActive")]
 		void SpecIsActive()
 		{
 			ChooseSpecButton.gameObject.SetActive(false);
 			SpecChooseLabelText1.gameObject.SetActive(false);
-			SpecChooseLabelText2.gameObject.SetActive(false);
+			// SpecChooseLabelText2.gameObject.SetActive(false);
 			
 			SpecIcon.gameObject.SetActive(true);
 			// SpecIcon.sprite = 
 			SpecNameText.gameObject.SetActive(true);
-			SpecNameText.text = _tower.Specialization.ToString().Substring(0, 3);
+			if (_tower != null)
+				SpecNameText.text = _tower.Specialization.ToString().Substring(0, 3);
+			else
+				SpecNameText.text = "INT";
 			ResetSpecButton.gameObject.SetActive(true);
 		}
 
+		[Button("SpecIsEmpty")]
 		void SpecIsEmpty()
 		{
 			ChooseSpecButton.gameObject.SetActive(true);
 			SpecChooseLabelText1.gameObject.SetActive(true);
-			SpecChooseLabelText2.gameObject.SetActive(true);
+			// SpecChooseLabelText2.gameObject.SetActive(true);
 			
 			SpecIcon.gameObject.SetActive(false);
 			SpecNameText.gameObject.SetActive(false);
