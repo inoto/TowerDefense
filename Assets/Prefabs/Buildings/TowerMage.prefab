@@ -167,8 +167,9 @@ MonoBehaviour:
   MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
+  SpecData: {fileID: 11400000, guid: e7ac26dfa5de3c94e87b76814dfefe4b, type: 2}
   Canvas: {fileID: 3914627328765478452}
-  damageMultiplierFromSoldiersCount: 0.25
+  DamageMultiplierFromSoldiersCount: 0.25
 --- !u!114 &617141021059423018
 MonoBehaviour:
   m_ObjectHideFlags: 0

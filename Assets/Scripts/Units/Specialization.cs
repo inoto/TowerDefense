@@ -47,5 +47,14 @@ namespace TowerDefense
 			
 			// can reduce other specs here
 		}
+
+		[Serializable]
+		public class Data
+		{
+			public Type OfType;
+			public string Name;
+			public Sprite Icon;
+			public string TooltipText;
+		}
 	}
 }

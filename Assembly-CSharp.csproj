@@ -104,6 +104,7 @@
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\References\RequiredReferences.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\ReorderableList\ReorderableList.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\SerializableDictionaryBase.cs" />
+    <Compile Include="Assets\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
     <Compile Include="Assets\Scripts\Buildings\Building.cs" />

@@ -19,12 +19,12 @@ namespace TowerDefense
 			LargestBunch
 		}
 
-		const int MOB_LAYER_MASK = 1 << 10;
+		protected const int MOB_LAYER_MASK = 1 << 10;
 		
 		protected Transform _transform;
 		protected Collider2D _collider;
-		static Collider2D[] _targetsBuffer = new Collider2D[50];
-		int _targetsCount;
+		protected static Collider2D[] _targetsBuffer = new Collider2D[50];
+		protected int _targetsCount;
 		
 		[SerializeField] bool debug = false;
 		[SerializeField] Transform DebugUnitTransform;
@@ -91,7 +91,7 @@ namespace TowerDefense
 			return true;
 		}
 
-		ITargetable DefineTarget()
+		protected ITargetable DefineTarget()
 		{
 			switch (TargetingTo)
 			{

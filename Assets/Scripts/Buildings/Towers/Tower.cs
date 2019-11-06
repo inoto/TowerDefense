@@ -35,9 +35,10 @@ namespace TowerDefense
 		}
 
 		public Specialization.Type Specialization;
+		[SerializeField] SpecializationsData SpecDataAsset;
 
 		protected Weapon Weapon;
-		public TowerCanvas Canvas;
+		[HideInInspector] public TowerCanvas Canvas;
 		protected Transform SpriteTransform;
 
 		public virtual int[] Damage
