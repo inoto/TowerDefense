@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -19,18 +21,25 @@ namespace TowerDefense
         public bool AutoUpdate;
         public float Tiling;
         public Texture2D Texture;
+        string materialAssetPath;
 
         public void Init(Vector2 centre, RoadCreator creator)
         {
             Curve = gameObject.AddComponent<BezierCurve>();
             Curve.Init(centre, creator);
             
-            MeshRenderer.sharedMaterial = new Material(Shader.Find("Unlit/Transparent"));
-            MeshRenderer.sharedMaterial.mainTexture = Texture;
+            Material newMaterial = new Material(Shader.Find("Unlit/Transparent"));
+            newMaterial.name = gameObject.name;
+            materialAssetPath = $"Assets/Materials/{newMaterial.name}.mat";
+            if (!AssetDatabase.IsValidFolder(materialAssetPath))
+                AssetDatabase.CreateAsset(newMaterial, materialAssetPath);
             
+            MeshRenderer.sharedMaterial = newMaterial;
+            MeshRenderer.sharedMaterial.mainTexture = Texture;
+
             UpdatePath();
         }
-        
+
         public void UpdatePath()
         {
             Vector2[] points = CalculateEvenlySpacedPoints(Spacing);

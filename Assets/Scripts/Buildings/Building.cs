@@ -8,6 +8,8 @@ namespace TowerDefense
 {
 	public abstract class Building : MonoBehaviour
 	{
+		public static List<Building> Instances = new List<Building>();
+		
 		public static event Action<Building> BuiltEvent;
 		public static event Action<Building> SoldiersCountChangedEvent;
 		public event Action SoldiersCountChangedSingleEvent;
@@ -20,6 +22,8 @@ namespace TowerDefense
 
 		void Start()
 		{
+			Instances.Add(this);
+			
 			if (initialized)
 				return;
 

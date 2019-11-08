@@ -11,7 +11,7 @@ namespace TowerDefense
 	    
 		[SerializeField][HideInInspector] List<Vector2> Points = new List<Vector2>();
 	    bool _isClosed;
-	    bool _autoSetControlPoints;
+	    bool _autoSetControlPoints = true;
 		
 		public void Init(Vector2 centre, BezierCurveCreator creator)
 		{
@@ -285,6 +285,17 @@ namespace TowerDefense
         int LoopIndex(int i)
         {
             return (i + Points.Count) % Points.Count;
+        }
+
+        public Vector2 Lerp(int segment, float time)
+        {
+            Vector2[] points = GetPointsInSegment(segment);
+            Vector2 a = Vector2.Lerp(points[0], points[1], time);
+            Vector2 b = Vector2.Lerp(points[1], points[2], time);
+            Vector2 c = Vector2.Lerp(points[2], points[3], time);
+            Vector2 d = Vector2.Lerp(a, b, time);
+            Vector2 e = Vector2.Lerp(b, c, time);
+            return Vector2.Lerp(d, e, time);
         }
 	}
 }

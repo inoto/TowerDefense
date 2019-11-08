@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Input\Camera2DController\Camera2DController.cs" />
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
     <Compile Include="Assets\Scripts\ITargetable.cs" />
+    <Compile Include="Assets\Scripts\Path\MoveByPath.cs" />
     <Compile Include="Assets\Scripts\Path\Path.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />

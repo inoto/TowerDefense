@@ -67,11 +67,14 @@ namespace TowerDefense
                 }
             }
             
-            if (guiEvent.type == EventType.MouseDown && guiEvent.control && guiEvent.button == 0)
-            {
-                
-//                if (j % 3 == 0 && creator.FindPathToConnect(Paths[i], Paths[i][j]))
-            }
+            // if (guiEvent.type == EventType.MouseDown && guiEvent.control && guiEvent.button == 0)
+            // {
+            //     if (_selectedSegmentIndex != -1)
+            //     {
+            //         Undo.RecordObject(_curve.Creator, "Split segment");
+            //         _curve.SplitSegment(mousePos, _selectedSegmentIndex);
+            //     }
+            // }
             
             if (guiEvent.type == EventType.MouseDown && guiEvent.button == 1)
             {
@@ -103,6 +106,7 @@ namespace TowerDefense
                 for (int i = 0; i < _curve.NumSegments; i++)
                 {
                     Vector2[] points = _curve.GetPointsInSegment(i);
+                    Handles.DrawBezier(points[0], points[3], points[1], points[2], Color.green, null, 2);
                     float dst = HandleUtility.DistancePointBezier(mousePos, points[0], points[3], points[1], points[2]);
                     if (dst < minDstToSegment)
                     {
@@ -110,6 +114,12 @@ namespace TowerDefense
                         newSelectedSegmentIndex = i;
                     }
                 }
+                
+                if (newSelectedSegmentIndex != _selectedSegmentIndex)
+                {
+                    _selectedSegmentIndex = newSelectedSegmentIndex;
+                    HandleUtility.Repaint();
+                } 
             }
 
             HandleUtility.AddDefaultControl(0);

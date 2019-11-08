@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5090799088823660724}
   - component: {fileID: 5978640524102946824}
   - component: {fileID: 1554915614503469926}
+  - component: {fileID: 1676540822217163681}
   m_Layer: 10
   m_Name: Goblin
   m_TagString: Untagged
@@ -98,6 +99,23 @@ MonoBehaviour:
   FoodReward: 1
   FootPoint: {x: 0, y: 0}
   HealthBar: {fileID: 8974507622515597745}
+--- !u!114 &1676540822217163681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2332605085333d947828eb4e3ae3bed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PathName: 
+  Speed: 40
+  RotationTransform: {fileID: 9003081776647942279}
+  _path: {fileID: 0}
+  _isMoving: 0
 --- !u!1001 &7619524975237950567
 PrefabInstance:
   m_ObjectHideFlags: 0

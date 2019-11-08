@@ -28,9 +28,11 @@ namespace TowerDefense
 			base.Init(pathName, isNew);
 			
 			UpdateHealthBar();
+			
+			GetComponent<MoveByPath>().Init(pathName);
 
-			if (LookingForPathEvent != null)
-				LookingForPathEvent(this, pathName);
+			// if (LookingForPathEvent != null)
+			// 	LookingForPathEvent(this, pathName);
 		}
 
 		public override void Damage(float damage, DamageType type = DamageType.Physical)

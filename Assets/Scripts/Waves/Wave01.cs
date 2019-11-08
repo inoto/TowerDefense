@@ -17,7 +17,7 @@ namespace TowerDefense
 
 			SpawnOgre01();
 			SpawnOgre02();
-			SpawnOgre03();
+			// SpawnOgre03();
 
 			float largestDuration = 0f;
 			for (int i = 0; i < WaveData.Count; i++)
@@ -28,7 +28,6 @@ namespace TowerDefense
 					largestDuration = spawnDuration;
 				}
 			}
-			LeanTween.delayedCall(largestDuration, EndWave); // end wave when last spawned
 
 			yield return null;
 		}

@@ -85,6 +85,7 @@ namespace TowerDefense
 				SpawnMob(mobPrefab, pathName);
 				mobCounter += 1;
 			}
+			EndWave();
 		}
 
 		void SpawnMob(GameObject mobPrefab, string pathName)

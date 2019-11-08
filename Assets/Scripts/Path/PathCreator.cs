@@ -13,12 +13,14 @@ namespace TowerDefense
 		void OnEnable()
 		{
 			Mob.LookingForPathEvent += ProvidePath;
+			MoveByPath.LookingForPathEvent += ProvidePath;
 			Wave.LookingForSpawnPointsEvent += ProvideSpawnPoints;
 		}
 
 		void OnDisable()
 		{
 			Mob.LookingForPathEvent -= ProvidePath;
+			MoveByPath.LookingForPathEvent -= ProvidePath;
 			Wave.LookingForSpawnPointsEvent -= ProvideSpawnPoints;
 		}
 
@@ -38,6 +40,17 @@ namespace TowerDefense
 					}
 					
 					unit.AssignPath(Curves[i] != null ? anchorsWithOffset : null);
+				}
+			}
+		}
+
+		void ProvidePath(MoveByPath move, string pathName)
+		{
+			for (int i = 0; i < Curves.Count; i++)
+			{
+				if (Curves[i].gameObject.name == pathName)
+				{
+					move.AssignPath(Curves[i]);
 				}
 			}
 		}

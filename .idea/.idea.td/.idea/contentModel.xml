@@ -362,7 +362,6 @@
             <e p="WeaponBow.cs" t="Include" />
             <e p="WeaponCannon.cs" t="Include" />
             <e p="WeaponMagicStaff.cs" t="Include" />
-            <e p="WeaponMagicStaffMultishot.cs" t="Include" />
           </e>
         </e>
         <e p="Simple Vector Icons" t="Include">

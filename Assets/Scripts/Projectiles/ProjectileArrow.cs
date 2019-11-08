@@ -24,6 +24,12 @@ namespace TowerDefense
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
+
+			if (_target == null || _target.IsDied)
+			{
+				SimplePool.Despawn(gameObject);
+				return;
+			}
 			
 			_startPoint = _transform.position;
 			_endPoint = _target.Point;
