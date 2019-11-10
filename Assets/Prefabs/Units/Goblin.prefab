@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5978640524102946824}
   - component: {fileID: 1554915614503469926}
   - component: {fileID: 1676540822217163681}
+  - component: {fileID: 9098928705200843329}
   m_Layer: 10
   m_Name: Goblin
   m_TagString: Untagged
@@ -97,7 +98,6 @@ MonoBehaviour:
   Damaged: 0
   MoveSpeed: 30
   FoodReward: 1
-  FootPoint: {x: 0, y: 0}
   HealthBar: {fileID: 8974507622515597745}
 --- !u!114 &1676540822217163681
 MonoBehaviour:
@@ -116,6 +116,47 @@ MonoBehaviour:
   RotationTransform: {fileID: 9003081776647942279}
   _path: {fileID: 0}
   _isMoving: 0
+--- !u!114 &9098928705200843329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ab0e5e14c4b084faef31dc9a1fb7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Foot
+    _keys:
+    - Foot
+    _values:
+    - {x: -0.0034079552, y: -0.16358006}
 --- !u!1001 &7619524975237950567
 PrefabInstance:
   m_ObjectHideFlags: 0

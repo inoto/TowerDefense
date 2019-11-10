@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085882470352526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1733163138940143132}
@@ -105,7 +105,7 @@ MonoBehaviour:
   DamageType: 0
   TargetingTo: 1
   Range: 200
-  AttackSpeed: 0.7
+  AttackSpeed: 1
   DamageMin: 3
   DamageMax: 5
   ProjectilePrefab: {fileID: 1471061530720506, guid: e81c982555ff45c4d903a030978c5beb,
@@ -164,8 +164,10 @@ MonoBehaviour:
   Soldiers: []
   Cost: 4
   Icon: {fileID: 0}
+  MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
+  SpecDataAsset: {fileID: 0}
   Canvas: {fileID: 2620135130142303570}
   weaponPrefab: {fileID: 1085882470352526}
   Weapons: []
@@ -525,7 +527,7 @@ PrefabInstance:
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 71
+      value: -155
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc5ec4cec098064eaf326aa7366852b, type: 3}

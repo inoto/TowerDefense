@@ -34,6 +34,10 @@ namespace TowerDefense
             
             _curve.IsClosed = EditorGUILayout.Toggle("IsClosed:", _curve.IsClosed);
             _curve.AutoSetControlPoints = EditorGUILayout.Toggle("AutoSetControlPoints:", _curve.AutoSetControlPoints);
+            // if (GUILayout.Button("TestMove"))
+            // {
+            //     _curve.TestMove();
+            // }
 
             if (EditorGUI.EndChangeCheck())
                 SceneView.RepaintAll();
@@ -168,6 +172,7 @@ namespace TowerDefense
                     {
                         Undo.RecordObject(_curve.Creator, "Move point");
                         _curve.MovePoint(j, newPos);
+                        EditorUtility.SetDirty(_curve);
                     }
 //                        else
 //                        {

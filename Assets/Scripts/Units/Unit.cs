@@ -16,25 +16,16 @@ namespace TowerDefense
 		Transform trans;
 		Collider2D coll;
 		bool initialized = false;
-		[HideInInspector] public Vector2[] Path = null;
-		int pathIndex;
-		Vector2 waypoint;
-		Vector2 waypointOffset;
-		Vector2 desired;
-
+	
 		[Header("Unit")]
-		[SerializeField] Transform rotationTrans;
 		public bool IsActive = false;
-		public bool IsMoving = false;
 		public bool IsDead = false;
 		[SerializeField] int maxHealth = 10;
 		public int CurrentHealth = 10;
 		[Range(0, 1f)] public float HealthPercent = 1f;
 		public Armor ArmorType = Armor.None;
 		public bool Damaged = false;
-		public float MoveSpeed = 30f;
 		public int FoodReward = 0;
-		public Vector2 FootPoint;
 
 		protected virtual void Awake()
 		{
@@ -46,7 +37,6 @@ namespace TowerDefense
 		{
 			IsActive = true;
 			IsDead = false;
-			IsMoving = false;
 
 			if (isNew && CurrentHealth < MaxHealth)
 				CurrentHealth = MaxHealth;
@@ -55,87 +45,18 @@ namespace TowerDefense
 			
 			ResetSprite();
 
-			pathIndex = 0;
-			Path = null;
-
 			initialized = true;
 		}
 
 		public virtual void DeInit()
 		{
 			IsActive = false;
-			IsMoving = false;
 			initialized = false;
 			StopAllCoroutines();
 		}
 		
-		public void AssignPath(Vector2[] path)
-		{
-			if (path != null && path.Length > 0)
-			{
-				Path = path;
-				StartCoroutine(MoveByPath());
-			}
-		}
 
-		IEnumerator MoveByPath()
-		{
-			IsMoving = true;
-//			animator.Play("Walking");
-//			animator.speed = MoveSpeed / 100 * 3;
-			waypoint = Path[pathIndex] - FootPoint;
-			Quaternion quat;
-			while (IsMoving)
-			{
-				desired = waypoint - (Vector2)trans.position;
-				quat = rotationTrans.rotation;
-				quat.y = desired.x < 0 ? 180f : 0f;
-				rotationTrans.rotation = quat;
-				float distance = desired.magnitude;
-				desired.Normalize();
-				if (distance < 0.1f)
-				{
-					if (pathIndex >= Path.Length - 1)
-					{
-						if (ArrivedDestinationEvent != null)
-							ArrivedDestinationEvent(this);
-						StopMoving();
-						yield break;
-					}
-					pathIndex += 1;
-					waypoint = Path[pathIndex] - FootPoint;
-				}
-				trans.position += (Vector3)desired * Time.fixedDeltaTime * MoveSpeed / 100;
-				yield return null;
-			}
-		}
-
-		protected IEnumerator MoveByPoint(Vector2 point)
-		{
-			IsMoving = true;
-//			animator.Play("Walking");
-//			animator.speed = MoveSpeed / 100 * 3;
-			Quaternion quat;
-			while (IsMoving)
-			{
-				desired = point - (Vector2) trans.position;
-				quat = rotationTrans.rotation;
-				quat.y = desired.x < 0 ? 180f : 0f;
-				rotationTrans.rotation = quat;
-				float distance = desired.magnitude;
-				desired.Normalize();
-				if (distance < 0.1f)
-				{
-					ArrivedDestination();
-					yield break;
-				}
-
-				trans.position += (Vector3) desired * Time.fixedDeltaTime * MoveSpeed / 100;
-				yield return null;
-			}
-		}
-
-		protected virtual void ArrivedDestination()
+		public virtual void ArrivedDestination()
 		{
 			ArrivedDestinationEvent?.Invoke(this);
 			ArrivedDestinationInstanceEvent?.Invoke();
@@ -144,7 +65,6 @@ namespace TowerDefense
 
 		protected void StopMoving()
 		{
-			IsMoving = false;
 			StopAllCoroutines();
 //			animator.Play("Idle");
 //			animator.speed = 1f;
@@ -154,7 +74,7 @@ namespace TowerDefense
 		{
 //			animator.enabled = true;
 //			animator.Play("Idle");
-			LeanTween.alpha(rotationTrans.gameObject, 1f, 0f);
+			// LeanTween.alpha(rotationTrans.gameObject, 1f, 0f);
 		}
 		
 		void Die(Weapon weapon)
@@ -166,6 +86,7 @@ namespace TowerDefense
 
 			// animator.Play("Dying");
 			// animator.SetTrigger("Die");
+			GetComponent<MoveByPath>().StopMoving();
 			
 			if (DiedEvent != null)
 				DiedEvent(this);
@@ -175,7 +96,7 @@ namespace TowerDefense
 		public void Corpse()
 		{
 			// animator.enabled = false;
-			LeanTween.alpha(rotationTrans.gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
+			// LeanTween.alpha(rotationTrans.gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 		
 		public virtual void Damage(Weapon weapon)
@@ -208,26 +129,6 @@ namespace TowerDefense
 			}
 		}
 
-		void OnDrawGizmos()
-		{
-			Gizmos.DrawSphere(transform.position + (Vector3)FootPoint, 0.1f);
-			if (IsMoving)
-			{
-				Gizmos.color = Color.blue;
-				Gizmos.DrawLine(trans.position, (Vector2)trans.position+desired);
-			}
-
-			if (Path != null && Path.Length > 0)
-			{
-				Gizmos.color = Color.green;
-				Gizmos.DrawLine(transform.position, Path[pathIndex]);
-				for (int i = pathIndex; i < Path.Length-1; i++)
-				{
-					Gizmos.DrawLine(Path[i], Path[i+1]);
-				}
-			}
-		}
-		
 #region ITargetable
 		public GameObject GameObj
 		{
@@ -241,12 +142,12 @@ namespace TowerDefense
 
 		public Vector2 WaypointPoint
 		{
-			get { return waypoint; }
+			get { return Vector2.zero; }
 		}
 
 		public int PathIndex
 		{
-			get { return pathIndex; }
+			get { return 0; }
 		}
 
 		public float Health

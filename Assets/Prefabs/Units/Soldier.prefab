@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 2163378095494506603}
   - component: {fileID: 8901014661639907564}
   - component: {fileID: 8486752623184486061}
+  - component: {fileID: 8455721943437846746}
+  - component: {fileID: 9165510485623413685}
+  - component: {fileID: 3826301983585980216}
+  - component: {fileID: 1393996554428614603}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Untagged
@@ -26,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2163378095494506605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.168, y: -1.405, z: 11.478158}
+  m_LocalPosition: {x: 3.168, y: -1.405, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6807698820096271209}
@@ -46,19 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c56a6a5d66108b4bb165bfffbb74513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: []
-  rotationTrans: {fileID: 6807698820096271209}
   IsActive: 0
-  IsMoving: 0
   IsDead: 0
   maxHealth: 10
   CurrentHealth: 10
   HealthPercent: 1
   ArmorType: 0
   Damaged: 0
-  MoveSpeed: 100
   FoodReward: 0
-  FootPoint: {x: 0, y: 0}
   InBuilding: 0
   Specialization: {fileID: 0}
 --- !u!114 &8486752623184486061
@@ -76,6 +75,99 @@ MonoBehaviour:
   SpecPoints: 
   SpecLevel: 
   PointsForLevel: 500
+--- !u!114 &8455721943437846746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163378095494506605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ab3670025594648909a4ca4d39cdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 40
+  RotationTransform: {fileID: 6807698820096271209}
+  _isMoving: 0
+--- !u!114 &9165510485623413685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163378095494506605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ab0e5e14c4b084faef31dc9a1fb7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Foot
+    _keys:
+    - Foot
+    _values:
+    - {x: 0, y: -0.20246589}
+--- !u!58 &3826301983585980216
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163378095494506605}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.05}
+  serializedVersion: 2
+  m_Radius: 0.16
+--- !u!50 &1393996554428614603
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163378095494506605}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &114352862156269913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -363,7 +455,7 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 121
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

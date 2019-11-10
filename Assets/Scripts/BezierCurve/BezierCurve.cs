@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace TowerDefense
 {
+    [ExecuteInEditMode]
 	public class BezierCurve : MonoBehaviour
 	{
 	    [HideInInspector] public BezierCurveCreator Creator;
@@ -297,5 +300,38 @@ namespace TowerDefense
             Vector2 e = Vector2.Lerp(b, c, time);
             return Vector2.Lerp(d, e, time);
         }
-	}
+
+        // public void TestMove()
+        // {
+        //     point = FirstSegment;
+        //     time = 0f;
+        //     segment = 0;
+        //     testMoving = true;
+        // }
+        //
+        // bool testMoving;
+        // float time = 0f;
+        // int segment = 0;
+        // void Update()
+        // {
+        //     if (testMoving)
+        //     {
+        //         
+        //         time += Time.fixedDeltaTime;
+        //         point = Lerp(segment, time);
+        //         if (time >= 1f)
+        //         {
+        //             time = 0f;
+        //             segment += 1;
+        //         }
+        //     }
+        // }
+        //
+        // Vector2 point;
+        // void OnDrawGizmos()
+        // {
+        //     Gizmos.color = Color.green;
+        //     Gizmos.DrawSphere(point, 0.2f);
+        // }
+    }
 }

@@ -9,7 +9,7 @@ namespace TowerDefense
 	
 	public class AttachmentPoints : MonoBehaviour
 	{
-		public PointsDict Points;
+		public PointsDict Points = new PointsDict();
 
 		public Vector2[] GetByText(string text)
 		{

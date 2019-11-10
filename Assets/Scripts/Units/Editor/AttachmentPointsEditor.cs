@@ -23,7 +23,7 @@ namespace TowerDefense
 			PointsDict copy = new PointsDict();
 			ap.Points.CopyTo(copy);
 
-			Vector2 pos = (Vector2) ap.transform.position;
+			Vector2 pos = ap.transform.position;
 
 			foreach (var kvp in copy)
 			{

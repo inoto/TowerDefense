@@ -286,6 +286,7 @@
               <e p="PathCreatorViewer.cs" t="Include" />
               <e p="PathEditor.cs" t="Include" />
             </e>
+            <e p="MoveByPath.cs" t="Include" />
             <e p="Path.cs" t="Include" />
             <e p="PathCreator.cs" t="Include" />
           </e>

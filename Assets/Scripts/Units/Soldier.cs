@@ -39,7 +39,6 @@ namespace TowerDefense
 		{
 			IsActive = true;
 			IsDead = false;
-			IsMoving = false;
 
 			if (isNew && CurrentHealth < MaxHealth)
 				CurrentHealth = MaxHealth;
@@ -51,7 +50,6 @@ namespace TowerDefense
 		public override void DeInit()
 		{
 			IsActive = false;
-			IsMoving = false;
 			StopAllCoroutines();
 			gameObject.SetActive(false);
 		}
@@ -65,7 +63,7 @@ namespace TowerDefense
 			building.AddSoldier(this);
 			ChangedBuildingEvent?.Invoke(this, _building);
 
-			StartCoroutine(MoveByPoint(building.transform.position));
+			GetComponent<MoveByPoint>().Init(building.transform.position);
 		}
 		
 		public void NowFree()
@@ -93,7 +91,7 @@ namespace TowerDefense
 			Init("");
 		}
 
-		protected override void ArrivedDestination()
+		public override void ArrivedDestination()
 		{
 			base.ArrivedDestination();
 			
