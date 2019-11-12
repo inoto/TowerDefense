@@ -287,6 +287,7 @@
               <e p="PathEditor.cs" t="Include" />
             </e>
             <e p="MoveByPath.cs" t="Include" />
+            <e p="MoveByTransform.cs" t="Include" />
             <e p="Path.cs" t="Include" />
             <e p="PathCreator.cs" t="Include" />
           </e>
@@ -333,6 +334,8 @@
             <e p="Editor" t="Include">
               <e p="AttachmentPointsEditor.cs" t="Include" />
             </e>
+            <e p="IUnitOrder.cs" t="Include" />
+            <e p="MeleeAttack.cs" t="Include" />
             <e p="Mobs" t="Include">
               <e p="HealthBar.cs" t="Include" />
               <e p="Mob.cs" t="Include" />

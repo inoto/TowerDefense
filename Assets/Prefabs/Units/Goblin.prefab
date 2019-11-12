@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1554915614503469926}
   - component: {fileID: 1676540822217163681}
   - component: {fileID: 9098928705200843329}
+  - component: {fileID: 6840562128410674061}
   m_Layer: 10
   m_Name: Goblin
   m_TagString: Untagged
@@ -33,6 +34,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 9003081776647942279}
+  - {fileID: 4661604589291516366}
   - {fileID: 2087864700809975342}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,7 +54,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.12
+  m_Radius: 0.09
 --- !u!50 &5978640524102946824
 Rigidbody2D:
   serializedVersion: 4
@@ -86,19 +88,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55abf5180c742947a2a23e0dee32fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: []
-  rotationTrans: {fileID: 9003081776647942279}
   IsActive: 0
-  IsMoving: 0
-  IsDead: 0
-  maxHealth: 10
+  RotationTransform: {fileID: 9003081776647942279}
+  HealthBar: {fileID: 8974507622515597745}
+  Damageable: 1
+  MaxHealth: 10
   CurrentHealth: 10
   HealthPercent: 1
   ArmorType: 0
   Damaged: 0
-  MoveSpeed: 30
+  IsDead: 0
   FoodReward: 1
-  HealthBar: {fileID: 8974507622515597745}
+  ReagentReward: 0
 --- !u!114 &1676540822217163681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,9 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2332605085333d947828eb4e3ae3bed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsActive: 0
   PathName: 
   Speed: 40
-  RotationTransform: {fileID: 9003081776647942279}
   _path: {fileID: 0}
   _isMoving: 0
 --- !u!114 &9098928705200843329
@@ -157,6 +158,90 @@ MonoBehaviour:
     - Foot
     _values:
     - {x: -0.0034079552, y: -0.16358006}
+--- !u!114 &6840562128410674061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ab3670025594648909a4ca4d39cdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 40
+  _isMoving: 0
+--- !u!1 &3805484264992011312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4661604589291516366}
+  - component: {fileID: 8681537971972024022}
+  - component: {fileID: 4655897532765683476}
+  m_Layer: 10
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4661604589291516366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805484264992011312}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1773084378477652540}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8681537971972024022
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805484264992011312}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.21
+--- !u!114 &4655897532765683476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805484264992011312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153f17c65e495bc468466cd3ed4b1ebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsActive: 0
+  AttackRange: 0.5
+  AttackSpeed: 1.5
+  AttackDamage: 2
+  AttackType: 0
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 6144
+  Target: {fileID: 0}
+  LaunchProgress: 0
 --- !u!1001 &7619524975237950567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,7 +292,7 @@ PrefabInstance:
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}

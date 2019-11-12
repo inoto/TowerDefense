@@ -22,14 +22,14 @@ namespace TowerDefense
 		{
 			base.Init(weapon);
 
-			if (_target == null || _target.IsDied)
+			if (_target == null || _target.IsDead)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
 			}
 
 			_startPoint = _transform.position;
-			_endPoint = _target.Point;
+			_endPoint = _target.Position;
 			_time = 0f;
 			
 			StartCoroutine(MoveByArc());

@@ -51,13 +51,16 @@ namespace TowerDefense
 
 		void SpawnFoodFloatingText(Unit unit)
 		{
-			if (unit.FoodReward < 1)
+			Mob mob = unit as Mob;
+			if (mob == null)
+				return;
+			if (mob.FoodReward < 1)
 				return;
 			
 			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
-			floatingText.transform.position = unit.Point;
+			floatingText.transform.position = unit.transform.position;
 			floatingText.Color(FoodColor);
-			floatingText.Text("+" + unit.FoodReward);
+			floatingText.Text("+" + mob.FoodReward);
 
 			floatingText.StartMoving();
 		}
@@ -79,7 +82,7 @@ namespace TowerDefense
 		void ShowDamageFloatingText(Unit unit, Weapon weapon)
 		{
 			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
-			floatingText.transform.position = unit.Point;
+			floatingText.transform.position = unit.transform.position;
 			floatingText.Color(Color.red);
 			floatingText.Text("-" + weapon.Damage);
 			

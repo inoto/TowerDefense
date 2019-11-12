@@ -157,6 +157,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224715956822983626}
     m_Modifications:
+    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 3426667980875374679}
     - target: {fileID: 1586502399081186, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
       propertyPath: m_Name
       value: ConstructionWheelSlot (1)
@@ -271,11 +276,6 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 2125329553349903240}
-    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 3426667980875374679}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
 --- !u!224 &2305018444631336680 stripped
@@ -315,6 +315,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224715956822983626}
     m_Modifications:
+    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 1379777661110619229}
     - target: {fileID: 1586502399081186, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
       propertyPath: m_Name
       value: ConstructionWheelSlot (2)
@@ -429,11 +434,6 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 2438316364679819138}
-    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 1379777661110619229}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
 --- !u!224 &2545974387601165026 stripped
@@ -473,6 +473,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224715956822983626}
     m_Modifications:
+    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 515508886937500644}
     - target: {fileID: 1586502399081186, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
       propertyPath: m_Name
       value: ConstructionWheelSlot
@@ -587,11 +592,6 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 3878763874667780155}
-    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 515508886937500644}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
 --- !u!224 &3987830639163751771 stripped
@@ -631,6 +631,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224715956822983626}
     m_Modifications:
+    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 8836524209474268150}
     - target: {fileID: 1586502399081186, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
       propertyPath: m_Name
       value: ConstructionWheelSlot (4)
@@ -745,11 +750,6 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 5211496391232047145}
-    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 8836524209474268150}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
 --- !u!224 &5391171304255335753 stripped
@@ -789,6 +789,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224715956822983626}
     m_Modifications:
+    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 5677722393189981691}
     - target: {fileID: 1586502399081186, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
       propertyPath: m_Name
       value: ConstructionWheelSlot (3)
@@ -903,11 +908,6 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 8950910612630224420}
-    - target: {fileID: 3705075631600554663, guid: b76638d6bb4b2d240892958e0661751f,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 5677722393189981691}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76638d6bb4b2d240892958e0661751f, type: 3}
 --- !u!224 &9132095120239221572 stripped

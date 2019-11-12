@@ -6,31 +6,40 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public class Unit : MonoBehaviour, ITargetable
+	public class Unit : MonoBehaviour
 	{
 		public static event Action<Unit> DiedEvent;
-		public static event Action<Unit, Weapon> DamagedEvent;
+		public event Action DiedInstanceEvent;
+		public static event Action<Unit, int, DamageType> DamagedEvent;
 		public static event Action<Unit> ArrivedDestinationEvent;
 		public event Action ArrivedDestinationInstanceEvent;
 
-		Transform trans;
-		Collider2D coll;
-		bool initialized = false;
-	
+		Transform _transform;
+		public Vector2 Position => _transform.position;
+		Collider2D _collider;
+		public Collider2D Collider => _collider;
+		
 		[Header("Unit")]
 		public bool IsActive = false;
-		public bool IsDead = false;
-		[SerializeField] int maxHealth = 10;
+		[Space]
+		public Transform RotationTransform;
+		[Space]
+		[SerializeField] HealthBar HealthBar;
+		public bool Damageable = true;
+		public int MaxHealth = 10;
 		public int CurrentHealth = 10;
 		[Range(0, 1f)] public float HealthPercent = 1f;
 		public Armor ArmorType = Armor.None;
 		public bool Damaged = false;
-		public int FoodReward = 0;
+		public bool IsDead = false;
+
+		public LinkedList<IUnitOrder> Orders = new LinkedList<IUnitOrder>();
+		public IUnitOrder CurrentOrder;
 
 		protected virtual void Awake()
 		{
-			trans = GetComponent<Transform>();
-			coll = GetComponent<Collider2D>();
+			_transform = GetComponent<Transform>();
+			_collider = GetComponent<Collider2D>();
 		}
 
 		public virtual void Init(string pathName, bool isNew = true)
@@ -38,23 +47,72 @@ namespace TowerDefense
 			IsActive = true;
 			IsDead = false;
 
-			if (isNew && CurrentHealth < MaxHealth)
-				CurrentHealth = MaxHealth;
-			HealthPercent = (float) CurrentHealth / MaxHealth;
-//			UpdateHealthBar();
-			
+			ResetHealth();
 			ResetSprite();
-
-			initialized = true;
 		}
 
 		public virtual void DeInit()
 		{
 			IsActive = false;
-			initialized = false;
 			StopAllCoroutines();
 		}
+
+		public void AddOrder(IUnitOrder order, bool runImmediate = true)
+		{
+			Debug.Log($"AddOrder [{order}], {runImmediate}");
+			if (!Orders.Contains(order))
+				Orders.AddLast(order);
+			if (runImmediate)
+			{
+				if (CurrentOrder != null)
+				{
+					CurrentOrder.PauseOrder();
+				}
+				ChangeOrder(order);
+			}
+		}
+
+		public void ChangeOrder(IUnitOrder order)
+		{
+			Debug.Log($"ChangeOrder [{order}]");
+			CurrentOrder = order;
+			order.StartOrder();
+		}
+
+		public void OrderEnded(IUnitOrder order) // TODO: rewrite to events
+		{
+			if (!Orders.Contains(order))
+				return;
+			
+			order.PauseOrder();
+			
+			Debug.Log($"OrderEnded [{order}]");
+			Orders.Remove(order);
+			if (Orders.Count > 0)
+				ChangeOrder(Orders.First.Value);
+		}
+
+		void ResetHealth()
+		{
+			if (CurrentHealth < MaxHealth)
+				CurrentHealth = MaxHealth;
+			HealthPercent = (float) CurrentHealth / MaxHealth;
+			UpdateHealthBar();
+			
+			Damaged = false;
+		}
 		
+		void UpdateHealthBar()
+		{
+			if (HealthBar != null)
+			{
+				HealthBar.SetPercent(HealthPercent);
+				if (HealthPercent >= 1f || HealthPercent <= 0f)
+					HealthBar.gameObject.SetActive(false);
+				else
+					HealthBar.gameObject.SetActive(true);
+			}
+		}
 
 		public virtual void ArrivedDestination()
 		{
@@ -74,7 +132,7 @@ namespace TowerDefense
 		{
 //			animator.enabled = true;
 //			animator.Play("Idle");
-			// LeanTween.alpha(rotationTrans.gameObject, 1f, 0f);
+			LeanTween.alpha(gameObject, 1f, 0f);
 		}
 		
 		void Die(Weapon weapon)
@@ -86,94 +144,49 @@ namespace TowerDefense
 
 			// animator.Play("Dying");
 			// animator.SetTrigger("Die");
-			GetComponent<MoveByPath>().StopMoving();
-			
-			if (DiedEvent != null)
-				DiedEvent(this);
+			GetComponent<MoveByPath>()?.StopMoving();
+
+			DiedEvent?.Invoke(this);
+			DiedInstanceEvent?.Invoke();
 		}
 
-		// calls in Animator
+		// used by Animator
 		public void Corpse()
 		{
 			// animator.enabled = false;
-			// LeanTween.alpha(rotationTrans.gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
+			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 		
 		public virtual void Damage(Weapon weapon)
 		{
+			if (!Damageable)
+				return;
+			
 			Damage(weapon.Damage, weapon.DamageType);
-			if (DamagedEvent != null)
-				DamagedEvent(this, weapon); //TODO: move event to catch not only weapon damage
 		}
 
-		public virtual void Damage(float damage, DamageType type = DamageType.Physical)
+		public virtual void Damage(int damage, DamageType type = DamageType.Physical)
 		{
-			if (IsDead)
+			if (IsDead || !Damageable)
 				return;
 
 			if (type == DamageType.Magical && ArmorType == Armor.Spiritual
 			    || type == DamageType.Physical && ArmorType == Armor.Fortified)
-				damage *= 0.25f;
+				damage = Mathf.RoundToInt(damage * 0.25f);
 			
 			CurrentHealth = (int)(CurrentHealth - damage);
 			HealthPercent = (float) CurrentHealth / MaxHealth;
-//			UpdateHealthBar();
+			UpdateHealthBar();
 			if (!Damaged && CurrentHealth < MaxHealth)
 			{
 				Damaged = true;
-//				healthBar.gameObject.SetActive(true);
 			}
 			if (CurrentHealth <= 0)
 			{
 				Die(null);
 			}
+			
+			DamagedEvent?.Invoke(this, damage, type);
 		}
-
-#region ITargetable
-		public GameObject GameObj
-		{
-			get { return gameObject; }
-		}
-
-		public bool IsDied
-		{
-			get { return IsDead; }
-		}
-
-		public Vector2 WaypointPoint
-		{
-			get { return Vector2.zero; }
-		}
-
-		public int PathIndex
-		{
-			get { return 0; }
-		}
-
-		public float Health
-		{
-			get { return HealthPercent; }
-		}
-
-		public int MaxHealth
-		{
-			get { return maxHealth; }
-		}
-
-		public Collider2D Collider
-		{
-			get { return coll; }
-		}
-
-		public Vector2 Point
-		{
-			get { return trans.position; }
-		}
-
-		public Vector2 PointToDamage
-		{
-			get { return trans.position; }
-		}
-#endregion
 	}
 }

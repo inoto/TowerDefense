@@ -41,7 +41,7 @@ namespace TowerDefense
 		public int Damage => UnityEngine.Random.Range(DamageMin, DamageMax);
 		[ShowNativeProperty] float DamagePerSecond => (float)(DamageMin + DamageMax) / 2 / AttackSpeed;
 
-		public ITargetable Target = null;
+		public Unit Target = null;
 
 		[SerializeField] protected GameObject ProjectilePrefab;
 		public Vector2 ProjectileStartPointOffset;
@@ -78,11 +78,9 @@ namespace TowerDefense
 		protected bool TrackTarget()
 		{
 			if (Target == null)
-			{
 				return false;
-			}
 
-			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
+			if (Target.IsDead || !Physics2D.IsTouching(_collider, Target.Collider))
 			{
 				Target = null;
 				return false;
@@ -91,7 +89,7 @@ namespace TowerDefense
 			return true;
 		}
 
-		protected ITargetable DefineTarget()
+		protected Unit DefineTarget()
 		{
 			switch (TargetingTo)
 			{
@@ -110,26 +108,27 @@ namespace TowerDefense
 
 		#region Targeting
 
-		ITargetable FindClosestToExitTarget()
+		Unit FindClosestToExitTarget()
 		{
-			ITargetable bestTarget = null;
+			Unit bestTarget = null;
 			int biggestPathIndex = -1;
 			float closestDistToWaypoint = float.MaxValue;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
+				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
 
-				if (possibleTarget != null && !possibleTarget.IsDied)
+				if (possibleTarget != null && !possibleTarget.IsDead)
 				{
-					if (possibleTarget.PathIndex > biggestPathIndex)
+					MoveByPath mbp = possibleTarget.GetComponent<MoveByPath>();
+					if (mbp.PathIndex > biggestPathIndex)
 					{
 						bestTarget = possibleTarget;
-						biggestPathIndex = possibleTarget.PathIndex;
-						closestDistToWaypoint = (possibleTarget.WaypointPoint - possibleTarget.Point).magnitude;
+						biggestPathIndex = mbp.PathIndex;
+						closestDistToWaypoint = (mbp.WaypointPoint - possibleTarget.Position).magnitude;
 					}
-					else if (possibleTarget.PathIndex == biggestPathIndex)
+					else if (mbp.PathIndex == biggestPathIndex)
 					{
-						float distToWaypoint = (possibleTarget.WaypointPoint - possibleTarget.Point).magnitude;
+						float distToWaypoint = (mbp.WaypointPoint - possibleTarget.Position).magnitude;
 						if (distToWaypoint < closestDistToWaypoint)
 						{
 							bestTarget = possibleTarget;
@@ -142,57 +141,57 @@ namespace TowerDefense
 			return bestTarget;
 		}
 		
-		ITargetable FindLowestHealthTarget()
+		Unit FindLowestHealthTarget()
 		{
-			ITargetable bestTarget = null;
+			Unit bestTarget = null;
 			float lowestValue = float.MaxValue;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
+				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
 				if (possibleTarget != null)
 				{
-					if (possibleTarget.Health < lowestValue)
+					if (possibleTarget.MaxHealth < lowestValue)
 					{
 						bestTarget = possibleTarget;
-						lowestValue = bestTarget.Health;
+						lowestValue = bestTarget.MaxHealth;
 					}
 				}
 			}
 			return bestTarget;
 		}
 
-		ITargetable FindMostDangerousTarget()
+		Unit FindMostDangerousTarget()
 		{
-			ITargetable bestTarget = null;
+			Unit bestTarget = null;
 			float highestMaxHealth = 0;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
+				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
 				if (possibleTarget != null)
 				{
 					if (possibleTarget.MaxHealth > highestMaxHealth)
 					{
 						bestTarget = possibleTarget;
-						highestMaxHealth = bestTarget.Health;
+						highestMaxHealth = bestTarget.MaxHealth;
 					}
 				}
 			}
 			return bestTarget;
 		}
 
-		ITargetable FindTargetInLargestBunch()
+		Unit FindTargetInLargestBunch()
 		{
-			ITargetable bestTarget = null;
+			Unit bestTarget = null;
 			float bunchRange = 1f;
-			Dictionary<ITargetable, Collider2D[]> targetsWithBunches = new Dictionary<ITargetable, Collider2D[]>();
+			Dictionary<Unit, Collider2D[]> targetsWithBunches = new Dictionary<Unit, Collider2D[]>();
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
-				targetsWithBunches.Add(t, _targetsBuffer.Where((e) => Vector2.Distance(t.Point, e.transform.position) <= bunchRange).ToArray());
+				Unit t = _targetsBuffer[i].GetComponent<Unit>();
+				targetsWithBunches.Add(t, _targetsBuffer.Where((e)=> Vector2.Distance(t.Position, e.transform.position) <= bunchRange).ToArray());
 			}
 
 			int maxCountInBunch = 0;
-			foreach (KeyValuePair<ITargetable,Collider2D[]> kvp in targetsWithBunches)
+			foreach (KeyValuePair<Unit,Collider2D[]> kvp in targetsWithBunches)
 			{
 				if (kvp.Value.Length > maxCountInBunch)
 				{
@@ -206,7 +205,7 @@ namespace TowerDefense
 		
 		#endregion
 
-		public void OnTargetDied(ITargetable target)
+		public void OnTargetDied(Unit target)
 		{
 
 			Tower.ModifySpecValue(20); // TODO: replace with event
@@ -222,7 +221,7 @@ namespace TowerDefense
 			Gizmos.color = Color.red;
 			if (Target != null)
 			{
-				Gizmos.DrawLine(_transform.position, Target.Point);
+				Gizmos.DrawLine(_transform.position, Target.Position);
 			}
 		}
 	}

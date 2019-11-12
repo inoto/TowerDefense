@@ -5,15 +5,16 @@ using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
-	public class MoveByPath : MonoBehaviour
+	public class MoveByPath : MonoBehaviour, IUnitOrder
 	{
 		public static event Action<MoveByPath, string> LookingForPathEvent;
 
 		const float MAX_WAYPOINT_OFFSET = 0.1f;
-		
+
+		public bool IsActive;
+		[Space]
 		[ReadOnly] public string PathName;
 		public float Speed = 40f;
-		[SerializeField] Transform RotationTransform;
 		[SerializeField] [ReadOnly] BezierCurve _path;
 		[SerializeField] [ReadOnly] bool _isMoving;
 
@@ -22,7 +23,9 @@ namespace TowerDefense
 		Unit _unit;
 		
 		int segment = 0;
+		public int PathIndex => segment;
 		Vector2 waypoint;
+		public Vector2 WaypointPoint => waypoint;
 		Vector2 desired;
 		Quaternion quat;
 		Vector2 offset;
@@ -56,6 +59,8 @@ namespace TowerDefense
 		{
 			waypoint = _path.Anchors[segment] + offset;
 			_isMoving = true;
+			
+			_unit.AddOrder(this);
 		}
 		
 		public void StopMoving()
@@ -65,13 +70,13 @@ namespace TowerDefense
 
 		void Update()
 		{
-			if (_isMoving)
+			if (IsActive && _isMoving)
 			{
 				desired = waypoint - (Vector2)_transform.position - footPoint;
 				
-				quat = RotationTransform.rotation;
+				quat = _unit.RotationTransform.rotation;
 				quat.y = desired.x < 0 ? 180f : 0f;
-				RotationTransform.rotation = quat;
+				_unit.RotationTransform.rotation = quat;
 				
 				float distance = desired.magnitude;
 				desired.Normalize();
@@ -93,6 +98,7 @@ namespace TowerDefense
 		{
 			_isMoving = false;
 			_unit.ArrivedDestination();
+			_unit.OrderEnded(this);
 		}
 
 		void OnDrawGizmos()
@@ -107,11 +113,27 @@ namespace TowerDefense
 				}
 			}
 			
-			if (_isMoving)
+			if (IsActive && _isMoving)
 			{
 				Gizmos.color = Color.blue;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position+desired);
 			}
 		}
+
+#region IUnitOrder
+
+		public void StartOrder()
+		{
+			IsActive = true;
+			Debug.Log($"{gameObject} order started");
+		}
+
+		public void PauseOrder()
+		{
+			IsActive = false;
+			Debug.Log($"{gameObject} order paused");
+		}
+		
+#endregion
 	}
 }

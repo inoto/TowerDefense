@@ -35,8 +35,11 @@ namespace TowerDefense
 
 		void ChangeValue(Unit unit)
 		{
-			_food += unit.FoodReward;
-			UpdateValue();
+			if (unit is Mob mob)
+			{
+				_food += mob.FoodReward;
+				UpdateValue();
+			}
 		}
 		
 		void FarmProvided(Farm farm, int amount)

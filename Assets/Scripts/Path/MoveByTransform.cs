@@ -3,17 +3,18 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-	public class MoveByPoint : MonoBehaviour
+	public class MoveByTransform : MonoBehaviour, IUnitOrder
 	{
+		public bool IsActive;
+		[Space]
 		public float Speed = 40f;
-		[SerializeField] Transform RotationTransform;
 		[SerializeField] [ReadOnly] bool _isMoving;
 		
 		Transform _transform;
 		AttachmentPoints _attachments;
 		Unit _unit;
 
-		Vector2 destination;
+		Transform destination;
 		Vector2 desired;
 		Quaternion quat;
 		Vector2 offset;
@@ -27,10 +28,10 @@ namespace TowerDefense
 			_unit = GetComponent<Unit>();
 		}
 		
-		public void Init(Vector2 point)
+		public void Init(Transform transform)
 		{
 			_isMoving = false;
-			destination = point;
+			destination = transform;
 			StartMoving();
 		}
 		
@@ -46,13 +47,13 @@ namespace TowerDefense
 
 		void Update()
 		{
-			if (_isMoving)
+			if (IsActive && _isMoving)
 			{
-				desired = destination - (Vector2)_transform.position - footPoint;
+				desired = destination.position - _transform.position - (Vector3)footPoint;
 				
-				quat = RotationTransform.rotation;
+				quat = _unit.RotationTransform.rotation;
 				quat.y = desired.x < 0 ? 180f : 0f;
-				RotationTransform.rotation = quat;
+				_unit.RotationTransform.rotation = quat;
 				
 				float distance = desired.magnitude;
 				desired.Normalize();
@@ -73,13 +74,29 @@ namespace TowerDefense
 
 		void OnDrawGizmos()
 		{
-			if (_isMoving)
+			if (IsActive && _isMoving)
 			{
 				Gizmos.color = Color.green;
-				Gizmos.DrawLine((Vector2)_transform.position + footPoint, destination);
+				Gizmos.DrawLine((Vector2)_transform.position + footPoint, destination.position);
 				Gizmos.color = Color.blue;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position+desired);
 			}
 		}
+		
+#region IUnitOrder
+
+		public void StartOrder()
+		{
+			IsActive = true;
+			Debug.Log($"{gameObject} order started");
+		}
+
+		public void PauseOrder()
+		{
+			IsActive = false;
+			Debug.Log($"{gameObject} order paused");
+		}
+		
+#endregion
 	}
 }

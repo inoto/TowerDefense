@@ -68,7 +68,7 @@ namespace TowerDefense
 		{
 			if (_attachedUnit != null)
 			{
-				transform.position = Camera.main.WorldToScreenPoint(_attachedUnit.Point);
+				transform.position = Camera.main.WorldToScreenPoint(_attachedUnit.transform.position);
 				_textMesh.color.SetAlpha(_textMesh.color.a - 2);
 			}
 		}

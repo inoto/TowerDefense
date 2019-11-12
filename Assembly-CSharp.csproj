@@ -125,7 +125,7 @@
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
     <Compile Include="Assets\Scripts\ITargetable.cs" />
     <Compile Include="Assets\Scripts\Path\MoveByPath.cs" />
-    <Compile Include="Assets\Scripts\Path\MoveByPoint.cs" />
+    <Compile Include="Assets\Scripts\Path\MoveByTransform.cs" />
     <Compile Include="Assets\Scripts\Path\Path.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />
@@ -155,6 +155,8 @@
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\Units\Armor.cs" />
     <Compile Include="Assets\Scripts\Units\AttachmentPoints.cs" />
+    <Compile Include="Assets\Scripts\Units\IUnitOrder.cs" />
+    <Compile Include="Assets\Scripts\Units\MeleeAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Mobs\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Units\Mobs\Mob.cs" />
     <Compile Include="Assets\Scripts\Units\Soldier.cs" />

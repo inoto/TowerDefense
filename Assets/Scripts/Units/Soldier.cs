@@ -13,6 +13,8 @@ namespace TowerDefense
 
 		public bool InBuilding = false;
 		public Specialization Specialization;
+
+		[SerializeField] bool Movable = true;
 		
 		protected override void Awake()
 		{
@@ -29,7 +31,7 @@ namespace TowerDefense
 		IEnumerator CheckCreatedManually()
 		{
 			yield return new WaitForSeconds(0.2f);
-			if (!IsActive)
+			if (!IsActive && Movable)
 			{
 				FreeSoldierEvent?.Invoke(this);
 			}
@@ -63,7 +65,7 @@ namespace TowerDefense
 			building.AddSoldier(this);
 			ChangedBuildingEvent?.Invoke(this, _building);
 
-			GetComponent<MoveByPoint>().Init(building.transform.position);
+			GetComponent<MoveByTransform>().Init(building.transform);
 		}
 		
 		public void NowFree()
