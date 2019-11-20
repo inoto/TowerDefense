@@ -33,18 +33,14 @@ namespace TowerDefense
 			yield return new WaitForSeconds(0.2f);
 			if (!IsActive && Movable)
 			{
+				Init("");
 				FreeSoldierEvent?.Invoke(this);
 			}
 		}
 		
-		public override void Init(string pathName, bool isNew = true)
+		public override void Init(string pathName = "")
 		{
-			IsActive = true;
-			IsDead = false;
-
-			if (isNew && CurrentHealth < MaxHealth)
-				CurrentHealth = MaxHealth;
-			HealthPercent = (float) CurrentHealth / MaxHealth;
+			base.Init(pathName);
 			
 			gameObject.SetActive(true);
 		}

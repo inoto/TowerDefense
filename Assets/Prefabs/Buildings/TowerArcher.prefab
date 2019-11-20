@@ -105,9 +105,10 @@ MonoBehaviour:
   DamageType: 0
   TargetingTo: 1
   Range: 200
-  AttackSpeed: 1
+  AttackSpeed: 1.5
   DamageMin: 3
   DamageMax: 5
+  Target: {fileID: 0}
   ProjectilePrefab: {fileID: 1471061530720506, guid: e81c982555ff45c4d903a030978c5beb,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
@@ -527,7 +528,7 @@ PrefabInstance:
     - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_SortingOrder
-      value: -155
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc5ec4cec098064eaf326aa7366852b, type: 3}

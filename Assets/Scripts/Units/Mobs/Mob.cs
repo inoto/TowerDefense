@@ -21,12 +21,12 @@ namespace TowerDefense
 		{
 			yield return new WaitForSeconds(2f);
 			if (!IsActive)
-				Init("Path0", false);
+				Init("Path0");
 		}
 
-		public override void Init(string pathName, bool isNew = true)
+		public override void Init(string pathName = "")
 		{
-			base.Init(pathName, isNew);
+			base.Init();
 
 			GetComponent<MoveByPath>().Init(pathName);
 

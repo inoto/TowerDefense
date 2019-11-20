@@ -25,7 +25,7 @@ namespace TowerDefense
 		{
 			base.Init(weapon);
 
-			if (_target == null || _target.IsDead)
+			if (_target == null || _target.IsDied)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
@@ -47,7 +47,7 @@ namespace TowerDefense
 
 			while (_time < _duration)
 			{
-				if (!_target.IsDead)
+				if (!_target.IsDied)
 				{
 					_endPoint = _target.Position;
 					_direction = _transform.position - _startPoint;

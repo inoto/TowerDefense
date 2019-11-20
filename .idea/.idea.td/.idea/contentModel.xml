@@ -258,6 +258,7 @@
             <e p="BuildPlace.cs" t="Include" />
             <e p="Camp.cs" t="Include" />
             <e p="Farm.cs" t="Include" />
+            <e p="Gates.cs" t="Include" />
             <e p="Towers" t="Include">
               <e p="Tower.cs" t="Include" />
               <e p="TowerArcher.cs" t="Include" />
@@ -270,6 +271,7 @@
             <e p="ConstructionWheelSlot.cs" t="Include" />
           </e>
           <e p="GameController.cs" t="Include" />
+          <e p="ICanAttack.cs" t="Include" />
           <e p="Input" t="Include">
             <e p="Camera2DController" t="Include">
               <e p="AbstractCamera2DInput.cs" t="Include" />
@@ -334,6 +336,7 @@
             <e p="Editor" t="Include">
               <e p="AttachmentPointsEditor.cs" t="Include" />
             </e>
+            <e p="Healthy.cs" t="Include" />
             <e p="IUnitOrder.cs" t="Include" />
             <e p="MeleeAttack.cs" t="Include" />
             <e p="Mobs" t="Include">

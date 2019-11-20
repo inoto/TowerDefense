@@ -27,7 +27,7 @@ namespace TowerDefense
 		protected int _targetsCount;
 		
 		[SerializeField] bool debug = false;
-		[SerializeField] Transform DebugUnitTransform;
+		[SerializeField] Transform DebugITargetableTransform;
 		
 		[Header("Weapon")]
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
@@ -41,7 +41,7 @@ namespace TowerDefense
 		public int Damage => UnityEngine.Random.Range(DamageMin, DamageMax);
 		[ShowNativeProperty] float DamagePerSecond => (float)(DamageMin + DamageMax) / 2 / AttackSpeed;
 
-		public Unit Target = null;
+		public ITargetable Target = null;
 
 		[SerializeField] protected GameObject ProjectilePrefab;
 		public Vector2 ProjectileStartPointOffset;
@@ -80,7 +80,7 @@ namespace TowerDefense
 			if (Target == null)
 				return false;
 
-			if (Target.IsDead || !Physics2D.IsTouching(_collider, Target.Collider))
+			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
 			{
 				Target = null;
 				return false;
@@ -89,7 +89,7 @@ namespace TowerDefense
 			return true;
 		}
 
-		protected Unit DefineTarget()
+		protected ITargetable DefineTarget()
 		{
 			switch (TargetingTo)
 			{
@@ -108,18 +108,18 @@ namespace TowerDefense
 
 		#region Targeting
 
-		Unit FindClosestToExitTarget()
+		ITargetable FindClosestToExitTarget()
 		{
-			Unit bestTarget = null;
+			ITargetable bestTarget = null;
 			int biggestPathIndex = -1;
 			float closestDistToWaypoint = float.MaxValue;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 
-				if (possibleTarget != null && !possibleTarget.IsDead)
+				if (possibleTarget != null && !possibleTarget.IsDied)
 				{
-					MoveByPath mbp = possibleTarget.GetComponent<MoveByPath>();
+					MoveByPath mbp = possibleTarget.GameObj.GetComponent<MoveByPath>();
 					if (mbp.PathIndex > biggestPathIndex)
 					{
 						bestTarget = possibleTarget;
@@ -141,13 +141,13 @@ namespace TowerDefense
 			return bestTarget;
 		}
 		
-		Unit FindLowestHealthTarget()
+		ITargetable FindLowestHealthTarget()
 		{
-			Unit bestTarget = null;
+			ITargetable bestTarget = null;
 			float lowestValue = float.MaxValue;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
 				{
 					if (possibleTarget.MaxHealth < lowestValue)
@@ -160,13 +160,13 @@ namespace TowerDefense
 			return bestTarget;
 		}
 
-		Unit FindMostDangerousTarget()
+		ITargetable FindMostDangerousTarget()
 		{
-			Unit bestTarget = null;
+			ITargetable bestTarget = null;
 			float highestMaxHealth = 0;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				Unit possibleTarget = _targetsBuffer[i].GetComponent<Unit>();
+				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
 				{
 					if (possibleTarget.MaxHealth > highestMaxHealth)
@@ -179,19 +179,19 @@ namespace TowerDefense
 			return bestTarget;
 		}
 
-		Unit FindTargetInLargestBunch()
+		ITargetable FindTargetInLargestBunch()
 		{
-			Unit bestTarget = null;
+			ITargetable bestTarget = null;
 			float bunchRange = 1f;
-			Dictionary<Unit, Collider2D[]> targetsWithBunches = new Dictionary<Unit, Collider2D[]>();
+			Dictionary<ITargetable, Collider2D[]> targetsWithBunches = new Dictionary<ITargetable, Collider2D[]>();
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				Unit t = _targetsBuffer[i].GetComponent<Unit>();
+				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
 				targetsWithBunches.Add(t, _targetsBuffer.Where((e)=> Vector2.Distance(t.Position, e.transform.position) <= bunchRange).ToArray());
 			}
 
 			int maxCountInBunch = 0;
-			foreach (KeyValuePair<Unit,Collider2D[]> kvp in targetsWithBunches)
+			foreach (KeyValuePair<ITargetable,Collider2D[]> kvp in targetsWithBunches)
 			{
 				if (kvp.Value.Length > maxCountInBunch)
 				{
@@ -205,7 +205,7 @@ namespace TowerDefense
 		
 		#endregion
 
-		public void OnTargetDied(Unit target)
+		public void OnTargetDied(ITargetable target)
 		{
 
 			Tower.ModifySpecValue(20); // TODO: replace with event

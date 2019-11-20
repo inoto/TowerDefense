@@ -22,7 +22,7 @@ namespace TowerDefense
 		{
 			base.Init(weapon);
 
-			if (_target == null || _target.IsDead)
+			if (_target == null || _target.IsDied)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
@@ -91,7 +91,7 @@ namespace TowerDefense
 			{
 				ITargetable t = colliders[i].GetComponent<ITargetable>();
 				if (t != null)
-					LeanTween.delayedCall(DamageDelay, () => t.Damage(wc.Damage * wc.SplashDamageFactor));
+					LeanTween.delayedCall(DamageDelay, () => t.Damage((int)(wc.Damage * wc.SplashDamageFactor)));
 			}
 			
 			SimplePool.Despawn(gameObject);

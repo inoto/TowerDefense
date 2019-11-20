@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public class Unit : MonoBehaviour
+	public class Unit : MonoBehaviour, IAlive, ITargetable, ICanAttack
 	{
 		public static event Action<Unit> DiedEvent;
 		public event Action DiedInstanceEvent;
@@ -15,24 +15,17 @@ namespace TowerDefense
 		public event Action ArrivedDestinationInstanceEvent;
 
 		Transform _transform;
-		public Vector2 Position => _transform.position;
 		Collider2D _collider;
-		public Collider2D Collider => _collider;
+		Healthy _healthy;
+		MoveByPath _moveByPath;
+		MoveByTransform _moveByTransform;
+		MeleeAttack _meleeAttack;
 		
 		[Header("Unit")]
 		public bool IsActive = false;
 		[Space]
 		public Transform RotationTransform;
 		[Space]
-		[SerializeField] HealthBar HealthBar;
-		public bool Damageable = true;
-		public int MaxHealth = 10;
-		public int CurrentHealth = 10;
-		[Range(0, 1f)] public float HealthPercent = 1f;
-		public Armor ArmorType = Armor.None;
-		public bool Damaged = false;
-		public bool IsDead = false;
-
 		public LinkedList<IUnitOrder> Orders = new LinkedList<IUnitOrder>();
 		public IUnitOrder CurrentOrder;
 
@@ -40,14 +33,19 @@ namespace TowerDefense
 		{
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
+			_healthy = GetComponent<Healthy>();
+			_moveByPath = GetComponent<MoveByPath>();
+			_moveByTransform = GetComponent<MoveByTransform>();
+			_meleeAttack = GetComponentInChildren<MeleeAttack>();
 		}
 
-		public virtual void Init(string pathName, bool isNew = true)
+		public virtual void Init(string pathName = "")
 		{
 			IsActive = true;
-			IsDead = false;
-
-			ResetHealth();
+			
+			if (_healthy != null)
+				_healthy.Init(this);
+			
 			ResetSprite();
 		}
 
@@ -57,19 +55,17 @@ namespace TowerDefense
 			StopAllCoroutines();
 		}
 
-		public void AddOrder(IUnitOrder order, bool runImmediate = true)
+		public void AddOrder(IUnitOrder order)
 		{
-			Debug.Log($"AddOrder [{order}], {runImmediate}");
+			Debug.Log($"AddOrder [{order}]");
 			if (!Orders.Contains(order))
 				Orders.AddLast(order);
-			if (runImmediate)
+
+			if (CurrentOrder != null)
 			{
-				if (CurrentOrder != null)
-				{
-					CurrentOrder.PauseOrder();
-				}
-				ChangeOrder(order);
+				CurrentOrder.PauseOrder();
 			}
+			ChangeOrder(order);
 		}
 
 		public void ChangeOrder(IUnitOrder order)
@@ -92,28 +88,6 @@ namespace TowerDefense
 				ChangeOrder(Orders.First.Value);
 		}
 
-		void ResetHealth()
-		{
-			if (CurrentHealth < MaxHealth)
-				CurrentHealth = MaxHealth;
-			HealthPercent = (float) CurrentHealth / MaxHealth;
-			UpdateHealthBar();
-			
-			Damaged = false;
-		}
-		
-		void UpdateHealthBar()
-		{
-			if (HealthBar != null)
-			{
-				HealthBar.SetPercent(HealthPercent);
-				if (HealthPercent >= 1f || HealthPercent <= 0f)
-					HealthBar.gameObject.SetActive(false);
-				else
-					HealthBar.gameObject.SetActive(true);
-			}
-		}
-
 		public virtual void ArrivedDestination()
 		{
 			ArrivedDestinationEvent?.Invoke(this);
@@ -134,18 +108,15 @@ namespace TowerDefense
 //			animator.Play("Idle");
 			LeanTween.alpha(gameObject, 1f, 0f);
 		}
-		
-		void Die(Weapon weapon)
+
+		public void RaiseDamagedEvent(int damage, DamageType type)
 		{
-			DeInit();
+			DamagedEvent?.Invoke(this, damage, type);
+		}
+
+		public void RaiseDiedEvent()
+		{
 			Corpse();
-			IsDead = true;
-			// Debug.Log(string.Format("# Mob [{0}] died", gameObject.name));
-
-			// animator.Play("Dying");
-			// animator.SetTrigger("Die");
-			GetComponent<MoveByPath>()?.StopMoving();
-
 			DiedEvent?.Invoke(this);
 			DiedInstanceEvent?.Invoke();
 		}
@@ -156,37 +127,29 @@ namespace TowerDefense
 			// animator.enabled = false;
 			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
-		
-		public virtual void Damage(Weapon weapon)
+
+#region ITargetable
+
+		public void Damage(Weapon weapon)
 		{
-			if (!Damageable)
-				return;
-			
-			Damage(weapon.Damage, weapon.DamageType);
+			_healthy.Damage(weapon);
 		}
 
-		public virtual void Damage(int damage, DamageType type = DamageType.Physical)
+		public void Damage(int damage, DamageType type = DamageType.Physical)
 		{
-			if (IsDead || !Damageable)
-				return;
-
-			if (type == DamageType.Magical && ArmorType == Armor.Spiritual
-			    || type == DamageType.Physical && ArmorType == Armor.Fortified)
-				damage = Mathf.RoundToInt(damage * 0.25f);
-			
-			CurrentHealth = (int)(CurrentHealth - damage);
-			HealthPercent = (float) CurrentHealth / MaxHealth;
-			UpdateHealthBar();
-			if (!Damaged && CurrentHealth < MaxHealth)
-			{
-				Damaged = true;
-			}
-			if (CurrentHealth <= 0)
-			{
-				Die(null);
-			}
-			
-			DamagedEvent?.Invoke(this, damage, type);
+			_healthy.Damage(damage, type);
 		}
+
+		public GameObject GameObj => gameObject;
+		public bool IsDied => _healthy.IsDied;
+		public Vector2 Position => _transform.position;
+		public Vector2 Waypoint => _moveByPath.WaypointPoint;
+		public int PathIndex => _moveByPath.PathIndex;
+		public float Health => _healthy.CurrentHealth;
+		public int MaxHealth => _healthy.MaxHealth;
+		public Collider2D Collider => _collider;
+		public Vector2 PointToDamage => Position;
+
+#endregion
 	}
 }

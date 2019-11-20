@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9165510485623413685}
   - component: {fileID: 3826301983585980216}
   - component: {fileID: 1393996554428614603}
+  - component: {fileID: 6247893295143434781}
   m_Layer: 11
   m_Name: Soldier
   m_TagString: Untagged
@@ -52,14 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 6807698820096271209}
-  HealthBar: {fileID: 1486299924534011023}
-  Damageable: 1
-  MaxHealth: 10
-  CurrentHealth: 10
-  HealthPercent: 1
-  ArmorType: 0
-  Damaged: 0
-  IsDead: 0
   InBuilding: 0
   Specialization: {fileID: 0}
   Movable: 1
@@ -171,6 +164,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6247893295143434781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2163378095494506605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173f63f3ac1ecbc40931d972e9d58aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsActive: 0
+  HealthBar: {fileID: 1486299924534011023}
+  Damageable: 1
+  MaxHealth: 10
+  CurrentHealth: 10
+  HealthPercent: 1
+  ArmorType: 0
+  Damaged: 0
+  IsDied: 0
 --- !u!1001 &114352862156269913
 PrefabInstance:
   m_ObjectHideFlags: 0

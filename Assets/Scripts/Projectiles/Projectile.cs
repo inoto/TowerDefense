@@ -11,7 +11,7 @@ namespace TowerDefense
 		
 		protected Transform _transform;
 		protected Weapon _weapon;
-		protected Unit _target;
+		protected ITargetable _target;
 		
 		[Header("Projectile")]
 		public float TravelTime = 1f;

@@ -74,7 +74,7 @@ namespace TowerDefense
 
 		void OnDrawGizmos()
 		{
-			if (IsActive && _isMoving)
+			if (IsActive && _isMoving && destination != null)
 			{
 				Gizmos.color = Color.green;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, destination.position);

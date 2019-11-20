@@ -16,14 +16,14 @@ namespace TowerDefense
 		public int AttackDamage = 2;
 		public DamageType AttackType = DamageType.Physical;
 		[SerializeField] LayerMask LayerMask;
-		[ReadOnly] public Unit Target;
+		[ReadOnly] public ITargetable Target;
 		[ProgressBar("LaunchProgress", 1f)]
 		[SerializeField] float LaunchProgress;
 
 		Transform _transform;
 		Collider2D _collider;
 		MoveByPath _moveByPath;
-		Unit _unit;
+		ICanAttack _attacking;
 		static Collider2D[] _targetsBuffer;
 		int _targetsCount;
 
@@ -32,7 +32,7 @@ namespace TowerDefense
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
 			_moveByPath = GetComponentInParent<MoveByPath>();
-			_unit = GetComponentInParent<Unit>();
+			_attacking = GetComponentInParent<ICanAttack>();
 		}
 
 		void Update()
@@ -57,28 +57,30 @@ namespace TowerDefense
 			if (Target == null)
 				return false;
 
+			if (Target.IsDied || !Target.GameObj.activeSelf)
+			{
+				if (followingTarget)
+				{
+					followingTarget = false;
+					_attacking.OrderEnded(GetComponentInParent<MoveByTransform>());
+				}
+
+				Target = null;
+				EndAttacking();
+			}
+
 			if (!followingTarget && !Physics2D.IsTouching(_collider, Target.Collider))
 			{
 				followingTarget = true;
 
 				MoveByTransform mbp = GetComponentInParent<MoveByTransform>();
-				mbp.Init(Target.transform);
-				_unit.AddOrder(mbp);
+				mbp.Init(Target.GameObj.transform);
+				_attacking.AddOrder(mbp);
 			}
-			else if (followingTarget)
+			else if (followingTarget && Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				if (!Target.gameObject.activeSelf)
-				{
-					followingTarget = false;
-					Target = null;
-					_unit.OrderEnded(GetComponentInParent<MoveByTransform>());
-					_unit.OrderEnded(this);
-				}
-				else if (Physics2D.IsTouching(_collider, Target.Collider))
-				{
-					followingTarget = false;
-					_unit.AddOrder(this);
-				}
+				followingTarget = false;
+				_attacking.AddOrder(this);
 			}
 
 			return true;
@@ -94,46 +96,47 @@ namespace TowerDefense
 			if (_targetsCount > 0)
 			{
 				Target = DefineTarget();
+				if (Target == null)
+					return false;
+				
 				IsActive = true;
-				_unit.AddOrder(this);
+				_attacking.AddOrder(this);
 				return true;
 			}
 			Target = null;
 			return false;
 		}
 
-		Unit DefineTarget()
+		ITargetable DefineTarget()
 		{
-			Unit bestTarget = null;
+			ITargetable bestTarget = null;
 			float minDistance = float.MaxValue;
 			for (int i = 0; i < _targetsCount; i++)
 			{
-				float distance = Vector2.Distance(_targetsBuffer[i].transform.position, _transform.position);
+				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
+				if (t.IsDied)
+					continue;
+				
+				float distance = Vector2.Distance(t.Position, _transform.position);
 				if (distance < minDistance)
 				{
-					bestTarget = _targetsBuffer[i].GetComponent<Unit>();
+					bestTarget = t;
 					minDistance = distance;
 				}
 			}
-			Debug.Log($"DefineTarget [{bestTarget}]");
+			if (bestTarget != null)
+				Debug.Log($"DefineTarget [{bestTarget}]");
 			return bestTarget;
-		}
-
-		void FollowTarget()
-		{
-			
 		}
 
 		void Attack()
 		{
-			Target.DiedInstanceEvent += TargetDied;
 			Target.Damage(AttackDamage, AttackType);
 		}
 
-		void TargetDied()
+		void EndAttacking()
 		{
-			Target.DiedInstanceEvent -= TargetDied;
-			_unit.OrderEnded(this);
+			_attacking.OrderEnded(this);
 		}
 		
 #region IUnitOrder

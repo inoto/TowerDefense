@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\Buildings\BuildPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Camp.cs" />
     <Compile Include="Assets\Scripts\Buildings\Farm.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Gates.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\ICanAttack.cs" />
     <Compile Include="Assets\Scripts\Input\Camera2DController\AbstractCamera2DInput.cs" />
     <Compile Include="Assets\Scripts\Input\Camera2DController\AbstractCamera2DInputMouse.cs" />
     <Compile Include="Assets\Scripts\Input\Camera2DController\AbstractCamera2DInputTouch.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Scripts\Units\Armor.cs" />
     <Compile Include="Assets\Scripts\Units\AttachmentPoints.cs" />
+    <Compile Include="Assets\Scripts\Units\Healthy.cs" />
     <Compile Include="Assets\Scripts\Units\IUnitOrder.cs" />
     <Compile Include="Assets\Scripts\Units\MeleeAttack.cs" />
     <Compile Include="Assets\Scripts\Units\Mobs\HealthBar.cs" />
