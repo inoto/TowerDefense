@@ -31,10 +31,11 @@ namespace TowerDefense
 		IEnumerator CheckCreatedManually()
 		{
 			yield return new WaitForSeconds(0.2f);
-			if (!IsActive && Movable)
+			if (!IsActive)
 			{
 				Init("");
-				FreeSoldierEvent?.Invoke(this);
+				if (Movable)
+					FreeSoldierEvent?.Invoke(this);
 			}
 		}
 		

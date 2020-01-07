@@ -253,6 +253,9 @@
               <e p="BezierCurveEditor.cs" t="Include" />
             </e>
           </e>
+          <e p="Buffs" t="Include">
+            <e p="BuffDamage.cs" t="Include" />
+          </e>
           <e p="Buildings" t="Include">
             <e p="Building.cs" t="Include" />
             <e p="BuildPlace.cs" t="Include" />

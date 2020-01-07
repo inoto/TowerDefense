@@ -107,6 +107,7 @@
     <Compile Include="Assets\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
+    <Compile Include="Assets\Scripts\Buffs\BuffDamage.cs" />
     <Compile Include="Assets\Scripts\Buildings\Building.cs" />
     <Compile Include="Assets\Scripts\Buildings\BuildPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Camp.cs" />
