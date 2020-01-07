@@ -88,6 +88,8 @@ namespace TowerDefense
 		
 		void Die()
 		{
+			IsDied = true;
+			
 			_alive?.RaiseDiedEvent();
 		}
 	}

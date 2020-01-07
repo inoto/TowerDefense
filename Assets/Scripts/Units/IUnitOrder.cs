@@ -4,7 +4,8 @@ namespace TowerDefense
 {
 	public interface IUnitOrder
 	{
-		void StartOrder();
-		void PauseOrder();
+		void Start();
+		void Pause();
+		string OrderName();
 	}
 }

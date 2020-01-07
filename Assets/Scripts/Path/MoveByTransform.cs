@@ -8,7 +8,7 @@ namespace TowerDefense
 		public bool IsActive;
 		[Space]
 		public float Speed = 40f;
-		[SerializeField] [ReadOnly] bool _isMoving;
+		[SerializeField] [ReadOnly] bool isMoving;
 		
 		Transform _transform;
 		AttachmentPoints _attachments;
@@ -30,24 +30,24 @@ namespace TowerDefense
 		
 		public void Init(Transform transform)
 		{
-			_isMoving = false;
+			isMoving = false;
 			destination = transform;
 			StartMoving();
 		}
 		
 		void StartMoving()
 		{
-			_isMoving = true;
+			isMoving = true;
 		}
 		
 		public void StopMoving()
 		{
-			_isMoving = false;
+			isMoving = false;
 		}
 
 		void Update()
 		{
-			if (IsActive && _isMoving)
+			if (IsActive && isMoving)
 			{
 				desired = destination.position - _transform.position - (Vector3)footPoint;
 				
@@ -68,13 +68,13 @@ namespace TowerDefense
 
 		void ArrivedDestination()
 		{
-			_isMoving = false;
+			isMoving = false;
 			_unit.ArrivedDestination();
 		}
 
 		void OnDrawGizmos()
 		{
-			if (IsActive && _isMoving && destination != null)
+			if (IsActive && isMoving && destination != null)
 			{
 				Gizmos.color = Color.green;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, destination.position);
@@ -85,16 +85,21 @@ namespace TowerDefense
 		
 #region IUnitOrder
 
-		public void StartOrder()
+		public void Start()
 		{
 			IsActive = true;
-			Debug.Log($"{gameObject} order started");
+			Debug.Log($"{name} order started");
 		}
 
-		public void PauseOrder()
+		public void Pause()
 		{
 			IsActive = false;
-			Debug.Log($"{gameObject} order paused");
+			Debug.Log($"{name} order paused");
+		}
+		
+		public string OrderName()
+		{
+			return name;
 		}
 		
 #endregion

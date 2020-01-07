@@ -14,6 +14,9 @@ namespace TowerDefense
 		public static event Action<Unit> ArrivedDestinationEvent;
 		public event Action ArrivedDestinationInstanceEvent;
 
+		public event Action OrderEndedEvent;
+		public event Action OrderChangedEvent;
+
 		Transform _transform;
 		Collider2D _collider;
 		Healthy _healthy;
@@ -28,6 +31,7 @@ namespace TowerDefense
 		[Space]
 		public LinkedList<IUnitOrder> Orders = new LinkedList<IUnitOrder>();
 		public IUnitOrder CurrentOrder;
+		Stack<IUnitOrder> startedOrders = new Stack<IUnitOrder>();
 
 		protected virtual void Awake()
 		{
@@ -55,37 +59,77 @@ namespace TowerDefense
 			StopAllCoroutines();
 		}
 
-		public void AddOrder(IUnitOrder order)
+		void LogOrders()
 		{
-			Debug.Log($"AddOrder [{order}]");
+			string s = "";
+			foreach (IUnitOrder order in Orders)
+			{
+				if (CurrentOrder == order)
+					s += ">>";
+				s += order.OrderName();
+				s += "\n";
+			}
+			
+			Debug.Log($"{gameObject.name} orders: \n{s}");
+		}
+
+		public void AddOrder(IUnitOrder order, bool startImmidiate = true)
+		{
+			Debug.Log($"{gameObject.name} AddOrder [{order.OrderName()}]");
+			
 			if (!Orders.Contains(order))
 				Orders.AddLast(order);
 
-			if (CurrentOrder != null)
+			if (startImmidiate)
 			{
-				CurrentOrder.PauseOrder();
+				if (CurrentOrder != null)
+				{
+					startedOrders.Push(CurrentOrder);
+					CurrentOrder.Pause();
+				}
+				ChangeOrder(order);
 			}
-			ChangeOrder(order);
+
+			LogOrders();
 		}
 
 		public void ChangeOrder(IUnitOrder order)
 		{
-			Debug.Log($"ChangeOrder [{order}]");
+			Debug.Log($"{gameObject.name} ChangeOrder [{order.OrderName()}]");
 			CurrentOrder = order;
-			order.StartOrder();
+			order.Start();
+			LogOrders();
 		}
 
-		public void OrderEnded(IUnitOrder order) // TODO: rewrite to events
+		public void OrderEnded(IUnitOrder order) // TODO: add events
 		{
 			if (!Orders.Contains(order))
 				return;
 			
-			order.PauseOrder();
+			order.Pause();
 			
-			Debug.Log($"OrderEnded [{order}]");
+			Debug.Log($"{gameObject.name} OrderEnded [{order.OrderName()}]");
+			
 			Orders.Remove(order);
-			if (Orders.Count > 0)
-				ChangeOrder(Orders.First.Value);
+
+			if (startedOrders.Count > 0)
+			{
+				IUnitOrder previousOrder = startedOrders.Pop();
+				if (previousOrder is MoveByPath mbp)
+				{
+					mbp.AssignToClosestWaypoint();
+				}
+				ChangeOrder(previousOrder);
+			}
+			else
+			{
+				if (Orders.Count > 0)
+					ChangeOrder(Orders.First.Value); // is it good to use first?
+				else
+					return;
+			}
+
+			LogOrders();
 		}
 
 		public virtual void ArrivedDestination()

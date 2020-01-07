@@ -15,8 +15,8 @@ namespace TowerDefense
 		[Space]
 		[ReadOnly] public string PathName;
 		public float Speed = 40f;
-		[SerializeField] [ReadOnly] BezierCurve _path;
-		[SerializeField] [ReadOnly] bool _isMoving;
+		[SerializeField] [ReadOnly] BezierCurve path;
+		[SerializeField] [ReadOnly] bool isMoving;
 
 		Transform _transform;
 		AttachmentPoints _attachments;
@@ -42,7 +42,7 @@ namespace TowerDefense
 		public void Init(string pathName)
 		{
 			segment = 0;
-			_isMoving = false;
+			isMoving = false;
 			offset = new Vector2(Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET),
 			                     Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET));
 			LookingForPathEvent?.Invoke(this, pathName);
@@ -50,70 +50,92 @@ namespace TowerDefense
 
 		public void AssignPath(BezierCurve path)
 		{
-			_path = path;
+			this.path = path;
 			
 			LeanTween.delayedCall(0.1f, StartMoving);
 		}
 
 		void StartMoving()
 		{
-			waypoint = _path.Anchors[segment] + offset;
-			_isMoving = true;
+			waypoint = path.Anchors[segment] + offset;
+			isMoving = true;
 			
 			_unit.AddOrder(this);
 		}
 		
 		public void StopMoving()
 		{
-			_isMoving = false;
+			isMoving = false;
 		}
 
 		void Update()
 		{
-			if (IsActive && _isMoving)
+			if (!IsActive || !isMoving)
+				return;
+			
+			desired = waypoint - (Vector2)_transform.position - footPoint;
+			
+			quat = _unit.RotationTransform.rotation;
+			quat.y = desired.x < 0 ? 180f : 0f;
+			_unit.RotationTransform.rotation = quat;
+			
+			float distance = desired.magnitude;
+			desired.Normalize();
+			if (distance < 0.1f)
 			{
-				desired = waypoint - (Vector2)_transform.position - footPoint;
-				
-				quat = _unit.RotationTransform.rotation;
-				quat.y = desired.x < 0 ? 180f : 0f;
-				_unit.RotationTransform.rotation = quat;
-				
-				float distance = desired.magnitude;
-				desired.Normalize();
-				if (distance < 0.1f)
+				if (segment >= path.Anchors.Length - 1)
 				{
-					if (segment >= _path.Anchors.Length - 1)
-					{
-						ArrivedDestination();
-						return;
-					}
-					segment += 1;
-					waypoint = _path.Anchors[segment] + offset;
+					ArrivedDestination();
+					return;
 				}
-				_transform.position += (Vector3)desired * Time.fixedDeltaTime * Speed / 100;
+				segment += 1;
+				waypoint = path.Anchors[segment] + offset;
 			}
+			_transform.position += (Vector3)desired * Time.fixedDeltaTime * Speed / 100;
 		}
 
 		void ArrivedDestination()
 		{
-			_isMoving = false;
+			isMoving = false;
 			_unit.ArrivedDestination();
 			_unit.OrderEnded(this);
 		}
 
+		public void AssignToClosestWaypoint()
+		{
+			float dist;
+			float smallestDist = Single.MaxValue;
+			int closestSegment = 0;
+			for (int i = 0; i < path.Anchors.Length; i++)
+			{
+				dist = Vector2.Distance(_transform.position, path.Anchors[i]);
+				if (dist < smallestDist)
+				{
+					smallestDist = dist;
+					closestSegment = i;
+				}
+			}
+
+			if (closestSegment > 0)
+			{
+				segment = closestSegment;
+				waypoint = path.Anchors[segment] + offset;
+			}
+		}
+
 		void OnDrawGizmos()
 		{
-			if (_path != null && _path.Anchors.Length > 0)
+			if (path != null && path.Anchors.Length > 0)
 			{
 				Gizmos.color = Color.green;
-				Gizmos.DrawLine((Vector2)_transform.position + footPoint, _path.Anchors[segment] + offset);
-				for (int i = segment; i < _path.Anchors.Length-1; i++)
+				Gizmos.DrawLine((Vector2)_transform.position + footPoint, path.Anchors[segment] + offset);
+				for (int i = segment; i < path.Anchors.Length-1; i++)
 				{
-					Gizmos.DrawLine(_path.Anchors[i] + offset, _path.Anchors[i+1] + offset);
+					Gizmos.DrawLine(path.Anchors[i] + offset, path.Anchors[i+1] + offset);
 				}
 			}
 			
-			if (IsActive && _isMoving)
+			if (IsActive && isMoving)
 			{
 				Gizmos.color = Color.blue;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position+desired);
@@ -122,16 +144,21 @@ namespace TowerDefense
 
 #region IUnitOrder
 
-		public void StartOrder()
+		public void Start()
 		{
 			IsActive = true;
-			Debug.Log($"{gameObject} order started");
+			Debug.Log($"{name} order started");
 		}
 
-		public void PauseOrder()
+		public void Pause()
 		{
 			IsActive = false;
-			Debug.Log($"{gameObject} order paused");
+			Debug.Log($"{name} order paused");
+		}
+		
+		public string OrderName()
+		{
+			return name;
 		}
 		
 #endregion

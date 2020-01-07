@@ -20,6 +20,8 @@ namespace TowerDefense
 		[ProgressBar("LaunchProgress", 1f)]
 		[SerializeField] float LaunchProgress;
 
+		IUnitOrder followingOrder;
+
 		Transform _transform;
 		Collider2D _collider;
 		MoveByPath _moveByPath;
@@ -62,25 +64,29 @@ namespace TowerDefense
 				if (followingTarget)
 				{
 					followingTarget = false;
-					_attacking.OrderEnded(GetComponentInParent<MoveByTransform>());
+					_attacking.OrderEnded(followingOrder);
 				}
 
 				Target = null;
 				EndAttacking();
+				return false;
 			}
 
 			if (!followingTarget && !Physics2D.IsTouching(_collider, Target.Collider))
 			{
 				followingTarget = true;
 
-				MoveByTransform mbp = GetComponentInParent<MoveByTransform>();
-				mbp.Init(Target.GameObj.transform);
-				_attacking.AddOrder(mbp);
+				MoveByTransform mbt = GetComponentInParent<MoveByTransform>();
+				mbt.Init(Target.GameObj.transform);
+				_attacking.AddOrder(mbt);
+				followingOrder = mbt;
 			}
 			else if (followingTarget && Physics2D.IsTouching(_collider, Target.Collider))
 			{
 				followingTarget = false;
-				_attacking.AddOrder(this);
+
+				_attacking.OrderEnded(followingOrder);
+				followingOrder = null;
 			}
 
 			return true;
@@ -114,7 +120,7 @@ namespace TowerDefense
 			for (int i = 0; i < _targetsCount; i++)
 			{
 				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
-				if (t.IsDied)
+				if (t == null || t.IsDied)
 					continue;
 				
 				float distance = Vector2.Distance(t.Position, _transform.position);
@@ -141,16 +147,21 @@ namespace TowerDefense
 		
 #region IUnitOrder
 
-		public void StartOrder()
+		public void Start()
 		{
 			IsActive = true;
-			Debug.Log($"{gameObject} order started");
+			Debug.Log($"{name} order started");
 		}
 
-		public void PauseOrder()
+		public void Pause()
 		{
 			IsActive = false;
-			Debug.Log($"{gameObject} order paused");
+			Debug.Log($"{name} order paused");
+		}
+
+		public string OrderName()
+		{
+			return name;
 		}
 		
 #endregion
