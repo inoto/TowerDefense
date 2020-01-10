@@ -30,8 +30,7 @@ namespace TowerDefense
 
 			GetComponent<MoveByPath>().Init(pathName);
 
-			// if (LookingForPathEvent != null)
-			// 	LookingForPathEvent(this, pathName);
+			// LookingForPathEvent?.Invoke(this, pathName);
 		}
 		
 	}

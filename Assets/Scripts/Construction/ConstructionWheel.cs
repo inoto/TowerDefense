@@ -22,11 +22,12 @@ namespace TowerDefense
 	
 	public class ConstructionWheel : Singleton<ConstructionWheel>
 	{
-		Transform _transform;
-		Selectable _selectable;
-		
 		[SerializeField] GameObject SlotPrefab;
 		[SerializeField] List<ConstructionWheelSlot> SlotsList;
+		
+		Selectable selectable;
+		
+		Transform _transform;
 
 		protected override void Awake()
 		{
@@ -46,7 +47,7 @@ namespace TowerDefense
 
 		public void Show(Selectable selectable, List<ConstructData> constructDataList)
 		{
-			_selectable = selectable;
+			this.selectable = selectable;
 
 			gameObject.SetActive(true);
 			Vector3 newPos = (Vector2) selectable.transform.position;
@@ -90,10 +91,10 @@ namespace TowerDefense
 			Hide();
 			
 			GameObject go = Instantiate(slot.BuildingPrefab);
-			go.transform.position = _selectable.transform.position;
-			go.GetComponent<Building>().Init(_selectable);
+			go.transform.position = selectable.transform.position;
+			go.GetComponent<Building>().Init(selectable);
 			
-			Destroy(_selectable.gameObject);
+			Destroy(selectable.gameObject);
 		}
 	}
 }

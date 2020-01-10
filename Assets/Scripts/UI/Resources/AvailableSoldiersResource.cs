@@ -7,7 +7,8 @@ namespace TowerDefense
 {
 	public class AvailableSoldiersResource : MonoBehaviour
 	{
-		int _soldiers;
+		int soldiersCount;
+		
 		TextMeshProUGUI _textMeshPro;
 
 		void Awake()
@@ -17,7 +18,7 @@ namespace TowerDefense
         
 		void Start()
 		{
-			_soldiers = 0;//Int32.Parse(Value.text);
+			soldiersCount = 0;//Int32.Parse(Value.text);
 		}
 
 		void OnEnable()
@@ -34,19 +35,19 @@ namespace TowerDefense
 
 		void SoldierAssignedToCamp(Soldier soldier)
 		{
-			_soldiers += 1;
+			soldiersCount += 1;
 			UpdateValue();
 		}
 		
 		void SoldierUnassignedToCamp(Soldier obj)
 		{
-			_soldiers -= 1;
+			soldiersCount -= 1;
 			UpdateValue();
 		}
 
 		void UpdateValue()
 		{
-			_textMeshPro.text = _soldiers.ToString();
+			_textMeshPro.text = soldiersCount.ToString();
 		}
 	}
 }

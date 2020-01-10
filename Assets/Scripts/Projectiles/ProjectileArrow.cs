@@ -15,59 +15,59 @@ namespace TowerDefense
 		[SerializeField] float HeightMultiplierMax = 1.1f;
 		[SerializeField] AnimationCurve Curve;
 		
-		Vector3 _newPoint, _startPoint, _endPoint;
-		float _time = 0f, _duration = 1f;
-		float _height, _multipliedSpeed, _heightMultiplier;
-		float _angleRad, _angleDeg;
-		Vector2 _direction;
+		Vector3 newPoint, startPoint, endPoint;
+		float time = 0f, duration = 1f;
+		float height, multipliedSpeed, heightMultiplier;
+		float angleRad, angleDeg;
+		Vector2 direction;
 
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
 
-			if (_target == null || _target.IsDied)
+			if (target == null || target.IsDied)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
 			}
 			
-			_startPoint = _transform.position;
-			_endPoint = _target.Position;
-			_time = 0f;
+			startPoint = _transform.position;
+			endPoint = target.Position;
+			time = 0f;
 
 			StartCoroutine(MoveByArc());
 		}
 
 		IEnumerator MoveByArc()
 		{
-			_multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
-			_heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
-			_duration = Vector2.Distance(_startPoint, _endPoint); // duration is a distance for now
-			if (_duration < 1f) _duration = 1f; // clamp
+			multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
+			heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
+			duration = Vector2.Distance(startPoint, endPoint); // duration is a distance for now
+			if (duration < 1f) duration = 1f; // clamp
 
-			while (_time < _duration)
+			while (time < duration)
 			{
-				if (!_target.IsDied)
+				if (!target.IsDied)
 				{
-					_endPoint = _target.Position;
-					_direction = _transform.position - _startPoint;
+					endPoint = target.Position;
+					direction = _transform.position - startPoint;
 				}
 				
-				_time += Time.fixedDeltaTime * 1/_multipliedSpeed;
-				_height = Curve.Evaluate(_time/_duration);
+				time += Time.fixedDeltaTime * 1/multipliedSpeed;
+				height = Curve.Evaluate(time/duration);
 
-				_newPoint = Vector2.Lerp(_startPoint, _endPoint, _time/_duration) + new Vector2(0f, _height);
+				newPoint = Vector2.Lerp(startPoint, endPoint, time/duration) + new Vector2(0f, height);
 
-				if (_time < _duration * 0.99)
+				if (time < duration * 0.99)
 				{
-					_direction = _newPoint - _transform.position;
-					_angleRad = Mathf.Atan2(_direction.y, _direction.x);
-					_angleDeg = (180 / Mathf.PI) * _angleRad;
+					direction = newPoint - _transform.position;
+					angleRad = Mathf.Atan2(direction.y, direction.x);
+					angleDeg = (180 / Mathf.PI) * angleRad;
 				
-					_transform.rotation = Quaternion.AngleAxis(_angleDeg, Vector3.forward);
+					_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
 				}
 
-				_transform.position = _newPoint;
+				_transform.position = newPoint;
  
 				yield return new WaitForSeconds(0.01f);
 			}
@@ -77,9 +77,9 @@ namespace TowerDefense
 
 		protected override void CheckHit()
 		{
-			if (_target.Collider.bounds.Contains(_transform.position))
+			if (target.Collider.bounds.Contains(_transform.position))
 			{
-				_target.Damage(_weapon);
+				target.Damage(weapon);
 				SimplePool.Despawn(gameObject);
 			}
 			else

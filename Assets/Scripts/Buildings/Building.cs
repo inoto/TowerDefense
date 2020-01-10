@@ -14,11 +14,11 @@ namespace TowerDefense
 		public static event Action<Building> SoldiersCountChangedEvent;
 		public event Action SoldiersCountChangedSingleEvent;
 
-		protected bool initialized = false;
-		
 		public List<Soldier> Soldiers;
 		public int SoldiersCount => Soldiers.Count;
 		public int SoldiersCountInBuilding => Soldiers.Count(s => s.InBuilding);
+		
+		protected bool initialized = false;
 
 		void Start()
 		{

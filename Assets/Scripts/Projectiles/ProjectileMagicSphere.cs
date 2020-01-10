@@ -5,33 +5,39 @@ namespace TowerDefense
 {
 	public class ProjectileMagicSphere : Projectile
 	{
-		Vector2 _desired, _diff;
-		float _velocityMultiplier;
-		Vector3 _endPoint;
+		Vector2 desired, diff;
+		float velocityMultiplier;
+		Vector3 endPoint;
 		
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
 
-			_endPoint = _target.Position;
+			if (target == null || target.IsDied)
+			{
+				SimplePool.Despawn(gameObject);
+				return;
+			}
 
-			_desired = Vector2.zero;
-			_diff = Vector2.zero;
-			_velocityMultiplier = 1f;
+			endPoint = target.Position;
+
+			desired = Vector2.zero;
+			diff = Vector2.zero;
+			velocityMultiplier = 1f;
 		}
 
-		void Update() //TODO: replace with coroutine
+		void Update()
 		{
-			if (_target == null)
+			if (target == null)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
 			}
 			
-			_velocityMultiplier += 0.01f;
-			_diff = _target.Position - (Vector2)_transform.position;
-			_transform.position += (Vector3)_diff.normalized * _velocityMultiplier * Time.fixedDeltaTime * (1/TravelTime);
-			if (_diff.magnitude < 0.1f)
+			velocityMultiplier += 0.01f;
+			diff = target.Position - (Vector2)_transform.position;
+			_transform.position += (Vector3)diff.normalized * velocityMultiplier * Time.fixedDeltaTime * (1/TravelTime);
+			if (diff.magnitude < 0.1f)
 				CheckHit();
 		}
 	}

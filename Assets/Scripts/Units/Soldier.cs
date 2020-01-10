@@ -8,13 +8,13 @@ namespace TowerDefense
 	{
 		public static event Action<Soldier, Building> ChangedBuildingEvent;
 		public static event Action<Soldier> FreeSoldierEvent;
-
-		Building _building;
-
+		
 		public bool InBuilding = false;
 		public Specialization Specialization;
 
 		[SerializeField] bool Movable = true;
+		
+		Building building;
 		
 		protected override void Awake()
 		{
@@ -55,19 +55,19 @@ namespace TowerDefense
 
 		public void AssignToBuilding(Building building)
 		{
-			if (_building != null)
+			if (this.building != null)
 				UnAssignFromBuilding();
 			
-			_building = building;
+			this.building = building;
 			building.AddSoldier(this);
-			ChangedBuildingEvent?.Invoke(this, _building);
+			ChangedBuildingEvent?.Invoke(this, this.building);
 
 			GetComponent<MoveByTransform>().Init(building.transform);
 		}
 		
 		public void NowFree()
 		{
-			if (_building != null)
+			if (building != null)
 				UnAssignFromBuilding();
 			
 			FreeSoldierEvent?.Invoke(this);
@@ -75,7 +75,7 @@ namespace TowerDefense
 
 		void UnAssignFromBuilding()
 		{
-			_building = null;
+			building = null;
 			
 			if (InBuilding)
 				ExitTower();
@@ -94,10 +94,10 @@ namespace TowerDefense
 		{
 			base.ArrivedDestination();
 			
-			if (_building != null)
+			if (building != null)
 			{
 				InBuilding = true;
-				_building.ActivateSoldier();
+				building.ActivateSoldier();
 			}
 
 			DeInit();

@@ -12,50 +12,50 @@ namespace TowerDefense
 		public static event Action<float, String, Action<Unit>> ShowEvent;
 		
 		[SerializeField] GameObject CollideObjPrefab;
-		GameObject _collideObj;
-		TextMeshProUGUI _tipText;
-		Action<Unit> _useAction;
-
+		GameObject collideObj;
+		Action<Unit> useAction;
 		bool found = false;
+		
+		TextMeshProUGUI _tipText;
+		Camera _cameraMain;
 
 		void Awake()
 		{
 			_tipText = GetComponentInChildren<TextMeshProUGUI>();
+			_cameraMain = Camera.main;
 		}
 
 		public void Init(float range, string text, Action<Unit> action)
 		{
-			_useAction = action;
+			useAction = action;
 			_tipText.text = text;
 
 			RectTransform rectTrans = GetComponent<RectTransform>();
 			rectTrans.sizeDelta = new Vector2(range, range*0.75f);
 
-			_collideObj = Instantiate(CollideObjPrefab);
-			_collideObj.GetComponent<RangeIndicatorCollideObj>().Init(this, range);
+			collideObj = Instantiate(CollideObjPrefab);
+			collideObj.GetComponent<RangeIndicatorCollideObj>().Init(this, range);
 		}
 
 		void Update()
 		{
 			transform.position = Input.mousePosition;
-			if (_collideObj != null)
+			if (collideObj != null)
 			{
-				_collideObj.transform.position = Camera.main.ScreenToWorldPoint(transform.position);
+				collideObj.transform.position = _cameraMain.ScreenToWorldPoint(transform.position);
 			}
 			if (Input.GetMouseButtonUp(0))
 			{
 				// StartCoroutine(DestroyInNextFrame());
-				_collideObj.GetComponent<RangeIndicatorCollideObj>().Run(_useAction);
+				collideObj.GetComponent<RangeIndicatorCollideObj>().Run(useAction);
 				Destroy(gameObject);
-				if (HideEvent != null)
-					HideEvent();
+				HideEvent?.Invoke();
 			}
 		}
 
 		public static void Show(float range, String text, Action<Unit> action)
 		{
-			if (ShowEvent != null)
-				ShowEvent(range, text, action);
+			ShowEvent?.Invoke(range, text, action);
 		}
 
 		IEnumerator DestroyInNextFrame()

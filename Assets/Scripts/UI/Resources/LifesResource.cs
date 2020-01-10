@@ -8,7 +8,9 @@ namespace TowerDefense
 	public class LifesResource : MonoBehaviour
 	{
 		[SerializeField] int StartLifes = 20;
-		int _lifesValue;
+		
+		int lifesCount;
+		
 		TextMeshProUGUI _textMeshPro;
 
 		void Awake()
@@ -18,7 +20,7 @@ namespace TowerDefense
 
 		void Start()
 		{
-			_lifesValue = StartLifes;
+			lifesCount = StartLifes;
 		}
 
 		void OnEnable()
@@ -33,8 +35,8 @@ namespace TowerDefense
 
 		void ChangeValue(Unit unit)
 		{
-			_lifesValue -= 1;
-			_textMeshPro.text = _lifesValue.ToString();
+			lifesCount -= 1;
+			_textMeshPro.text = lifesCount.ToString();
 		}
 	}
 }

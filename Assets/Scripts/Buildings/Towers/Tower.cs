@@ -22,14 +22,14 @@ namespace TowerDefense
 		public Sprite Icon;
 		public int MaxDesired = 3;
 		public int DesiredCount = 0;
-		SoldiersDispenser.Priority _priorityForDesired = SoldiersDispenser.Priority.Normal;
+		SoldiersDispenser.Priority priorityForDesired = SoldiersDispenser.Priority.Normal;
 		public SoldiersDispenser.Priority PriorityForDesired
 		{
-			get => _priorityForDesired;
+			get => priorityForDesired;
 			set
 			{
-				SoldiersDispenser.Priority oldPriority = _priorityForDesired;
-				_priorityForDesired = value;
+				SoldiersDispenser.Priority oldPriority = priorityForDesired;
+				priorityForDesired = value;
 				PriorityChangedEvent?.Invoke(this, oldPriority);
 			}
 		}
@@ -82,9 +82,7 @@ namespace TowerDefense
 		{
 			if (DesiredCount <= 0)
 				return;
-			
-			Debug.Log("tower RemoveDesired");
-			
+
 			DesiredCount -= 1;
 			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 

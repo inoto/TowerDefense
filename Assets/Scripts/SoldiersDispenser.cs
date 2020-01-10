@@ -18,8 +18,8 @@ namespace TowerDefense
 		[SerializeField] bool debug = false;
 		public bool Balance = true;
 
-		Dictionary<int, List<Tower>> _priorities;
-		List<Camp> _camps;
+		Dictionary<int, List<Tower>> priorities;
+		List<Camp> camps;
 
 		void Start()
 		{
@@ -28,13 +28,13 @@ namespace TowerDefense
 
 		void Init()
 		{
-			_priorities = new Dictionary<int, List<Tower>>();
+			priorities = new Dictionary<int, List<Tower>>();
 			foreach (var value in Enum.GetValues(typeof(Priority)))
 			{
-				_priorities.Add((int) value, new List<Tower>());
+				priorities.Add((int) value, new List<Tower>());
 			}
 
-			_camps = FindObjectsOfType<Camp>().ToList();
+			camps = FindObjectsOfType<Camp>().ToList();
 		}
 
 		void OnEnable()
@@ -58,26 +58,26 @@ namespace TowerDefense
 			Tower tower = building.GetComponent<Tower>();
 			if (tower != null)
 			{
-				_priorities[(int)tower.PriorityForDesired].Add(tower);
-				if (debug) Debug.Log("tower built " + tower);
+				priorities[(int)tower.PriorityForDesired].Add(tower);
+				if (debug) Debug.Log($"tower built {tower}");
 			}
 			else
 			{
-				_camps.Add(building as Camp);
-				if (debug) Debug.Log("camp built " + building);
+				camps.Add(building as Camp);
+				if (debug) Debug.Log($"camp built {building}");
 			}
 		}
 
 		void PriorityChanged(Tower tower, Priority oldPriority)
 		{
 			// update priority data structure
-			for (int i = 0; i < _priorities[(int)oldPriority].Count; i++)
+			for (int i = 0; i < priorities[(int)oldPriority].Count; i++)
 			{
-				if (_priorities[(int)oldPriority][i] == tower)
+				if (priorities[(int)oldPriority][i] == tower)
 				{
-					Tower t = _priorities[(int)oldPriority][i];
-					_priorities[(int)oldPriority].RemoveAt(i);
-					_priorities[(int)tower.PriorityForDesired].Add(t);
+					Tower t = priorities[(int)oldPriority][i];
+					priorities[(int)oldPriority].RemoveAt(i);
+					priorities[(int)tower.PriorityForDesired].Add(t);
 				}
 			}
 
@@ -137,12 +137,12 @@ namespace TowerDefense
 			
 			List<Tower> towers = new List<Tower>();
 			
-			foreach (int priority in _priorities.Keys)
+			foreach (int priority in priorities.Keys)
 			{
 				if (priority >= (int)tower.PriorityForDesired)
 					break;
 				// if (debug) Debug.Log($"towers count in priority {(Priority)priority}: {_priorities[priority].Count}");
-				foreach (Tower t in _priorities[priority])
+				foreach (Tower t in priorities[priority])
 				{
 					if (debug) Debug.Log("tower candidate: " + t.gameObject.name);
 					if (t.SoldiersCount > 0)
@@ -180,9 +180,9 @@ namespace TowerDefense
 		{
 			if (debug) Debug.Log($"FindTowerForFreeSoldier: {soldier.gameObject}");
 			List<Tower> bestTowers = new List<Tower>();
-			foreach (int priority in _priorities.Keys.Reverse())
+			foreach (int priority in priorities.Keys.Reverse())
 			{
-				foreach (Tower t in _priorities[priority])
+				foreach (Tower t in priorities[priority])
 				{
 					if (t.DesiredCount > 0 && t.Soldiers.Count < t.DesiredCount)
 					{
@@ -202,12 +202,12 @@ namespace TowerDefense
 		{
 			float lowestDistance = float.MaxValue;
 			Camp campWithLowestDistance = null;
-			foreach (Camp c in _camps)
+			foreach (Camp c in camps)
 			{
 				if (withSoldiers && c.SoldiersCount <= 0)
 					continue;
 				
-				if (debug) Debug.Log("camp candidate: " + c.gameObject);
+				if (debug) Debug.Log($"camp candidate: {c.gameObject}");
 				float distance = Vector2.Distance(trans.position, c.transform.position);
 				if (distance < lowestDistance)
 				{
@@ -222,10 +222,10 @@ namespace TowerDefense
 		{
 			if (debug) Debug.Log($"FindTowerWithHigherPriority: {tower.gameObject}");
 			List<Tower> bestTowers = new List<Tower>();
-			foreach (int priority in _priorities.Keys.Reverse())
+			foreach (int priority in priorities.Keys.Reverse())
 			{
 				// if (debug) Debug.Log($"towers count in priority {(Priority)priority}: {_priorities[priority].Count}");
-				foreach (Tower t in _priorities[priority])
+				foreach (Tower t in priorities[priority])
 				{
 					if (t == tower)
 						continue;

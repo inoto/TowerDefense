@@ -32,8 +32,7 @@ namespace TowerDefense
 			{
 				yield return new WaitForSeconds(Interval);
 
-				if (FoodProvidedEvent != null)
-					FoodProvidedEvent(this, Amount);
+				FoodProvidedEvent?.Invoke(this, Amount);
 			}
 			
 			yield return null;

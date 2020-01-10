@@ -274,26 +274,16 @@
             <e p="ConstructionWheelSlot.cs" t="Include" />
           </e>
           <e p="GameController.cs" t="Include" />
-          <e p="ICanAttack.cs" t="Include" />
           <e p="Input" t="Include">
-            <e p="Camera2DController" t="Include">
-              <e p="AbstractCamera2DInput.cs" t="Include" />
-              <e p="AbstractCamera2DInputMouse.cs" t="Include" />
-              <e p="AbstractCamera2DInputTouch.cs" t="Include" />
-              <e p="Camera2DController.cs" t="Include" />
-            </e>
             <e p="InputKeyboard.cs" t="Include" />
           </e>
-          <e p="ITargetable.cs" t="Include" />
           <e p="Path" t="Include">
             <e p="Editor" t="Include">
               <e p="PathCreatorEditor.cs" t="Include" />
               <e p="PathCreatorViewer.cs" t="Include" />
-              <e p="PathEditor.cs" t="Include" />
             </e>
             <e p="MoveByPath.cs" t="Include" />
             <e p="MoveByTransform.cs" t="Include" />
-            <e p="Path.cs" t="Include" />
             <e p="PathCreator.cs" t="Include" />
           </e>
           <e p="Projectiles" t="Include">
@@ -303,7 +293,6 @@
             <e p="ProjectileBomb.cs" t="Include" />
             <e p="ProjectileMagicSphere.cs" t="Include" />
           </e>
-          <e p="RangeIndicatorCollideObj.cs" t="Include" />
           <e p="Road" t="Include">
             <e p="Editor" t="Include">
               <e p="RoadCreatorEditor.cs" t="Include" />
@@ -339,11 +328,13 @@
             <e p="Editor" t="Include">
               <e p="AttachmentPointsEditor.cs" t="Include" />
             </e>
+            <e p="HealthBar.cs" t="Include" />
             <e p="Healthy.cs" t="Include" />
+            <e p="ICanAttack.cs" t="Include" />
+            <e p="ITargetable.cs" t="Include" />
             <e p="IUnitOrder.cs" t="Include" />
             <e p="MeleeAttack.cs" t="Include" />
             <e p="Mobs" t="Include">
-              <e p="HealthBar.cs" t="Include" />
               <e p="Mob.cs" t="Include" />
             </e>
             <e p="Soldier.cs" t="Include" />
@@ -355,6 +346,7 @@
             <e p="Bezier.cs" t="Include" />
             <e p="Cheets.cs" t="Include" />
             <e p="ColorExtensions.cs" t="Include" />
+            <e p="RangeIndicatorCollideObj.cs" t="Include" />
             <e p="SimplePool.cs" t="Include" />
             <e p="Tools.cs" t="Include" />
             <e p="UnitSortingDepth.cs" t="Include" />

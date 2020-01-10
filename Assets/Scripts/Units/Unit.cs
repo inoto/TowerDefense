@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,16 +14,8 @@ namespace TowerDefense
 		public static event Action<Unit, int, DamageType> DamagedEvent;
 		public static event Action<Unit> ArrivedDestinationEvent;
 		public event Action ArrivedDestinationInstanceEvent;
-
 		public event Action OrderEndedEvent;
 		public event Action OrderChangedEvent;
-
-		Transform _transform;
-		Collider2D _collider;
-		Healthy _healthy;
-		MoveByPath _moveByPath;
-		MoveByTransform _moveByTransform;
-		MeleeAttack _meleeAttack;
 		
 		[Header("Unit")]
 		public bool IsActive = false;
@@ -31,7 +24,15 @@ namespace TowerDefense
 		[Space]
 		public LinkedList<IUnitOrder> Orders = new LinkedList<IUnitOrder>();
 		public IUnitOrder CurrentOrder;
+		
 		Stack<IUnitOrder> startedOrders = new Stack<IUnitOrder>();
+		
+		Transform _transform;
+		Collider2D _collider;
+		Healthy _healthy;
+		MoveByPath _moveByPath;
+		MoveByTransform _moveByTransform;
+		MeleeAttack _meleeAttack;
 
 		protected virtual void Awake()
 		{
@@ -61,16 +62,16 @@ namespace TowerDefense
 
 		void LogOrders()
 		{
-			string s = "";
+			StringBuilder sb = new StringBuilder($"{gameObject.name} orders: \n");
 			foreach (IUnitOrder order in Orders)
 			{
 				if (CurrentOrder == order)
-					s += ">>";
-				s += order.OrderName();
-				s += "\n";
+					sb.Append(">>");
+				sb.Append(order.OrderName());
+				sb.Append("\n");
 			}
 			
-			Debug.Log($"{gameObject.name} orders: \n{s}");
+			Debug.Log(sb.ToString());
 		}
 
 		public void AddOrder(IUnitOrder order, bool startImmidiate = true)
@@ -93,7 +94,7 @@ namespace TowerDefense
 			LogOrders();
 		}
 
-		public void ChangeOrder(IUnitOrder order)
+		void ChangeOrder(IUnitOrder order)
 		{
 			Debug.Log($"{gameObject.name} ChangeOrder [{order.OrderName()}]");
 			CurrentOrder = order;
@@ -166,7 +167,7 @@ namespace TowerDefense
 		}
 
 		// used by Animator
-		public void Corpse()
+		void Corpse()
 		{
 			// animator.enabled = false;
 			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));

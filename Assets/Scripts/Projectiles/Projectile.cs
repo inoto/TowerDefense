@@ -8,10 +8,11 @@ namespace TowerDefense
 	public class Projectile : MonoBehaviour
 	{
 		public static event Action<Projectile> MissedEvent;
+
+		protected Weapon weapon;
+		protected ITargetable target;
 		
 		protected Transform _transform;
-		protected Weapon _weapon;
-		protected ITargetable _target;
 		
 		[Header("Projectile")]
 		public float TravelTime = 1f;
@@ -23,8 +24,8 @@ namespace TowerDefense
 
 		public virtual void Init(Weapon weapon)
 		{
-			_weapon = weapon;
-			_target = weapon.Target;
+			this.weapon = weapon;
+			target = weapon.Target;
 			
 			// StopAllCoroutines();
 			// LeanTween.cancelAll(gameObject);
@@ -32,9 +33,9 @@ namespace TowerDefense
 
 		protected virtual void CheckHit()
 		{
-			if (_target.Collider.bounds.Contains(_transform.position))
+			if (target.Collider.bounds.Contains(_transform.position))
 			{
-				_target.Damage(_weapon);
+				target.Damage(weapon);
 				SimplePool.Despawn(gameObject);
 			}
 			else

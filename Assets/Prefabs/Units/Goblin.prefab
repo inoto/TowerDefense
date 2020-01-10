@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3722696797777239621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42035213603886134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ad81ec50aa5bc4782a3eb0b8a6cb15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FillImage: {fileID: 3947562945272554956}
 --- !u!1 &1993218058550423989
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,8 +121,8 @@ MonoBehaviour:
   IsActive: 0
   PathName: 
   Speed: 40
-  _path: {fileID: 0}
-  _isMoving: 0
+  path: {fileID: 0}
+  isMoving: 0
 --- !u!114 &9098928705200843329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   Speed: 40
-  _isMoving: 0
+  isMoving: 0
 --- !u!114 &8545540718028535666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
-  HealthBar: {fileID: 8974507622515597745}
+  HealthBar: {fileID: 3722696797777239621}
   Damageable: 1
   MaxHealth: 10
   CurrentHealth: 10
@@ -263,10 +276,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1773084378477652540}
     m_Modifications:
+    - target: {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541,
+        type: 3}
+      propertyPath: FillImage
+      value: 
+      objectReference: {fileID: 3947562945272554956}
     - target: {fileID: 1789851920244350453, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e1bc6f3b35d743d49970c6dabf178bd7,
+        type: 3}
+    - target: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 0.511
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
@@ -383,23 +412,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541,
-        type: 3}
-      propertyPath: FillImage
-      value: 
-      objectReference: {fileID: 3947562945272554956}
-    - target: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e1bc6f3b35d743d49970c6dabf178bd7,
-        type: 3}
-    - target: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 0.511
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 54297fae1dc332847b94eb0d7fc8d541, type: 3}
 --- !u!224 &2087864700809975342 stripped
 RectTransform:
@@ -407,18 +421,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7619524975237950567}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8974507622515597745 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1528451705595071958, guid: 54297fae1dc332847b94eb0d7fc8d541,
+--- !u!1 &42035213603886134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7577494756837341265, guid: 54297fae1dc332847b94eb0d7fc8d541,
     type: 3}
   m_PrefabInstance: {fileID: 7619524975237950567}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f771ad8ca734ec943ab44cddd969b4d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3947562945272554956 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6878529407031527851, guid: 54297fae1dc332847b94eb0d7fc8d541,
@@ -438,16 +446,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1773084378477652540}
     m_Modifications:
-    - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
-        type: 3}
-      propertyPath: m_Name
-      value: Sprite
-      objectReference: {fileID: 0}
-    - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 623510334883479825, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -552,6 +550,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Name
+      value: Sprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

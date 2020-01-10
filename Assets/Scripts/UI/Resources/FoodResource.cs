@@ -7,7 +7,8 @@ namespace TowerDefense
 {
 	public class FoodResource : MonoBehaviour
 	{
-		int _food;
+		int foodCount;
+		
 		TextMeshProUGUI _textMeshPro;
 
 		void Awake()
@@ -17,7 +18,7 @@ namespace TowerDefense
 
 		void Start()
 		{
-			_food = 0;
+			foodCount = 0;
 			UpdateValue();
 		}
 
@@ -37,20 +38,20 @@ namespace TowerDefense
 		{
 			if (unit is Mob mob)
 			{
-				_food += mob.FoodReward;
+				foodCount += mob.FoodReward;
 				UpdateValue();
 			}
 		}
 		
 		void FarmProvided(Farm farm, int amount)
 		{
-			_food += amount;
+			foodCount += amount;
 			UpdateValue();
 		}
 
 		void UpdateValue()
 		{
-			_textMeshPro.text = _food.ToString();
+			_textMeshPro.text = foodCount.ToString();
 		}
 	}
 }

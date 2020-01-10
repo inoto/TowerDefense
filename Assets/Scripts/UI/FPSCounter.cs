@@ -7,8 +7,9 @@ namespace TowerDefense
 {
 	public class FPSCounter : MonoBehaviour
 	{
+		float deltaTime = 0f;
+		
 		TextMeshProUGUI _textMeshPro;
-		float _deltaTime = 0f;
 
 		void Awake()
 		{
@@ -17,12 +18,12 @@ namespace TowerDefense
 
 		IEnumerator Start()
 		{
-			_deltaTime = Time.unscaledDeltaTime;
+			deltaTime = Time.unscaledDeltaTime;
 			while (true)
 			{
 				if (Time.timeScale > 0)
 				{
-					_deltaTime += (Time.unscaledDeltaTime - _deltaTime) * 0.1f;
+					deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 					_textMeshPro.text = (1.0f / Time.unscaledDeltaTime).ToString("F1");
 				}
 				else

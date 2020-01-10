@@ -10,13 +10,14 @@ namespace TowerDefense
 	{
 		public static event Action<Tower> TowerClickedEvent;
 		public static event Action<Selectable, List<ConstructData>> BuildPlaceClickedEvent;
-		static Selectable _selected;
+		
+		static Selectable selected;
 
 		// [SerializeField] Sprite sprite;
 	
 		void OnMouseUp()
 		{
-			if (_selected == this)
+			if (selected == this)
 				return;
 			
 			Debug.Log($"# Selection # {gameObject.name} clicked");
@@ -27,7 +28,7 @@ namespace TowerDefense
 			if (tower != null)
 			{
 				TowerClickedEvent?.Invoke(tower);
-				_selected = this;
+				selected = this;
 				return;
 			}
 			
@@ -35,7 +36,7 @@ namespace TowerDefense
 			if (buildPlace != null)
 			{
 				BuildPlaceClickedEvent?.Invoke(this, buildPlace.ConstructDataList);
-				_selected = this;
+				selected = this;
 				return;
 			}
 		}
@@ -44,7 +45,7 @@ namespace TowerDefense
 		{
 			TowerInfo.Instance.Hide();
 			ConstructionWheel.Instance.Hide();
-			_selected = null;
+			selected = null;
 		}
 		
 		public void OnPointerEnter(PointerEventData eventData)

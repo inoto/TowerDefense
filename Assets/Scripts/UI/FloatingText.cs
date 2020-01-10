@@ -9,17 +9,21 @@ namespace TowerDefense
 {
 	public class FloatingText : MonoBehaviour
 	{
-		TextMeshProUGUI _textMesh;
-		Image _icon;
 		[SerializeField] LeanTweenType TweenType = LeanTweenType.easeOutExpo;
 		[SerializeField] float MovingTime = 3;
 		[SerializeField] float MovingAdditionalYDistance = 30;
-		Unit _attachedUnit;
+		
+		Unit attachedUnit;
+		
+		TextMeshProUGUI _textMesh;
+		Image _icon;
+		Camera _cameraMain;
 
 		void Awake()
 		{
 			_textMesh = GetComponentInChildren<TextMeshProUGUI>();
 			_icon = GetComponentInChildren<Image>();
+			_cameraMain = Camera.main;
 		}
 
 		void OnEnable()
@@ -59,16 +63,16 @@ namespace TowerDefense
 
 		public void StartMovingAttached(float height = 0, Unit unit = null)
 		{
-			_attachedUnit = unit;
+			attachedUnit = unit;
 			
 			StartMoving(height);
 		}
 
 		void Update()
 		{
-			if (_attachedUnit != null)
+			if (attachedUnit != null)
 			{
-				transform.position = Camera.main.WorldToScreenPoint(_attachedUnit.transform.position);
+				transform.position = _cameraMain.WorldToScreenPoint(attachedUnit.transform.position);
 				_textMesh.color.SetAlpha(_textMesh.color.a - 2);
 			}
 		}

@@ -21,13 +21,13 @@ namespace TowerDefense
 		[SerializeField] float LaunchProgress;
 
 		IUnitOrder followingOrder;
+		int targetsCount;
 
 		Transform _transform;
 		Collider2D _collider;
 		MoveByPath _moveByPath;
 		ICanAttack _attacking;
 		static Collider2D[] _targetsBuffer;
-		int _targetsCount;
 
 		void Awake()
 		{
@@ -98,8 +98,8 @@ namespace TowerDefense
 			filter.layerMask = LayerMask;
 			filter.useLayerMask = true;
 			_targetsBuffer = new Collider2D[25];
-			_targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
-			if (_targetsCount > 0)
+			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
+			if (targetsCount > 0)
 			{
 				Target = DefineTarget();
 				if (Target == null)
@@ -117,7 +117,7 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float minDistance = float.MaxValue;
-			for (int i = 0; i < _targetsCount; i++)
+			for (int i = 0; i < targetsCount; i++)
 			{
 				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (t == null || t.IsDied)

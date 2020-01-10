@@ -14,23 +14,23 @@ namespace TowerDefense
 		[SerializeField] float DamageDelay = 0.1f;
 		[SerializeField] AnimationCurve Curve;
 
-		Vector3 _newPoint, _startPoint, _endPoint;
-		float _time = 0f, _duration = 1f;
-		float _height, _multipliedSpeed;
+		Vector3 newPoint, startPoint, endPoint;
+		float time = 0f, duration = 1f;
+		float height, multipliedSpeed;
 
 		public override void Init(Weapon weapon)
 		{
 			base.Init(weapon);
 
-			if (_target == null || _target.IsDied)
+			if (target == null || target.IsDied)
 			{
 				SimplePool.Despawn(gameObject);
 				return;
 			}
 
-			_startPoint = _transform.position;
-			_endPoint = _target.Position;
-			_time = 0f;
+			startPoint = _transform.position;
+			endPoint = target.Position;
+			time = 0f;
 			
 			StartCoroutine(MoveByArc());
 		}
@@ -40,16 +40,16 @@ namespace TowerDefense
 			// float angleRad, angleDeg;
 			// Vector2 direction;
 
-			_multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
-			_duration = Vector2.Distance(_startPoint, _endPoint); // duration is a distance for now
-			if (_duration < 1f) _duration = 1f; // clamp
+			multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
+			duration = Vector2.Distance(startPoint, endPoint); // duration is a distance for now
+			if (duration < 1f) duration = 1f; // clamp
 
-			while (_time < _duration)
+			while (time < duration)
 			{
-				_time += Time.fixedDeltaTime * 1/_multipliedSpeed;
-				_height = Curve.Evaluate(_time/_duration);
+				time += Time.fixedDeltaTime * 1/multipliedSpeed;
+				height = Curve.Evaluate(time/duration);
 
-				_newPoint = Vector2.Lerp(_startPoint, _endPoint, _time/_duration) + new Vector2(0f, _height);
+				newPoint = Vector2.Lerp(startPoint, endPoint, time/duration) + new Vector2(0f, height);
 
 				// if (time < duration * 0.99)
 				// {
@@ -60,7 +60,7 @@ namespace TowerDefense
 				// 	_transform.rotation = Quaternion.AngleAxis(angleDeg, Vector3.forward);
 				// }
 
-				_transform.position = _newPoint;
+				_transform.position = newPoint;
  
 				yield return new WaitForSeconds(0.01f);
 			}
@@ -72,7 +72,7 @@ namespace TowerDefense
 		{
 			GameObject go = SimplePool.Spawn(ExplosionPrefab, _transform.position, Quaternion.identity);
 
-			WeaponCannon wc = _weapon as WeaponCannon;
+			WeaponCannon wc = weapon as WeaponCannon;
 
 			Collider2D[] colliders = new Collider2D[25];
 			// TODO: could be replaced with ellipse collider

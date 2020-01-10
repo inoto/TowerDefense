@@ -21,14 +21,9 @@ namespace TowerDefense
 
 		protected const int MOB_LAYER_MASK = 1 << 10;
 		
-		protected Transform _transform;
-		protected Collider2D _collider;
-		protected static Collider2D[] _targetsBuffer = new Collider2D[50];
-		protected int _targetsCount;
-		
 		[SerializeField] bool debug = false;
 		[SerializeField] Transform DebugITargetableTransform;
-		
+
 		[Header("Weapon")]
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
 		public DamageType DamageType = DamageType.Physical;
@@ -46,6 +41,12 @@ namespace TowerDefense
 		[SerializeField] protected GameObject ProjectilePrefab;
 		public Vector2 ProjectileStartPointOffset;
 		public Tower Tower;
+		
+		protected static Collider2D[] _targetsBuffer = new Collider2D[50];
+		protected int targetsCount;
+		
+		protected Transform _transform;
+		protected Collider2D _collider;
 
 		protected virtual void Awake()
 		{
@@ -65,8 +66,8 @@ namespace TowerDefense
 			filter.layerMask = MOB_LAYER_MASK;
 			filter.useLayerMask = true;
 			_targetsBuffer = new Collider2D[25];
-			_targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
-			if (_targetsCount > 0)
+			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
+			if (targetsCount > 0)
 			{
 				Target = DefineTarget();
 				return true;
@@ -113,7 +114,7 @@ namespace TowerDefense
 			ITargetable bestTarget = null;
 			int biggestPathIndex = -1;
 			float closestDistToWaypoint = float.MaxValue;
-			for (int i = 0; i < _targetsCount; i++)
+			for (int i = 0; i < targetsCount; i++)
 			{
 				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 
@@ -145,7 +146,7 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float lowestValue = float.MaxValue;
-			for (int i = 0; i < _targetsCount; i++)
+			for (int i = 0; i < targetsCount; i++)
 			{
 				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
@@ -164,7 +165,7 @@ namespace TowerDefense
 		{
 			ITargetable bestTarget = null;
 			float highestMaxHealth = 0;
-			for (int i = 0; i < _targetsCount; i++)
+			for (int i = 0; i < targetsCount; i++)
 			{
 				ITargetable possibleTarget = _targetsBuffer[i].GetComponent<ITargetable>();
 				if (possibleTarget != null)
@@ -184,7 +185,7 @@ namespace TowerDefense
 			ITargetable bestTarget = null;
 			float bunchRange = 1f;
 			Dictionary<ITargetable, Collider2D[]> targetsWithBunches = new Dictionary<ITargetable, Collider2D[]>();
-			for (int i = 0; i < _targetsCount; i++)
+			for (int i = 0; i < targetsCount; i++)
 			{
 				ITargetable t = _targetsBuffer[i].GetComponent<ITargetable>();
 				targetsWithBunches.Add(t, _targetsBuffer.Where((e)=> Vector2.Distance(t.Position, e.transform.position) <= bunchRange).ToArray());

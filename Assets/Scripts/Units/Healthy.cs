@@ -11,8 +11,6 @@ namespace TowerDefense
 	
 	public class Healthy : MonoBehaviour
 	{
-		IAlive _alive;
-		
 		public bool IsActive;
 		[Space]
 		[SerializeField] HealthBar HealthBar;
@@ -24,10 +22,12 @@ namespace TowerDefense
 		public Armor ArmorType = Armor.None;
 		public bool Damaged = false;
 		public bool IsDied = false;
+		
+		IAlive alive;
 
 		public void Init(IAlive alive)
 		{
-			_alive = alive;
+			this.alive = alive;
 			Damaged = false;
 			IsDied = false;
 
@@ -83,14 +83,14 @@ namespace TowerDefense
 				Die();
 			}
 			
-			_alive?.RaiseDamagedEvent(damage, type);
+			alive?.RaiseDamagedEvent(damage, type);
 		}
 		
 		void Die()
 		{
 			IsDied = true;
 			
-			_alive?.RaiseDiedEvent();
+			alive?.RaiseDiedEvent();
 		}
 	}
 }

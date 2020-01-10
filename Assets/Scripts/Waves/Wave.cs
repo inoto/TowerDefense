@@ -32,40 +32,38 @@ namespace TowerDefense
 		
 		public bool ShowWaypoints;
 		public bool Active = true;
-		int waveNumber;
 		[NonSerialized] public Dictionary<string, Vector2> SpawnPoints;
+		
+		int waveNumber;
 
 		void Start()
 		{
-			if (LookingForSpawnPointsEvent != null)
-				LookingForSpawnPointsEvent(this);
+			LookingForSpawnPointsEvent?.Invoke(this);
 		}
 
 		public virtual void InitWave(int waveNumber)
 		{
 			this.waveNumber = waveNumber;
 			StartCoroutine(StartWave());
-			
-			if (StartedEvent != null)
-				StartedEvent(waveNumber);
+
+			StartedEvent?.Invoke(waveNumber);
 		}
 
-		public virtual IEnumerator StartWave()
+		protected virtual IEnumerator StartWave()
 		{
-			Debug.Log(string.Format("# Wave # Wave {0} started", waveNumber));
+			Debug.Log($"# Wave # Wave {waveNumber} started");
 
 			yield return null;
 		}
 
-		public virtual void EndWave()
+		protected virtual void EndWave()
 		{
-			Debug.Log(string.Format("# Wave # Wave {0} ended", waveNumber));
+			Debug.Log($"# Wave # Wave {waveNumber} ended");
 
-			if (EndedEvent != null)
-				EndedEvent(waveNumber);
+			EndedEvent?.Invoke(waveNumber);
 		}
-		
-		public void StartSpawn(GameObject mobPrefab, int mobCount, float interval, string pathName)
+
+		protected void StartSpawn(GameObject mobPrefab, int mobCount, float interval, string pathName)
 		{
 			StartCoroutine(Spawning(mobPrefab, mobCount, interval, pathName));
 		}
@@ -97,8 +95,7 @@ namespace TowerDefense
 			Unit unit = mob.GetComponent<Unit>();
 			unit.Init(pathName);
 
-			if (MobSpawnedEvent != null)
-				MobSpawnedEvent(unit, this);
+			MobSpawnedEvent?.Invoke(unit, this);
 		}
 		
 		void OnDrawGizmos()

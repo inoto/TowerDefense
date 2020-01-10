@@ -12,13 +12,11 @@ namespace TowerDefense
 		{
 			if (Input.GetKeyUp(KeyCode.Tab))
 			{
-				if (ZoomKeyPressedEvent != null)
-					ZoomKeyPressedEvent();
+				ZoomKeyPressedEvent?.Invoke();
 			}
 			if (Input.GetKeyUp(KeyCode.Alpha1))
 			{
-				if (Alpha1KeyPressedEvent != null)
-					Alpha1KeyPressedEvent();
+				Alpha1KeyPressedEvent?.Invoke();
 			}
 		}
 	}

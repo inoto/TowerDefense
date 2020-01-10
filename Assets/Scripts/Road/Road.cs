@@ -21,6 +21,7 @@ namespace TowerDefense
         public bool AutoUpdate;
         public float Tiling;
         public Texture2D Texture;
+        
         string materialAssetPath;
 
         public void Init(Vector2 centre, RoadCreator creator)

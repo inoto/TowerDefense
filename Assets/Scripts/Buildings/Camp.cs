@@ -21,32 +21,30 @@ namespace TowerDefense
 		{
 			base.Init(fromSelectable);
 			
-			_canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding));
+			_canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}
 
 		public override void AddSoldier(Soldier soldier)
 		{
 			base.AddSoldier(soldier);
 
-			if (SoldierAssignedEvent != null)
-				SoldierAssignedEvent(soldier);
+			SoldierAssignedEvent?.Invoke(soldier);
 		}
 
 		public override void ActivateSoldier()
 		{
 			base.ActivateSoldier();
 			
-			_canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding));
+			_canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}
 
 		public override Soldier RemoveSoldier()
 		{
 			Soldier soldier = base.RemoveSoldier();
 
-			if (SoldierUnassignedEvent != null)
-				SoldierUnassignedEvent(soldier);
-			
-			_canvas.UpdateCounterText(Soldiers.Count(s => s.InBuilding));
+			SoldierUnassignedEvent?.Invoke(soldier);
+
+			_canvas.UpdateCounterText(SoldiersCountInBuilding);
 			return soldier;
 		}
 	}

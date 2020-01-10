@@ -9,6 +9,7 @@ namespace TowerDefense
 		[ProgressBar("LaunchProgress", 1f)]
 		[SerializeField]
 		float LaunchProgress;
+		
 		void Update()
 		{
 			LaunchProgress += 1/AttackSpeed * Time.deltaTime;
@@ -28,7 +29,6 @@ namespace TowerDefense
 		
 		protected override void ReleaseMissile()
 		{
-			// TODO: Object Pool for projectiles
 			Projectile proj = SimplePool.Spawn(ProjectilePrefab,
 			                              (Vector2)transform.position+ProjectileStartPointOffset,
 			                              _transform.rotation).GetComponent<Projectile>();

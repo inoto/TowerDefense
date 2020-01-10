@@ -72,7 +72,6 @@
     <Compile Include="Assets\Scripts\BezierCurve\Editor\BezierCurveEditor.cs" />
     <Compile Include="Assets\Scripts\Path\Editor\PathCreatorEditor.cs" />
     <Compile Include="Assets\Scripts\Path\Editor\PathCreatorViewer.cs" />
-    <Compile Include="Assets\Scripts\Path\Editor\PathEditor.cs" />
     <Compile Include="Assets\Scripts\Road\Editor\RoadCreatorEditor.cs" />
     <Compile Include="Assets\Scripts\Road\Editor\RoadEditor.cs" />
     <Compile Include="Assets\Scripts\Units\Editor\AttachmentPointsEditor.cs" />

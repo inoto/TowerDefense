@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace TowerDefense
 {
+	[ExecuteInEditMode]
 	public class PathCreator : BezierCurveCreator
 	{
 		[Header("PathCreator")]
 		public float MaxPathPointOffset = 0.3f;
 		public List<BezierCurve> Curves = new List<BezierCurve>();
+
+		Transform _transform;
+
+		void Awake()
+		{
+			_transform = GetComponent<Transform>();
+		}
 
 		void OnEnable()
 		{
@@ -45,10 +54,10 @@ namespace TowerDefense
 		public void AddCurve()
 		{
 			BezierCurve newCurve = Editor.Instantiate(BezierCurvePrefab).GetComponent<BezierCurve>();
-			newCurve.transform.parent = transform;
-			newCurve.transform.position = transform.position;
+			newCurve.transform.parent = _transform;
+			newCurve.transform.position = _transform.position;
 			newCurve.gameObject.name = DefaultName + newCurve.transform.GetSiblingIndex().ToString();
-			newCurve.Init(transform.position, this);
+			newCurve.Init(_transform.position, this);
             
 			Curves.Add(newCurve);
 			if (Curves.Count == 1)

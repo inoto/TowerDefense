@@ -8,11 +8,11 @@ namespace TowerDefense
     [CustomEditor(typeof(Road))]
     public class RoadEditor : Editor
     {
-        Road _road;
+        Road road;
         
         void OnEnable()
         {
-            _road = (Road)target;
+            road = (Road)target;
         }
 
 //        public override void OnInspectorGUI()
@@ -22,9 +22,9 @@ namespace TowerDefense
 
         void OnSceneGUI()
         {
-            if (_road.AutoUpdate && Event.current.type == EventType.Repaint)
+            if (road.AutoUpdate && Event.current.type == EventType.Repaint)
             {
-                _road.UpdatePath();
+                road.UpdatePath();
             }
         }
     }

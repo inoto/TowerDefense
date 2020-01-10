@@ -9,9 +9,9 @@ namespace TowerDefense
 	public class TowerMage : Tower
 	{
 		[Header("TowerMage")]
-		[SerializeField] float DamageMultiplierFromSoldiersCount = 0.25f;
+		[SerializeField] float damageMultiplierFromSoldiersCount = 0.25f;
 
-		int[] _damageOriginal;
+		int[] damageOriginal;
 		
 		public override int[] Damage
 		{
@@ -27,7 +27,7 @@ namespace TowerDefense
 		{
 			base.Awake();
 
-			_damageOriginal = Damage;
+			damageOriginal = Damage;
 		}
 
 		public override void ActivateSoldier()
@@ -36,8 +36,8 @@ namespace TowerDefense
 				Weapon.gameObject.SetActive(true);
 			else
 			{
-				Weapon.DamageMin += (int)(_damageOriginal[0] * DamageMultiplierFromSoldiersCount);
-				Weapon.DamageMax += (int)(_damageOriginal[1] * DamageMultiplierFromSoldiersCount);
+				Weapon.DamageMin += (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+				Weapon.DamageMax += (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 			}
 
 			base.ActivateSoldier();
@@ -53,8 +53,8 @@ namespace TowerDefense
 					Weapon.gameObject.SetActive(false);
 				else
 				{
-					Weapon.DamageMin -= (int)(_damageOriginal[0] * DamageMultiplierFromSoldiersCount);
-					Weapon.DamageMax -= (int)(_damageOriginal[1] * DamageMultiplierFromSoldiersCount);
+					Weapon.DamageMin -= (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+					Weapon.DamageMax -= (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 				}
 			}
 

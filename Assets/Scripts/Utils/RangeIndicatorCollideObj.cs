@@ -9,10 +9,9 @@ namespace TowerDefense
 	{
 		[SerializeField] RangeIndicator RangeIndicator;
 
-		bool _isActive = false;
-		bool _found = false;
-
-		Action<Unit> _useAction;
+		bool isActive = false;
+		bool found = false;
+		Action<Unit> useAction;
 		
 		public void Init(RangeIndicator rangeIndicator, float range)
 		{
@@ -26,21 +25,21 @@ namespace TowerDefense
 
 		public void Run(Action<Unit> action)
 		{
-			_useAction = action;
-			_isActive = true;
+			useAction = action;
+			isActive = true;
 			StartCoroutine(DestroyInNextFrame());
 		}
 
 		void OnTriggerStay2D(Collider2D other)
 		{
-			if (!_isActive)
+			if (!isActive)
 				return;
 			
 			Unit unit = other.gameObject.GetComponent<Unit>();
 			if (unit != null)
 			{
-				_useAction(unit);
-				_found = true;
+				useAction(unit);
+				found = true;
 			}
 		}
 
@@ -51,7 +50,7 @@ namespace TowerDefense
 			{
 				yield return new WaitForEndOfFrame();
 				// if make less than 3 then no trigger something
-				if (counter > 3 || _found)
+				if (counter > 3 || found)
 				{
 					Destroy(gameObject);
 					yield break;

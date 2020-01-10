@@ -11,9 +11,6 @@ namespace TowerDefense
 	[RequireComponent(typeof(TextMeshProUGUI))]
 	public class TowerInfo : Singleton<TowerInfo>
 	{
-		Transform _transform;
-		Tower _tower;
-
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
 
@@ -44,6 +41,9 @@ namespace TowerDefense
 		[SerializeField] TextMeshProUGUI SpecNameText;
 		[SerializeField] Image SpecIcon;
 		[SerializeField] Button ResetSpecButton;
+		
+		Transform _transform;
+		Tower _tower;
 
 		protected override void Awake()
 		{
@@ -134,11 +134,9 @@ namespace TowerDefense
 		// using by button
 		public void DesiredRemove()
 		{
-			Debug.Log("DesiredRemove press");
 			_tower.RemoveDesired();
 			UpdateSoldiersCount();
 			UpdateDesiredCount();
-			Debug.Log("DesiredRemove end");
 		}
 
 		// using by button

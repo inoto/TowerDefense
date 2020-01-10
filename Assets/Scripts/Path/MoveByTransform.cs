@@ -9,16 +9,14 @@ namespace TowerDefense
 		[Space]
 		public float Speed = 40f;
 		[SerializeField] [ReadOnly] bool isMoving;
-		
+
+		Transform destination;
+		Vector2 desired, offset, footPoint;
+		Quaternion quat;
+
 		Transform _transform;
 		AttachmentPoints _attachments;
 		Unit _unit;
-
-		Transform destination;
-		Vector2 desired;
-		Quaternion quat;
-		Vector2 offset;
-		Vector2 footPoint;
 		
 		void Awake()
 		{

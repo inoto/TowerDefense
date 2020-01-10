@@ -7,7 +7,8 @@ namespace TowerDefense
 {
 	public class KillsIndicator : MonoBehaviour
 	{
-		int _kills;
+		int killsCount;
+		
 		TextMeshProUGUI _textMeshPro;
 
 		void Awake()
@@ -17,7 +18,7 @@ namespace TowerDefense
         
 		void Start()
 		{
-			_kills = 0;
+			killsCount = 0;
 		}
 
 		void OnEnable()
@@ -32,8 +33,8 @@ namespace TowerDefense
 
 		void ChangeValue(Unit unit)
 		{
-			_kills += 1;
-			_textMeshPro.text = _kills.ToString();
+			killsCount += 1;
+			_textMeshPro.text = killsCount.ToString();
 		}
 	}
 }

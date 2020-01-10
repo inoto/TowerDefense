@@ -6,13 +6,14 @@ namespace TowerDefense
 {
 	public class ChooseSpecWheel : Singleton<ChooseSpecWheel>
 	{
-		Transform _transform;
-		Tower _tower;
-		bool isShown = false;
-
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
 		[SerializeField] Button[] Buttons;
+		
+		bool isShown = false;
+		Tower tower;
+		
+		Transform _transform;
 
 		protected override void Awake()
 		{
@@ -29,7 +30,7 @@ namespace TowerDefense
 				return;
 			
 			isShown = true;
-			_tower = tower;
+			this.tower = tower;
 
 			gameObject.SetActive(true);
 			Vector3 newPos = (Vector2)buttonTransform.position;
@@ -62,7 +63,7 @@ namespace TowerDefense
 		// using by button
 		public void SpecSet(int value)
 		{
-			_tower.SetSpec((Specialization.Type)value);
+			tower.SetSpec((Specialization.Type)value);
 			Hide();
 		}
 	}

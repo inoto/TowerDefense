@@ -13,16 +13,6 @@ namespace TowerDefense
 			Icons[4].SetActive(true); // temporary enable 1
 		}
 
-//		void OnEnable()
-//		{
-//			Enemy.DiedEvent += ChangeValue;
-//		}
-//
-//		void OnDisable()
-//		{
-//			Enemy.DiedEvent -= ChangeValue;
-//		}
-
 		void HideAllIcons()
 		{
 			foreach (var icon in Icons)

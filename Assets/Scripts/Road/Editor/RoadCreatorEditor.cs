@@ -8,18 +8,18 @@ namespace TowerDefense
     [CustomEditor(typeof(RoadCreator))]
     public class RoadCreatorEditor : Editor
     {
-        RoadCreator _creator;
+        RoadCreator creator;
 
         List<Road> Roads
         {
-            get { return _creator.Roads; }
+            get { return creator.Roads; }
         }
 
         const float SEGMENT_SELECT_DISTANCE_THRESHOLD = .1f;
         
         void OnEnable()
         {
-            _creator = (RoadCreator) target;
+            creator = (RoadCreator) target;
         }
 
         public override void OnInspectorGUI()
@@ -33,15 +33,15 @@ namespace TowerDefense
             {
                 if (GUILayout.Button("Add road"))
                 {
-                    Undo.RecordObject(_creator, "Add road");
-                    _creator.AddRoad();
+                    Undo.RecordObject(creator, "Add road");
+                    creator.AddRoad();
                 }
                 if (GUILayout.Button("Clear roads"))
                 {
-                    Undo.RecordObject(_creator, "Clear roads");
-                    for (int i = _creator.transform.childCount-1; i >= 0; i--)
-                        DestroyImmediate(_creator.transform.GetChild(i).gameObject);
-                    _creator.Clear();
+                    Undo.RecordObject(creator, "Clear roads");
+                    for (int i = creator.transform.childCount-1; i >= 0; i--)
+                        DestroyImmediate(creator.transform.GetChild(i).gameObject);
+                    creator.Clear();
                 }
             }
             EditorGUILayout.EndHorizontal();

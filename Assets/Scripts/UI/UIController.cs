@@ -10,10 +10,11 @@ namespace TowerDefense
 	{
 		[SerializeField] GameObject FloatingTextPrefab;
 		[SerializeField] GameObject RangeIndicatorPrefab;
-		bool _locatorInUse = false;
 		[SerializeField] Color MissColor;
 		[SerializeField] Color FoodColor;
 		[SerializeField] Sprite FoodIconSprite;
+		
+		bool locatorInUse = false;
 		
 		void OnEnable()
 		{
@@ -91,10 +92,10 @@ namespace TowerDefense
 
 		void ShowLocator(float range, String text, Action<Unit> action)
 		{
-			if (_locatorInUse)
+			if (locatorInUse)
 				return;
 
-			_locatorInUse = true;
+			locatorInUse = true;
 			GameObject go = Instantiate(RangeIndicatorPrefab);
 			go.transform.parent = transform;
 			go.transform.position = Input.mousePosition;
@@ -103,7 +104,7 @@ namespace TowerDefense
 
 		void HideLocator()
 		{
-			_locatorInUse = false;
+			locatorInUse = false;
 		}
 	}
 }

@@ -10,12 +10,6 @@ namespace TowerDefense
 			GetComponent<Healthy>().Init(this);
 		}
 
-		IEnumerator CheckCreatedManually()
-		{
-			yield return new WaitForSeconds(0.2f);
-			
-		}
-
 		void Corpse()
 		{
 			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => Destroy(gameObject));

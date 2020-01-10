@@ -11,6 +11,7 @@ namespace TowerDefense
 	{
 		[Header("TowerCannon")]
 		[SerializeField] float attackMultiplierFromSoldiersCount = 0.25f;
+		
 		float attackSpeedOriginal;
 		
 		public override int[] Damage

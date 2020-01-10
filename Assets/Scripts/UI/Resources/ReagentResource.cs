@@ -7,7 +7,8 @@ namespace TowerDefense
 {
 	public class ReagentResource : MonoBehaviour
 	{
-		int _reagents;
+		int reagentsCount;
+		
 		TextMeshProUGUI _textMeshPro;
 
 		void Awake()
@@ -17,7 +18,7 @@ namespace TowerDefense
         
 		void Start()
 		{
-			_reagents = 0;//Int32.Parse(Value.text);
+			reagentsCount = 0;//Int32.Parse(Value.text);
 			UpdateValue();
 		}
 
@@ -39,7 +40,7 @@ namespace TowerDefense
 
 		void UpdateValue()
 		{
-			_textMeshPro.text = _reagents.ToString();
+			_textMeshPro.text = reagentsCount.ToString();
 		}
 	}
 }

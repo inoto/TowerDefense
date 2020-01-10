@@ -18,10 +18,6 @@ namespace TowerDefense
 		[SerializeField] [ReadOnly] BezierCurve path;
 		[SerializeField] [ReadOnly] bool isMoving;
 
-		Transform _transform;
-		AttachmentPoints _attachments;
-		Unit _unit;
-		
 		int segment = 0;
 		public int PathIndex => segment;
 		Vector2 waypoint;
@@ -30,6 +26,10 @@ namespace TowerDefense
 		Quaternion quat;
 		Vector2 offset;
 		Vector2 footPoint;
+		
+		Transform _transform;
+		AttachmentPoints _attachments;
+		Unit _unit;
 
 		void Awake()
 		{
@@ -46,6 +46,8 @@ namespace TowerDefense
 			offset = new Vector2(Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET),
 			                     Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET));
 			LookingForPathEvent?.Invoke(this, pathName);
+
+			_unit.DiedInstanceEvent += StopMoving;
 		}
 
 		public void AssignPath(BezierCurve path)
@@ -65,6 +67,8 @@ namespace TowerDefense
 		
 		public void StopMoving()
 		{
+			_unit.DiedInstanceEvent -= StopMoving;
+			
 			isMoving = false;
 		}
 

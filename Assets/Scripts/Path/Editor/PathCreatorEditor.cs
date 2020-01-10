@@ -7,18 +7,18 @@ namespace TowerDefense
     [CustomEditor(typeof(PathCreator))]
     public class PathCreatorEditor : Editor
     {
-        PathCreator _creator;
+        PathCreator creator;
 
         List<BezierCurve> Paths
         {
-            get { return _creator.Curves; }
+            get { return creator.Curves; }
         }
 
         const float SEGMENT_SELECT_DISTANCE_THRESHOLD = .1f;
 
         void OnEnable()
         {
-            _creator = (PathCreator)target;
+            creator = (PathCreator)target;
         }
 
         public override void OnInspectorGUI()
@@ -26,24 +26,22 @@ namespace TowerDefense
             base.OnInspectorGUI();
 
             EditorGUILayout.Space();
-            
-            
-            
+
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.BeginHorizontal();
             {
                 if (GUILayout.Button("Add curve"))
                 {
-                    Undo.RecordObject(_creator, "Add curve");
-                    _creator.AddCurve();
+                    Undo.RecordObject(creator, "Add curve");
+                    creator.AddCurve();
                 }
 
                 if (GUILayout.Button("Clear curves"))
                 {
-                    Undo.RecordObject(_creator, "Clear curves");
-                    for (int i = _creator.transform.childCount - 1; i >= 0; i--)
-                        DestroyImmediate(_creator.transform.GetChild(i).gameObject);
-                    _creator.Clear();
+                    Undo.RecordObject(creator, "Clear curves");
+                    for (int i = creator.transform.childCount - 1; i >= 0; i--)
+                        DestroyImmediate(creator.transform.GetChild(i).gameObject);
+                    creator.Clear();
                 }
             }
             EditorGUILayout.EndHorizontal();

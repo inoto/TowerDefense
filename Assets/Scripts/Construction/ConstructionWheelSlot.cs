@@ -55,8 +55,7 @@ namespace TowerDefense
 			
 			if (BuildingPrefab != null)
 			{
-				if (ClickedEvent != null)
-					ClickedEvent(BuildingPrefab);
+				ClickedEvent?.Invoke(BuildingPrefab);
 			}
 			
 		}
