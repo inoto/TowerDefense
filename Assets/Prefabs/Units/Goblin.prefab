@@ -210,9 +210,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4661604589291516366}
   - component: {fileID: 8681537971972024022}
-  - component: {fileID: 4655897532765683476}
+  - component: {fileID: 6850890338181795496}
   m_Layer: 10
-  m_Name: Attack
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.21
---- !u!114 &4655897532765683476
+--- !u!114 &6850890338181795496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,18 +257,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3805484264992011312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 153f17c65e495bc468466cd3ed4b1ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: 96338764db194b098e6b3db1b6f5b865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsActive: 0
-  AttackRange: 0.5
-  AttackSpeed: 1.5
-  AttackDamage: 2
-  AttackType: 0
+  IsActive: 1
+  CanAttackTarget: 2
+  DamageType: 0
   LayerMask:
     serializedVersion: 2
-    m_Bits: 6144
+    m_Bits: 14336
+  Ranged: 0
+  AttackInterval: 2
   LaunchProgress: 0
+  DamageMin: 2
+  DamageMax: 4
+  ProjectilePrefab: {fileID: 0}
+  ProjectileStartPointOffset: {x: 0, y: 0}
 --- !u!1001 &7619524975237950567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -436,7 +440,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8383020197961232790
@@ -551,6 +555,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 913502141549211429, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_Name
@@ -569,7 +578,12 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 160
+      value: 228
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-	public class MoveByTransform : MonoBehaviour, IUnitOrder
+	public class MoveByTransform : Order
 	{
-		public bool IsActive;
-		[Space]
 		public float Speed = 40f;
 		[SerializeField] [ReadOnly] bool isMoving;
 
@@ -14,16 +12,14 @@ namespace TowerDefense
 		Vector2 desired, offset, footPoint;
 		Quaternion quat;
 
-		Transform _transform;
 		AttachmentPoints _attachments;
-		Unit _unit;
 		
-		void Awake()
+		protected override void Awake()
 		{
-			_transform = transform;
+			base.Awake();
+
 			_attachments = GetComponent<AttachmentPoints>();
 			_attachments.Points.TryGetValue("Foot", out footPoint);
-			_unit = GetComponent<Unit>();
 		}
 		
 		public void Init(Transform transform)
@@ -80,26 +76,5 @@ namespace TowerDefense
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position+desired);
 			}
 		}
-		
-#region IUnitOrder
-
-		public void Start()
-		{
-			IsActive = true;
-			Debug.Log($"{name} order started");
-		}
-
-		public void Pause()
-		{
-			IsActive = false;
-			Debug.Log($"{name} order paused");
-		}
-		
-		public string OrderName()
-		{
-			return name;
-		}
-		
-#endregion
-	}
+    }
 }

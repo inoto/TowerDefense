@@ -49,7 +49,7 @@ namespace TowerDefense
 			}
 		}
 
-		public virtual float AttackSpeed => Weapon.AttackSpeed;
+		public virtual float AttackSpeed => Weapon.AttackInterval;
 
 
 		protected virtual void Awake()

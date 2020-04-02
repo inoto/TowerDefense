@@ -53,8 +53,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 6807698820096271209}
+  CurrentOrder: {fileID: 0}
+  _healthy: {fileID: 6247893295143434781}
+  _moveByTransform: {fileID: 8455721943437846746}
   InBuilding: 0
-  Specialization: {fileID: 0}
+  Specialization: {fileID: 8486752623184486061}
   Movable: 1
 --- !u!114 &8486752623184486061
 MonoBehaviour:
@@ -359,7 +362,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6259697107216425592
@@ -474,6 +477,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 913502141549211429, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_Name
@@ -492,7 +500,12 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 140
+      value: -159
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}

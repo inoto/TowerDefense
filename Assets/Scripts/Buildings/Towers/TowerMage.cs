@@ -21,7 +21,7 @@ namespace TowerDefense
 			}
 		}
 		
-		public override float AttackSpeed => Weapon.AttackSpeed;
+		public override float AttackSpeed => Weapon.AttackInterval;
 
 		protected override void Awake()
 		{

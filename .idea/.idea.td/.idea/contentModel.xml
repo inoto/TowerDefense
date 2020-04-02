@@ -325,6 +325,7 @@
           <e p="Units" t="Include">
             <e p="Armor.cs" t="Include" />
             <e p="AttachmentPoints.cs" t="Include" />
+            <e p="Attack.cs" t="Include" />
             <e p="Editor" t="Include">
               <e p="AttachmentPointsEditor.cs" t="Include" />
             </e>
@@ -333,7 +334,6 @@
             <e p="ICanAttack.cs" t="Include" />
             <e p="ITargetable.cs" t="Include" />
             <e p="IUnitOrder.cs" t="Include" />
-            <e p="MeleeAttack.cs" t="Include" />
             <e p="Mobs" t="Include">
               <e p="Mob.cs" t="Include" />
             </e>
@@ -358,12 +358,11 @@
             <e p="WaveController.cs" t="Include" />
           </e>
           <e p="Weapons" t="Include">
-            <e p="CanAttackTarget.cs" t="Include" />
-            <e p="DamageType.cs" t="Include" />
-            <e p="Weapon.cs" t="Include" />
-            <e p="WeaponBow.cs" t="Include" />
+            <e p="AbstractWeapon.cs" t="Include" />
+            <e p="Enums.cs" t="Include" />
+            <e p="MobWeapon.cs" t="Include" />
+            <e p="TowerWeapon.cs" t="Include" />
             <e p="WeaponCannon.cs" t="Include" />
-            <e p="WeaponMagicStaff.cs" t="Include" />
           </e>
         </e>
         <e p="Simple Vector Icons" t="Include">

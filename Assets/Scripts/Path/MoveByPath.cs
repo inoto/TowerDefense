@@ -5,14 +5,12 @@ using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
-	public class MoveByPath : MonoBehaviour, IUnitOrder
+	public class MoveByPath : Order
 	{
 		public static event Action<MoveByPath, string> LookingForPathEvent;
 
 		const float MAX_WAYPOINT_OFFSET = 0.1f;
 
-		public bool IsActive;
-		[Space]
 		[ReadOnly] public string PathName;
 		public float Speed = 40f;
 		[SerializeField] [ReadOnly] BezierCurve path;
@@ -27,19 +25,17 @@ namespace TowerDefense
 		Vector2 offset;
 		Vector2 footPoint;
 		
-		Transform _transform;
 		AttachmentPoints _attachments;
-		Unit _unit;
 
-		void Awake()
+		protected override void Awake()
 		{
-			_transform = transform;
+			base.Awake();
+
 			_attachments = GetComponent<AttachmentPoints>();
 			_attachments.Points.TryGetValue("Foot", out footPoint);
-			_unit = GetComponent<Unit>();
 		}
 
-		public void Init(string pathName)
+		public void SetPath(string pathName)
 		{
 			segment = 0;
 			isMoving = false;
@@ -47,27 +43,26 @@ namespace TowerDefense
 			                     Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET));
 			LookingForPathEvent?.Invoke(this, pathName);
 
-			_unit.DiedInstanceEvent += StopMoving;
+			_unit.DiedInstanceEvent += Pause;
 		}
 
 		public void AssignPath(BezierCurve path)
 		{
 			this.path = path;
 			
-			LeanTween.delayedCall(0.1f, StartMoving);
+			_unit.AddOrder(this, _unit.CurrentOrder == null);
 		}
 
-		void StartMoving()
+		public override void Activate()
 		{
+			base.Activate();
 			waypoint = path.Anchors[segment] + offset;
 			isMoving = true;
-			
-			_unit.AddOrder(this);
-		}
+        }
 		
-		public void StopMoving()
+		public override void Pause()
 		{
-			_unit.DiedInstanceEvent -= StopMoving;
+			_unit.DiedInstanceEvent -= Pause;
 			
 			isMoving = false;
 		}
@@ -145,26 +140,5 @@ namespace TowerDefense
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position+desired);
 			}
 		}
-
-#region IUnitOrder
-
-		public void Start()
-		{
-			IsActive = true;
-			Debug.Log($"{name} order started");
-		}
-
-		public void Pause()
-		{
-			IsActive = false;
-			Debug.Log($"{name} order paused");
-		}
-		
-		public string OrderName()
-		{
-			return name;
-		}
-		
-#endregion
-	}
+    }
 }

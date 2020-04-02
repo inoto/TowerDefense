@@ -26,9 +26,9 @@ namespace TowerDefense
 		{
 			get
 			{
-				if (Weapon.AttackSpeed <= 0 )
+				if (Weapon.AttackInterval <= 0 )
 					throw new Exception($"{Weapon} AttackSpeed could not be 0!");
-				return Weapon.AttackSpeed;
+				return Weapon.AttackInterval;
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace TowerDefense
 				Weapon.gameObject.SetActive(true);
 			else
 			{
-				Weapon.AttackSpeed -= attackSpeedOriginal * attackMultiplierFromSoldiersCount;
+				Weapon.AttackInterval -= attackSpeedOriginal * attackMultiplierFromSoldiersCount;
 			}
 
 			base.ActivateSoldier();
@@ -61,7 +61,7 @@ namespace TowerDefense
 					Weapon.gameObject.SetActive(false);
 				else
 				{
-					Weapon.AttackSpeed += attackSpeedOriginal * attackMultiplierFromSoldiersCount;
+					Weapon.AttackInterval += attackSpeedOriginal * attackMultiplierFromSoldiersCount;
 				}
 			}
 

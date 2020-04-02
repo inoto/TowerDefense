@@ -46,7 +46,7 @@ namespace TowerDefense
 			CurrentWaveNumber += 1;
 
 			Wave wave = transform.GetChild(CurrentWaveNumber - 1).GetComponent<Wave>();
-			if (wave.Active)
+			if (wave.gameObject.activeSelf && wave.Active)
 			{
 				CurrentWave = wave;
 				CurrentWave.InitWave(CurrentWaveNumber);

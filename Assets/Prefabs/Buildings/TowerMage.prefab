@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4543009374871000}
   - component: {fileID: 60629785584949406}
   - component: {fileID: 114231414643803216}
-  - component: {fileID: 6506780540777079810}
+  - component: {fileID: 5284811585941149946}
   m_Layer: 9
   m_Name: Weapon
   m_TagString: Untagged
@@ -87,7 +87,7 @@ MonoBehaviour:
   radiusY: 1.75
   rotation: 0
   advanced: 0
---- !u!114 &6506780540777079810
+--- !u!114 &5284811585941149946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,23 +96,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1220021309157758}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4556fb947a90aa4aa5e853a8fd47bac, type: 3}
+  m_Script: {fileID: 11500000, guid: 089b60b144604416821c4a86bfeff80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
-  DebugUnitTransform: {fileID: 0}
+  IsActive: 1
   CanAttackTarget: 2
   DamageType: 0
-  TargetingTo: 1
-  Range: 200
-  AttackSpeed: 1.5
-  DamageMin: 8
-  DamageMax: 11
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  Ranged: 0
+  AttackInterval: 2
+  LaunchProgress: 0
+  DamageMin: 5
+  DamageMax: 10
   ProjectilePrefab: {fileID: 1697831707011706, guid: 1bfad3bb73dbb8c4891865d46586de20,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
   Tower: {fileID: 0}
-  LaunchProgress: 0
+  TargetingTo: 0
 --- !u!1 &1347750961285234
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,9 +169,9 @@ MonoBehaviour:
   MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
-  SpecData: {fileID: 11400000, guid: e7ac26dfa5de3c94e87b76814dfefe4b, type: 2}
+  SpecDataAsset: {fileID: 0}
   Canvas: {fileID: 3914627328765478452}
-  DamageMultiplierFromSoldiersCount: 0.25
+  damageMultiplierFromSoldiersCount: 0.25
 --- !u!114 &617141021059423018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,11 +204,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6494051971715682568}
     m_Modifications:
-    - target: {fileID: 5572468923497841756, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Name
-      value: Canvas
-      objectReference: {fileID: 0}
     - target: {fileID: 3148708927888431244, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: CounterText
@@ -322,6 +319,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5572468923497841756, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572468924060092525, guid: c5cd0964165a69646a18d171796a62ae,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5572468924060092527, guid: c5cd0964165a69646a18d171796a62ae,
         type: 3}
       propertyPath: m_textInfo.textComponent
@@ -332,11 +339,6 @@ PrefabInstance:
       propertyPath: m_renderer
       value: 
       objectReference: {fileID: 5815440353192253142}
-    - target: {fileID: 5572468924060092525, guid: c5cd0964165a69646a18d171796a62ae,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5cd0964165a69646a18d171796a62ae, type: 3}
 --- !u!224 &5815440354895223523 stripped
@@ -388,15 +390,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6494051971715682568}
     m_Modifications:
-    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
+    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
-      propertyPath: m_Name
-      value: Sprite
+      propertyPath: m_SortingLayer
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
+    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
-      propertyPath: m_Layer
-      value: 9
+      propertyPath: m_SortingOrder
+      value: -84
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1940878653405692277, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
@@ -503,15 +510,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
+    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
+      propertyPath: m_Name
+      value: Sprite
       objectReference: {fileID: 0}
-    - target: {fileID: 1226604560924377437, guid: abc5ec4cec098064eaf326aa7366852b,
+    - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
-      propertyPath: m_SortingOrder
-      value: 398
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3135269945718432484, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
@@ -519,6 +526,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: b6d8b84100aff3e468b2a3787dddddbb,
         type: 3}
+    - target: {fileID: 7285557580500561338, guid: abc5ec4cec098064eaf326aa7366852b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc5ec4cec098064eaf326aa7366852b, type: 3}
 --- !u!224 &6805765012860312150 stripped

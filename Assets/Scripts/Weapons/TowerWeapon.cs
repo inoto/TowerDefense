@@ -1,96 +1,22 @@
-﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public abstract class Weapon : MonoBehaviour
+	public class TowerWeapon : Weapon
 	{
-		public enum Priority
-		{
-			RandomTarget,
-			ClosestToExit,
-			LowHealth,
-			MostDangerous,
-			LargestBunch
-		}
-
-		protected const int MOB_LAYER_MASK = 1 << 10;
-		
-		[SerializeField] bool debug = false;
-		[SerializeField] Transform DebugITargetableTransform;
-
-		[Header("Weapon")]
-		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
-		public DamageType DamageType = DamageType.Physical;
+		public Tower Tower;
 		public Priority TargetingTo = Priority.RandomTarget;
 
-		public int Range = 200;
-		public float AttackSpeed = 2f;
-		public int DamageMin = 2;
-		public int DamageMax = 4;
-		public int Damage => UnityEngine.Random.Range(DamageMin, DamageMax);
-		[ShowNativeProperty] float DamagePerSecond => (float)(DamageMin + DamageMax) / 2 / AttackSpeed;
-
-		public ITargetable Target = null;
-
-		[SerializeField] protected GameObject ProjectilePrefab;
-		public Vector2 ProjectileStartPointOffset;
-		public Tower Tower;
-		
-		protected static Collider2D[] _targetsBuffer = new Collider2D[50];
-		protected int targetsCount;
-		
-		protected Transform _transform;
-		protected Collider2D _collider;
-
-		protected virtual void Awake()
+		protected override void Awake()
 		{
-			Tower = GetComponentInParent<Tower>();
-			_transform = GetComponent<Transform>();
-			_collider = GetComponent<Collider2D>();
-		}
-
-		void OnDisable()
-		{
-			Target = null;
-		}
-
-		protected bool AcquireTarget()
-		{
-			ContactFilter2D filter = new ContactFilter2D();
-			filter.layerMask = MOB_LAYER_MASK;
-			filter.useLayerMask = true;
-			_targetsBuffer = new Collider2D[25];
-			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
-			if (targetsCount > 0)
-			{
-				Target = DefineTarget();
-				return true;
-			}
-			Target = null;
-			return false;
-		}
-		
-		protected bool TrackTarget()
-		{
-			if (Target == null)
-				return false;
-
-			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
-			{
-				Target = null;
-				return false;
-			}
+			base.Awake();
 			
-			return true;
+			Tower = GetComponentInParent<Tower>();
 		}
 
-		protected ITargetable DefineTarget()
+		protected override ITargetable DefineTarget()
 		{
 			switch (TargetingTo)
 			{
@@ -205,25 +131,11 @@ namespace TowerDefense
 		}
 		
 		#endregion
-
+		
 		public void OnTargetDied(ITargetable target)
 		{
 
 			Tower.ModifySpecValue(20); // TODO: replace with event
-		}
-
-		protected virtual void ReleaseMissile()
-		{
-		}
-
-		protected virtual void OnDrawGizmos()
-		{
-			Gizmos.DrawSphere((Vector2)transform.position+ProjectileStartPointOffset, 0.02f);
-			Gizmos.color = Color.red;
-			if (Target != null)
-			{
-				Gizmos.DrawLine(_transform.position, Target.Position);
-			}
 		}
 	}
 }

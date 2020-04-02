@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public class Unit : MonoBehaviour, IAlive, ITargetable, ICanAttack
+	public class Unit : MonoBehaviour, IAlive, ITargetable
 	{
 		public static event Action<Unit> DiedEvent;
 		public event Action DiedInstanceEvent;
@@ -22,113 +22,123 @@ namespace TowerDefense
 		[Space]
 		public Transform RotationTransform;
 		[Space]
-		public LinkedList<IUnitOrder> Orders = new LinkedList<IUnitOrder>();
-		public IUnitOrder CurrentOrder;
+		public Queue<Order> NotStartedOrders = new Queue<Order>();
+		public Order CurrentOrder;
 		
-		Stack<IUnitOrder> startedOrders = new Stack<IUnitOrder>();
+		Stack<Order> startedOrders = new Stack<Order>();
 		
 		Transform _transform;
 		Collider2D _collider;
-		Healthy _healthy;
-		MoveByPath _moveByPath;
-		MoveByTransform _moveByTransform;
-		MeleeAttack _meleeAttack;
 
-		protected virtual void Awake()
+		[Header("Orders")]
+		[SerializeField] Healthy _healthy;
+        [SerializeField] MoveByTransform _moveByTransform;
+
+        protected virtual void Awake()
 		{
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
-			_healthy = GetComponent<Healthy>();
-			_moveByPath = GetComponent<MoveByPath>();
-			_moveByTransform = GetComponent<MoveByTransform>();
-			_meleeAttack = GetComponentInChildren<MeleeAttack>();
-		}
+        }
 
-		public virtual void Init(string pathName = "")
+   //      void Start()
+   //      {
+			// Reset();
+   //      }
+
+		void OnEnable()
 		{
-			IsActive = true;
-			
-			if (_healthy != null)
-				_healthy.Init(this);
-			
-			ResetSprite();
-		}
+            Reset();
+        }
 
-		public virtual void DeInit()
+		void OnDisable()
 		{
 			IsActive = false;
 			StopAllCoroutines();
 		}
 
+        void Reset()
+        {
+            IsActive = true;
+
+			if (_healthy != null)
+                _healthy.Init(this);
+
+            ResetSprite();
+		}
+
 		void LogOrders()
 		{
 			StringBuilder sb = new StringBuilder($"{gameObject.name} orders: \n");
-			foreach (IUnitOrder order in Orders)
+			foreach (Order order in NotStartedOrders)
 			{
 				if (CurrentOrder == order)
 					sb.Append(">>");
-				sb.Append(order.OrderName());
+				sb.Append(order.GetType().Name);
 				sb.Append("\n");
 			}
 			
-			Debug.Log(sb.ToString());
+			if (NotStartedOrders.Count > 0)
+			    Debug.Log(sb.ToString());
 		}
 
-		public void AddOrder(IUnitOrder order, bool startImmidiate = true)
+		public virtual void AddOrder(Order order, bool startImmediate = true)
 		{
-			Debug.Log($"{gameObject.name} AddOrder [{order.OrderName()}]");
-			
-			if (!Orders.Contains(order))
-				Orders.AddLast(order);
-
-			if (startImmidiate)
+			Debug.Log($"{gameObject.name} AddOrder [{order.GetType().Name}]");
+            
+			if (startImmediate)
 			{
 				if (CurrentOrder != null)
 				{
 					startedOrders.Push(CurrentOrder);
 					CurrentOrder.Pause();
 				}
-				ChangeOrder(order);
+				ActivateOrder(order);
 			}
+            else
+            {
+                if (!NotStartedOrders.Contains(order))
+                    NotStartedOrders.Enqueue(order);
+				LogOrders();
+            }
+        }
 
-			LogOrders();
-		}
-
-		void ChangeOrder(IUnitOrder order)
+		void ActivateOrder(Order order)
 		{
-			Debug.Log($"{gameObject.name} ChangeOrder [{order.OrderName()}]");
+			Debug.Log($"{gameObject.name} ActivateOrder [{order.GetType().Name}]");
 			CurrentOrder = order;
-			order.Start();
-			LogOrders();
+			order.Activate();
+			// LogOrders();
 		}
 
-		public void OrderEnded(IUnitOrder order) // TODO: add events
+		public virtual void OrderEnded(Order order) // TODO: add events
 		{
-			if (!Orders.Contains(order))
-				return;
+			// if (!NotStartedOrders.Contains(order))
+			// 	return;
 			
 			order.Pause();
+            CurrentOrder = null;
 			
-			Debug.Log($"{gameObject.name} OrderEnded [{order.OrderName()}]");
-			
-			Orders.Remove(order);
+			Debug.Log($"{gameObject.name} OrderEnded [{order.GetType().Name}]");
 
 			if (startedOrders.Count > 0)
 			{
-				IUnitOrder previousOrder = startedOrders.Pop();
+                Order previousOrder = startedOrders.Pop();
 				if (previousOrder is MoveByPath mbp)
-				{
 					mbp.AssignToClosestWaypoint();
-				}
-				ChangeOrder(previousOrder);
+
+				ActivateOrder(previousOrder);
 			}
 			else
 			{
-				if (Orders.Count > 0)
-					ChangeOrder(Orders.First.Value); // is it good to use first?
-				else
-					return;
-			}
+                if (NotStartedOrders.Count > 0)
+                {
+                    Order nextOrder = NotStartedOrders.Dequeue();
+                    if (nextOrder is MoveByPath mbp)
+                        mbp.AssignToClosestWaypoint();
+
+					ActivateOrder(nextOrder); // is it good to use first?
+                }
+            }
 
 			LogOrders();
 		}
@@ -188,8 +198,8 @@ namespace TowerDefense
 		public GameObject GameObj => gameObject;
 		public bool IsDied => _healthy.IsDied;
 		public Vector2 Position => _transform.position;
-		public Vector2 Waypoint => _moveByPath.WaypointPoint;
-		public int PathIndex => _moveByPath.PathIndex;
+		// public Vector2 Waypoint => _moveByPath.WaypointPoint;
+		// public int PathIndex => _moveByPath.PathIndex;
 		public float Health => _healthy.CurrentHealth;
 		public int MaxHealth => _healthy.MaxHealth;
 		public Collider2D Collider => _collider;

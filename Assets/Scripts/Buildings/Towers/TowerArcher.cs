@@ -27,7 +27,7 @@ namespace TowerDefense
 			}
 		}
 		
-		public override float AttackSpeed => Weapons.Count > 0 ? Weapons[0].AttackSpeed : 0;
+		public override float AttackSpeed => Weapons.Count > 0 ? Weapons[0].AttackInterval : 0;
 
 		public override void ActivateSoldier()
 		{

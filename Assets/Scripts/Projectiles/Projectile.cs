@@ -27,8 +27,8 @@ namespace TowerDefense
 			this.weapon = weapon;
 			target = weapon.Target;
 			
-			// StopAllCoroutines();
-			// LeanTween.cancelAll(gameObject);
+			StopAllCoroutines();
+			LeanTween.cancelAll(gameObject);
 		}
 
 		protected virtual void CheckHit()

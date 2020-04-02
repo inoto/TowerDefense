@@ -33,27 +33,12 @@ namespace TowerDefense
 			yield return new WaitForSeconds(0.2f);
 			if (!IsActive)
 			{
-				Init("");
-				if (Movable)
+                if (Movable)
 					FreeSoldierEvent?.Invoke(this);
 			}
 		}
-		
-		public override void Init(string pathName = "")
-		{
-			base.Init(pathName);
-			
-			gameObject.SetActive(true);
-		}
 
-		public override void DeInit()
-		{
-			IsActive = false;
-			StopAllCoroutines();
-			gameObject.SetActive(false);
-		}
-
-		public void AssignToBuilding(Building building)
+        public void AssignToBuilding(Building building)
 		{
 			if (this.building != null)
 				UnAssignFromBuilding();
@@ -87,7 +72,7 @@ namespace TowerDefense
 		{
 			InBuilding = false;
 			
-			Init("");
+			gameObject.SetActive(true);
 		}
 
 		public override void ArrivedDestination()
@@ -100,7 +85,7 @@ namespace TowerDefense
 				building.ActivateSoldier();
 			}
 
-			DeInit();
+            gameObject.SetActive(false);
 		}
 	}
 }

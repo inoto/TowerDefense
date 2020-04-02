@@ -88,14 +88,16 @@ namespace TowerDefense
 
 		void SpawnMob(GameObject mobPrefab, string pathName)
 		{
-			GameObject mob = SimplePool.Spawn(mobPrefab,
-				SpawnPoints[pathName], transform.rotation);
+			Mob mob = SimplePool.Spawn(mobPrefab,
+				SpawnPoints[pathName], transform.rotation).GetComponent<Mob>();
 			//				mob.transform.position += new Vector3(i % 2 == 0 ? WaveControl.RangeBetweenMobsInGroup.x*i : 0,
 			//					i % 2 == 0 ? WaveControl.RangeBetweenMobsInGroup.y*i : 0, 0);
-			Unit unit = mob.GetComponent<Unit>();
-			unit.Init(pathName);
 
-			MobSpawnedEvent?.Invoke(unit, this);
+            MoveByPath mbp = mob.GetComponent<MoveByPath>();
+            mbp.SetPath(pathName);
+            // mob.AddOrder(mbp);
+
+            MobSpawnedEvent?.Invoke(mob, this);
 		}
 		
 		void OnDrawGizmos()

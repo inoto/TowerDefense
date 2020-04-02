@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3443899776358795049}
   - component: {fileID: 9128201899730590998}
-  - component: {fileID: 4703302378474978070}
+  - component: {fileID: 6547912123825889085}
   m_Layer: 10
-  m_Name: Attack
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,8 +47,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.32
---- !u!114 &4703302378474978070
+  m_Radius: 0.25
+--- !u!114 &6547912123825889085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,18 +57,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5284304016322683305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 153f17c65e495bc468466cd3ed4b1ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: 96338764db194b098e6b3db1b6f5b865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
-  AttackRange: 0.5
-  AttackSpeed: 1.2
-  AttackDamage: 4
-  AttackType: 0
+  CanAttackTarget: 2
+  DamageType: 0
   LayerMask:
     serializedVersion: 2
     m_Bits: 6144
+  Range: 0.5
+  AttackInterval: 3
   LaunchProgress: 0
+  DamageMin: 8
+  DamageMax: 10
+  ProjectilePrefab: {fileID: 0}
+  ProjectileStartPointOffset: {x: 0, y: 0}
 --- !u!114 &7812412869456837715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,7 +429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9168851483325751933

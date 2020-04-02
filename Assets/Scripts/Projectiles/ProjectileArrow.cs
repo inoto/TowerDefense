@@ -38,7 +38,7 @@ namespace TowerDefense
 			StartCoroutine(MoveByArc());
 		}
 
-		IEnumerator MoveByArc()
+		IEnumerator MoveByArc() // TODO: remove coroutine
 		{
 			multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
 			heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
@@ -77,7 +77,8 @@ namespace TowerDefense
 
 		protected override void CheckHit()
 		{
-			if (target.Collider.bounds.Contains(_transform.position))
+			if (target != null && target.Collider != null
+				&& target.Collider.bounds.Contains(_transform.position))
 			{
 				target.Damage(weapon);
 				SimplePool.Despawn(gameObject);

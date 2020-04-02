@@ -10,8 +10,8 @@ namespace TowerDefense
 		GameObject GameObj { get; }
 		bool IsDied { get; }
 		Vector2 Position { get; }
-		Vector2 Waypoint { get; }
-		int PathIndex { get; }
+		// Vector2 Waypoint { get; }
+		// int PathIndex { get; }
 		float Health { get; }
 		int MaxHealth { get; }
 		Collider2D Collider { get; }
