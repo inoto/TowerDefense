@@ -56,10 +56,7 @@ namespace TowerDefense
 		
 		public void Damage(Weapon weapon)
 		{
-			if (!Damageable)
-				return;
-			
-			Damage(weapon.Damage, weapon.DamageType);
+            Damage(weapon.Damage, weapon.DamageType);
 		}
 
 		public void Damage(int damage, DamageType type = DamageType.Physical)

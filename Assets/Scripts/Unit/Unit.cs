@@ -197,7 +197,14 @@ namespace TowerDefense
 
 		public GameObject GameObj => gameObject;
 		public bool IsDied => _healthy.IsDied;
-		public Vector2 Position => _transform.position;
+
+        public Vector2 Position
+        {
+            get
+            {
+                return _transform.position;
+			}
+        } 
 		// public Vector2 Waypoint => _moveByPath.WaypointPoint;
 		// public int PathIndex => _moveByPath.PathIndex;
 		public float Health => _healthy.CurrentHealth;

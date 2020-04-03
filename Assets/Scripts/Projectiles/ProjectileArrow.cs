@@ -40,6 +40,12 @@ namespace TowerDefense
 
 		IEnumerator MoveByArc() // TODO: remove coroutine
 		{
+            if (target == null || target.IsDied)
+            {
+                SimplePool.Despawn(gameObject);
+                yield break;
+            }
+
 			multipliedSpeed = TravelTime * Random.Range(SpeedMultiplierMin, SpeedMultiplierMax);
 			heightMultiplier = Random.Range(HeightMultiplierMin, HeightMultiplierMax);
 			duration = Vector2.Distance(startPoint, endPoint); // duration is a distance for now
@@ -77,18 +83,21 @@ namespace TowerDefense
 
 		protected override void CheckHit()
 		{
-			if (target != null && target.Collider != null
-				&& target.Collider.bounds.Contains(_transform.position))
+			if (target != null && target.Collider != null)
 			{
-				target.Damage(weapon);
-				SimplePool.Despawn(gameObject);
-			}
+                if (target.Collider.bounds.Contains(_transform.position) && !target.IsDied)
+                {
+                    target.Damage(weapon);
+                    SimplePool.Despawn(gameObject);
+                }
+                else
+                {
+					RaiseMissedEvent();
+                    LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => SimplePool.Despawn(gameObject));
+				}
+            }
 			else
-			{
-				RaiseMissedEvent();
-				
-				LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => SimplePool.Despawn(gameObject));
-			}
+                LeanTween.alpha(gameObject, 0f, 1f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 	}
 }

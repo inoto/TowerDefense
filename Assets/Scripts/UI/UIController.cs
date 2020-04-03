@@ -46,7 +46,8 @@ namespace TowerDefense
 			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
 			floatingText.transform.position = projectile.transform.position;
 			floatingText.Color(MissColor);
-			
+            floatingText.Text("MISS");
+
 			floatingText.StartMoving();
 		}
 

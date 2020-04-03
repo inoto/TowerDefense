@@ -145,7 +145,7 @@ namespace TowerDefense
 		{
 			Gizmos.DrawSphere((Vector2)transform.position+ProjectileStartPointOffset, 0.02f);
 			Gizmos.color = Color.red;
-			if (Target != null)
+			if (Target != null && !Target.IsDied)
 			{
 				Gizmos.DrawLine(_transform.position, Target.Position);
 			}

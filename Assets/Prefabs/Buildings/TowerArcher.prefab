@@ -105,7 +105,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  Ranged: 0
+  Ranged: 1
   AttackInterval: 2
   LaunchProgress: 0
   DamageMin: 2
