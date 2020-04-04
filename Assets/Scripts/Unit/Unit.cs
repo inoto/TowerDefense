@@ -31,8 +31,8 @@ namespace TowerDefense
 		Collider2D _collider;
 
 		[Header("Orders")]
-		[SerializeField] Healthy _healthy;
-        [SerializeField] MoveByTransform _moveByTransform;
+		[SerializeField] protected Healthy _healthy;
+        [SerializeField] protected MoveByTransform _moveByTransform;
 
         protected virtual void Awake()
 		{

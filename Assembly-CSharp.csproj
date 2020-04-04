@@ -110,6 +110,7 @@
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\References\RequiredReferences.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\ReorderableList\ReorderableList.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\SerializableDictionaryBase.cs" />
+    <Compile Include="Assets\ScriptableObjects\MobStatsData.cs" />
     <Compile Include="Assets\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Assets\Scripts\Unit\Healthy.cs" />
     <Compile Include="Assets\Scripts\Unit\ITargetable.cs" />
     <Compile Include="Assets\Scripts\Unit\Mobs\Mob.cs" />
+    <Compile Include="Assets\Scripts\Unit\MoveSpeed.cs" />
     <Compile Include="Assets\Scripts\Unit\Orders\Order.cs" />
     <Compile Include="Assets\Scripts\Unit\Soldier.cs" />
     <Compile Include="Assets\Scripts\Unit\Specialization.cs" />

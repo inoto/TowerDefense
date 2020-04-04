@@ -6,17 +6,40 @@ namespace TowerDefense
 {
 	public class Mob : Unit
 	{
-        [Header("Mob")]
         public bool CreatedManually = false;
 		public int FoodReward = 0;
 		public int ReagentReward = 0;
 
+        [SerializeField] MobStatsData StatsData;
         [SerializeField] MoveByPath _moveByPath;
 
 		void Start()
-		{
-			StartCoroutine(CheckCreatedManually());
+        {
+            LoadData();
+            StartCoroutine(CheckCreatedManually());
 		}
+
+        void LoadData()
+        {
+            _healthy.SetMaxHealth(StatsData.Hp);
+
+            MobWeapon weapon = GetComponentInChildren<MobWeapon>();
+            weapon.DamageMin = StatsData.DamageMin;
+            weapon.DamageMax = StatsData.DamageMax;
+            weapon.AttackInterval = StatsData.AttackRate;
+
+            _healthy.ArmorType = StatsData.Armor;
+
+            MoveByPath mbp = GetComponent<MoveByPath>();
+            // StatsData.SpeedType;
+            mbp.Speed = (float) StatsData.Speed;
+
+            MoveByTransform mbt = GetComponent<MoveByTransform>();
+            mbt.Speed = (float) StatsData.Speed;
+
+            FoodReward = StatsData.FoodReward;
+            ReagentReward = StatsData.ReagentReward;
+        }
 	
 		IEnumerator CheckCreatedManually()
 		{

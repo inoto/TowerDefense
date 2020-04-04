@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a8eb8bd533caf449521274c6f83eeb, type: 3}
-  m_Name: TowerMagic
+  m_Script: {fileID: 11500000, guid: 631059ef9e783f94aa3f0246db39b728, type: 3}
+  m_Name: Goblin
   m_EditorClassIdentifier: 
-  Data:
-  - OfType: 1
-    Name: Multi-shot
-    Icon: {fileID: 21300000, guid: ed2b366b90853425a8fb5c275705e013, type: 3}
-    TooltipText: Multi-shot haha
+  Hp: 16
+  DamageMin: 1
+  DamageMax: 4
+  AttackRate: 1
+  Armor: 0
+  SpeedType: 0
+  Speed: 40
+  FoodReward: 1
+  ReagentReward: 0

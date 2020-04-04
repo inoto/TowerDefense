@@ -34,6 +34,12 @@ namespace TowerDefense
 			ResetHealth();
 		}
 
+        public void SetMaxHealth(int value)
+        {
+            MaxHealth = value;
+            ResetHealth();
+        }
+
 		void ResetHealth()
 		{
 			if (CurrentHealth < MaxHealth)

@@ -104,8 +104,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 9003081776647942279}
+  CurrentOrder: {fileID: 0}
+  _healthy: {fileID: 8545540718028535666}
+  _moveByTransform: {fileID: 6840562128410674061}
+  CreatedManually: 0
   FoodReward: 1
   ReagentReward: 0
+  StatsData: {fileID: 11400000, guid: 9a324c556f01f5f41851b2c5c3f12b00, type: 2}
+  _moveByPath: {fileID: 1676540822217163681}
 --- !u!114 &1676540822217163681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +279,7 @@ MonoBehaviour:
   DamageMax: 4
   ProjectilePrefab: {fileID: 0}
   ProjectileStartPointOffset: {x: 0, y: 0}
+  followingTarget: 0
 --- !u!1001 &7619524975237950567
 PrefabInstance:
   m_ObjectHideFlags: 0

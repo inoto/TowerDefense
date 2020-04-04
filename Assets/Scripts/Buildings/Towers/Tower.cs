@@ -35,7 +35,7 @@ namespace TowerDefense
 		}
 
 		public Specialization.Type Specialization;
-		[SerializeField] SpecializationsData SpecDataAsset;
+		[SerializeField] SpecializationsSettings SpecDataAsset;
 
 		protected Weapon Weapon;
 		[HideInInspector] public TowerCanvas Canvas;
