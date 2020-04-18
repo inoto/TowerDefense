@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &425808136
 Transform:
   m_ObjectHideFlags: 0
@@ -2863,7 +2863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3250,7 +3250,7 @@ GameObject:
   - component: {fileID: 4206550792027160333}
   - component: {fileID: 8142364139394579849}
   - component: {fileID: 2421796866894304967}
-  - component: {fileID: 2753327018474310690}
+  - component: {fileID: 1329521836326749356}
   m_Layer: 5
   m_Name: Element (1)
   m_TagString: Untagged
@@ -3321,19 +3321,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!65 &2753327018474310690
-BoxCollider:
+--- !u!61 &1329521836326749356
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4497723744492890553}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.7, y: 6.12}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 121.11, y: 89.91, z: 1}
-  m_Center: {x: 5.4, y: 4.2, z: 0}
+  m_Size: {x: 92.15, y: 65.34}
+  m_EdgeRadius: 0
 --- !u!1 &4775175049322664777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4967,7 +4980,7 @@ GameObject:
   - component: {fileID: 6469851506508379190}
   - component: {fileID: 2553062677739601124}
   - component: {fileID: 2204739505607351687}
-  - component: {fileID: 8982303417636307186}
+  - component: {fileID: 2309899085468489940}
   m_Layer: 5
   m_Name: Element
   m_TagString: Untagged
@@ -5035,19 +5048,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!65 &8982303417636307186
-BoxCollider:
+--- !u!61 &2309899085468489940
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6749930314163833848}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.18, y: 2.78}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 120.62, y: 95.49, z: 1}
-  m_Center: {x: 4.4, y: 5.22, z: 0}
+  m_Size: {x: 95.9, y: 66.53}
+  m_EdgeRadius: 0
 --- !u!1 &6854117466373316593
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,8 +5522,8 @@ GameObject:
   - component: {fileID: 3424484330620779648}
   - component: {fileID: 2271773414437121428}
   - component: {fileID: 2449575224893571510}
-  - component: {fileID: 7848575884925568785}
   - component: {fileID: 2567409094328336075}
+  - component: {fileID: 5224389994696276320}
   m_Layer: 5
   m_Name: TowerCloudTemplate
   m_TagString: Untagged
@@ -5565,19 +5591,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!65 &7848575884925568785
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7709969621839853085}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 120.62, y: 95.49, z: 1}
-  m_Center: {x: 4.4, y: 5.22, z: 0}
 --- !u!114 &2567409094328336075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5592,8 +5605,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoreSoldiersButton: {fileID: 8397484761376817839}
   LessSoldiersButton: {fileID: 7465422255664969629}
-  desiredSoldiersCount: 0
+  DesiredSoldiersCount: 0
   DesiredSoldiersText: {fileID: 5827137066648250760}
+--- !u!61 &5224389994696276320
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709969621839853085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.4, y: 5.22}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 120.62, y: 95.49}
+  m_EdgeRadius: 0
 --- !u!1 &8287018800134626649
 GameObject:
   m_ObjectHideFlags: 0
@@ -6349,7 +6388,7 @@ GameObject:
   - component: {fileID: 4131123699085250662}
   - component: {fileID: 1611538428055688419}
   - component: {fileID: 581274757509558478}
-  - component: {fileID: 7405971963527047092}
+  - component: {fileID: 3781731772219660449}
   m_Layer: 5
   m_Name: Element (2)
   m_TagString: Untagged
@@ -6415,19 +6454,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!65 &7405971963527047092
-BoxCollider:
+--- !u!61 &3781731772219660449
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8627227268338194990}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.46, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 122.34, y: 95.05, z: 1}
-  m_Center: {x: 5.4, y: -2.7, z: 0}
+  m_Size: {x: 120.9, y: 90.55}
+  m_EdgeRadius: 0
 --- !u!1 &8711520127136084252
 GameObject:
   m_ObjectHideFlags: 0

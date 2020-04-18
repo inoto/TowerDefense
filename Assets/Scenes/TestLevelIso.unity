@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 593813237}
   - component: {fileID: 593813236}
   - component: {fileID: 593813235}
+  - component: {fileID: 593813238}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -648,6 +649,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593813238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593813234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167aefd41b7f41e489201247689c1f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LayersToClick:
+    serializedVersion: 2
+    m_Bits: 17184
 --- !u!1 &609682278
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +973,8 @@ PrefabInstance:
       propertyPath: DamageMax
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2920837290959236830, guid: b857d2d547f13f045833f1ff298540c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b857d2d547f13f045833f1ff298540c6, type: 3}
 --- !u!4 &650860336 stripped
 Transform:
@@ -1850,6 +1867,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8901121728352678826}
     m_Modifications:
+    - target: {fileID: 1220021309157758, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1347750961285234, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
       propertyPath: m_Name
       value: TowerMage
@@ -1914,7 +1935,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 617141021059423018, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
 --- !u!4 &1294821680 stripped
 Transform:
@@ -2256,6 +2278,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8901121728352678826}
     m_Modifications:
+    - target: {fileID: 1220021309157758, guid: f94f55b98de5327438489d0223c2f362, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1347750961285234, guid: f94f55b98de5327438489d0223c2f362, type: 3}
       propertyPath: m_Name
       value: TowerCannon
@@ -5604,7 +5630,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 845955897409243931, guid: bf51c2b72d6ffb94e801845c126fe95a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bf51c2b72d6ffb94e801845c126fe95a, type: 3}
 --- !u!1 &8419494374254241940
 GameObject:
@@ -6314,10 +6341,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1875044157}
     m_Modifications:
-    - target: {fileID: 425808135, guid: 10ca4bcf27b214145b3612a01d21b775, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 769816143290720908, guid: 10ca4bcf27b214145b3612a01d21b775,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -6476,11 +6499,6 @@ PrefabInstance:
     - target: {fileID: 5529989858771566980, guid: 10ca4bcf27b214145b3612a01d21b775,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628786478978702246, guid: 10ca4bcf27b214145b3612a01d21b775,
-        type: 3}
-      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6661760105532706499, guid: 10ca4bcf27b214145b3612a01d21b775,

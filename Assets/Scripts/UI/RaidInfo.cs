@@ -36,11 +36,18 @@ namespace TowerDefense
         void Start()
         {
             Hide();
-            Selectable.WizardClickedEvent += Show;
+            Wizard.ClickedEvent += Show;
         }
 
         void Show(Wizard wizard)
         {
+            if (InputMouse.selected == wizard)
+                return;
+
+            if (InputMouse.selected != null)
+                InputMouse.ClearSelection();
+
+            InputMouse.selected = wizard;
             this.wizard = wizard;
 
             clouds.Clear();

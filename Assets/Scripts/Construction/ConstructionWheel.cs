@@ -23,8 +23,8 @@ namespace TowerDefense
 	{
 		[SerializeField] GameObject SlotPrefab;
 		[SerializeField] List<ConstructionWheelSlot> SlotsList;
-		
-		Selectable selectable;
+
+        BuildPlace _buildPlace;
 		
 		Transform _transform;
 
@@ -41,15 +41,22 @@ namespace TowerDefense
 		void Start()
 		{
 			Hide();
-			Selectable.BuildPlaceClickedEvent += Show;
+			BuildPlace.ClickedEvent += Show;
 		}
 
-		public void Show(Selectable selectable, List<ConstructData> constructDataList)
-		{
-			this.selectable = selectable;
+		public void Show(BuildPlace buildPlace, List<ConstructData> constructDataList)
+        {
+            if (InputMouse.selected == buildPlace)
+                return;
+
+            if (InputMouse.selected != null)
+                InputMouse.ClearSelection();
+
+			InputMouse.selected = buildPlace;
+			_buildPlace = buildPlace;
 
 			gameObject.SetActive(true);
-			Vector3 newPos = (Vector2) selectable.transform.position;
+			Vector3 newPos = (Vector2) buildPlace.transform.position;
 			newPos.z -= 1;
 			_transform.position = newPos;
 			
@@ -90,10 +97,10 @@ namespace TowerDefense
 			Hide();
 			
 			GameObject go = Instantiate(slot.BuildingPrefab);
-			go.transform.position = selectable.transform.position;
-			go.GetComponent<Building>().Init(selectable);
+			go.transform.position = _buildPlace.transform.position;
+			go.GetComponent<Building>().Init();
 			
-			Destroy(selectable.gameObject);
+			Destroy(_buildPlace.gameObject);
 		}
 	}
 }

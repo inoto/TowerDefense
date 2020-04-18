@@ -57,11 +57,18 @@ namespace TowerDefense
 			DesiredLabelText.gameObject.SetActive(false);
 			PriorityLabelText.gameObject.SetActive(false);
 			Hide();
-			Selectable.TowerClickedEvent += Show;
+			Tower.ClickedEvent += Show;
 		}
 
 		void Show(Tower tower)
-		{
+        {
+            if (InputMouse.selected == tower)
+                return;
+
+            if (InputMouse.selected != null)
+                InputMouse.ClearSelection();
+
+			InputMouse.selected = tower;
 			_tower = tower;
 
 			_tower.SoldiersCountChangedSingleEvent += UpdateSoldiersCount;

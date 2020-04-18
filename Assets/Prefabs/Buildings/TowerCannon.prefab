@@ -126,8 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1741809740030969301}
   - component: {fileID: 6499469566575801297}
-  - component: {fileID: 5996219702000148465}
-  - component: {fileID: 800236443340959991}
+  - component: {fileID: 7233261268116998332}
   m_Layer: 9
   m_Name: TowerCannon
   m_TagString: Untagged
@@ -173,19 +172,7 @@ MonoBehaviour:
   SpecDataAsset: {fileID: 0}
   Canvas: {fileID: 673872371280203632}
   attackMultiplierFromSoldiersCount: 0.25
---- !u!114 &5996219702000148465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347750961285234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62033811fbf87f54a9a5db7c794b988b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!61 &800236443340959991
+--- !u!61 &7233261268116998332
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

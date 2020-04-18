@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TowerDefense
 {
-    public class Wizard : Unit
+    public class Wizard : Unit, IClickable
     {
+        public static event Action<Wizard> ClickedEvent;
+
         public bool CreatedManually = false;
         public int ReagentReward = 0;
 
@@ -37,6 +41,11 @@ namespace TowerDefense
             {
                 
             }
+        }
+
+        public void OnClick()
+        {
+            ClickedEvent?.Invoke(this);
         }
     }
 }

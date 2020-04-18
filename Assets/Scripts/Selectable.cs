@@ -20,6 +20,9 @@ namespace TowerDefense
 		{
 			if (selected == this)
 				return;
+
+            if (selected == null && gameObject.name == "Grass")
+                return;
 			
 			Debug.Log($"# Selection # {gameObject.name} clicked");
 			

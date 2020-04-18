@@ -113,6 +113,7 @@
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\SerializableDictionaryBase.cs" />
     <Compile Include="Assets\ScriptableObjects\MobStatsData.cs" />
     <Compile Include="Assets\ScriptableObjects\SpecializationsData.cs" />
+    <Compile Include="Assets\Scripts\Background.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
     <Compile Include="Assets\Scripts\Buffs\BuffDamage.cs" />
@@ -128,7 +129,9 @@
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\IClickable.cs" />
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
+    <Compile Include="Assets\Scripts\Input\InputMouse.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectile.cs" />

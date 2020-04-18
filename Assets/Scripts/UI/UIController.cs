@@ -24,9 +24,9 @@ namespace TowerDefense
 //			Enemy.DamagedEvent += ShowDamageFloatingText;
 			RangeIndicator.ShowEvent += ShowLocator;
 			RangeIndicator.HideEvent += HideLocator;
-		}
+        }
 
-		void OnDisable()
+        void OnDisable()
 		{
 			Projectile.MissedEvent -= SpawnMissFloatingText;
 			Unit.DiedEvent -= SpawnFoodFloatingText;

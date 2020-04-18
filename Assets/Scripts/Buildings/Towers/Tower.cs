@@ -10,8 +10,9 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public class Tower : Building
-	{
+	public class Tower : Building, IClickable
+    {
+        public static event Action<Tower> ClickedEvent;
 		public static event Action<Tower, SoldiersDispenser.Priority> PriorityChangedEvent;
 		public static event Action<Tower> DesiredChangedEvent;
 
@@ -59,9 +60,9 @@ namespace TowerDefense
 			SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
 		}
 
-		public override void Init(Selectable fromSelectable = null)
+		public override void Init()
 		{
-			base.Init(fromSelectable);
+			base.Init();
 
 			Weapon.gameObject.SetActive(false);
 			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
@@ -128,5 +129,10 @@ namespace TowerDefense
 				Soldiers[i].Specialization.Modify(Specialization, value);
 			}
 		}
-	}
+
+        public void OnClick()
+        {
+            ClickedEvent?.Invoke(this);
+        }
+    }
 }

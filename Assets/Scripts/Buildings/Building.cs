@@ -40,7 +40,7 @@ namespace TowerDefense
 			}
 		}
 
-		public virtual void Init(Selectable fromSelectable = null)
+		public virtual void Init()
 		{
 			if (initialized)
 				return;
