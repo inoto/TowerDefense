@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2643362790956912113}
-  - component: {fileID: 1696754804392804369}
+  - component: {fileID: 201463541627832952}
   m_Layer: 0
   m_Name: Wave02
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 5626906073761719311}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1696754804392804369
+--- !u!114 &201463541627832952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,23 +40,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1855804807583802194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2866e61512599eb4a8b38471e0259e92, type: 3}
+  m_Script: {fileID: 11500000, guid: 16a7f68027f9aa144a4ac8d100278992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowWaypoints: 0
   Active: 1
-  StartDelay: 0.1
+  StartDelay: 5
   WaveData:
-  - MobPrefab: {fileID: 7990922790765674767, guid: 7b8a602fa99023f4d9b67c13a3f9852a,
-      type: 3}
-    MobCount: 5
-    Interval: 4
-    PathName: Path0
-  - MobPrefab: {fileID: 1993218058550423989, guid: 5ecb095d2deb2cc439d674c5b619de24,
-      type: 3}
-    MobCount: 10
-    Interval: 2
-    PathName: Path1
+    Mobs: []
+    Wizards:
+    - Stone: {fileID: 0}
 --- !u!1 &5626906072133032264
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,16 +97,18 @@ MonoBehaviour:
   Active: 1
   StartDelay: 0.1
   WaveData:
-  - MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
-      type: 3}
-    MobCount: 5
-    Interval: 2.5
-    PathName: Path0
-  - MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
-      type: 3}
-    MobCount: 5
-    Interval: 2
-    PathName: Path1
+    Mobs:
+    - MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+        type: 3}
+      MobCount: 5
+      Interval: 2
+      PathName: Path0
+    - MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+        type: 3}
+      MobCount: 5
+      Interval: 2
+      PathName: Path1
+    Wizards: []
 --- !u!1 &5626906073761719310
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +139,7 @@ Transform:
   m_Children:
   - {fileID: 5626906072133032265}
   - {fileID: 2643362790956912113}
+  - {fileID: 4980415265094628826}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -161,3 +157,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentWaveNumber: 0
   CurrentWave: {fileID: 0}
+--- !u!1 &8340353669954819826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4980415265094628826}
+  - component: {fileID: 4976900985461906880}
+  m_Layer: 0
+  m_Name: Wave03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4980415265094628826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8340353669954819826}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5626906073761719311}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4976900985461906880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8340353669954819826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a7f68027f9aa144a4ac8d100278992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowWaypoints: 0
+  Active: 1
+  StartDelay: 5
+  WaveData:
+    Mobs: []
+    Wizards:
+    - Stone: {fileID: 0}

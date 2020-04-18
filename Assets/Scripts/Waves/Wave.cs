@@ -6,22 +6,7 @@ using UnityEditor;
 
 namespace TowerDefense
 {
-	[Serializable]
-	public class WaveData
-	{
-		public GameObject MobPrefab;
-		public int MobCount;
-		public float Interval;
-		public string PathName;
-
-		public WaveData()
-		{
-			MobPrefab = null;
-			MobCount = 5;
-			Interval = 2;
-			PathName = "Path0";
-		}
-	}
+	
 	
 	public class Wave : MonoBehaviour
 	{
@@ -33,7 +18,10 @@ namespace TowerDefense
 		public bool ShowWaypoints;
 		public bool Active = true;
 		[NonSerialized] public Dictionary<string, Vector2> SpawnPoints;
-		
+
+        public float StartDelay = 5f;
+        public WaveData WaveData;
+
 		int waveNumber;
 
 		void Start()
@@ -44,24 +32,20 @@ namespace TowerDefense
 		public virtual void InitWave(int waveNumber)
 		{
 			this.waveNumber = waveNumber;
-			StartCoroutine(StartWave());
+			Invoke("StartWave", StartDelay);
+        }
 
-			StartedEvent?.Invoke(waveNumber);
-		}
-
-		protected virtual IEnumerator StartWave()
+		protected virtual void StartWave()
 		{
+            StartedEvent?.Invoke(waveNumber);
 			Debug.Log($"# Wave # Wave {waveNumber} started");
-
-			yield return null;
 		}
 
 		protected virtual void EndWave()
 		{
+            EndedEvent?.Invoke(waveNumber);
 			Debug.Log($"# Wave # Wave {waveNumber} ended");
-
-			EndedEvent?.Invoke(waveNumber);
-		}
+        }
 
 		protected void StartSpawn(GameObject mobPrefab, int mobCount, float interval, string pathName)
 		{

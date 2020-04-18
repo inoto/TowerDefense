@@ -116,6 +116,7 @@
     <Compile Include="Assets\Scripts\Background.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
+    <Compile Include="Assets\Scripts\BigSkyStone.cs" />
     <Compile Include="Assets\Scripts\Buffs\BuffDamage.cs" />
     <Compile Include="Assets\Scripts\Buildings\BuildPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Building.cs" />
@@ -188,6 +189,8 @@
     <Compile Include="Assets\Scripts\Waves\Wave.cs" />
     <Compile Include="Assets\Scripts\Waves\Wave01.cs" />
     <Compile Include="Assets\Scripts\Waves\WaveController.cs" />
+    <Compile Include="Assets\Scripts\Waves\WaveData.cs" />
+    <Compile Include="Assets\Scripts\Waves\WaveWizards.cs" />
     <Compile Include="Assets\Scripts\Weapons\Enums.cs" />
     <Compile Include="Assets\Scripts\Weapons\MobWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\SoldierWeapon.cs" />

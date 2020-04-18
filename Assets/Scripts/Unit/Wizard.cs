@@ -60,7 +60,7 @@ namespace TowerDefense
 
         void CastSomething()
         {
-            int rand = Random.Range(0, Magics.Count-1);
+            int rand = Random.Range(0, Magics.Count);
             var magic = Magics[rand];
 
             MagicIcon.sprite = magic.Icon;

@@ -22,6 +22,8 @@ namespace TowerDefense
 	{
 		public int CurrentWaveNumber = 0;
 		public Wave CurrentWave;
+
+        int currentChild = 0;
 		
 		void OnEnable()
 		{
@@ -40,17 +42,19 @@ namespace TowerDefense
 
 		void StartNextWave(int waveNumber)
 		{
-			if (CurrentWaveNumber >= transform.childCount)
-				return;
+            CurrentWaveNumber += 1;
 
-			CurrentWaveNumber += 1;
-
-			Wave wave = transform.GetChild(CurrentWaveNumber - 1).GetComponent<Wave>();
-			if (wave.gameObject.activeSelf && wave.Active)
-			{
-				CurrentWave = wave;
-				CurrentWave.InitWave(CurrentWaveNumber);
-			}
-		}
+            for (int i = currentChild; i < transform.childCount; i++)
+            {
+				Wave wave = transform.GetChild(i).GetComponent<Wave>();
+                if (wave.gameObject.activeSelf && wave.Active)
+                {
+                    currentChild = i+1;
+					CurrentWave = wave;
+                    CurrentWave.InitWave(CurrentWaveNumber);
+                    return;
+                }
+            }
+        }
 	}
 }
