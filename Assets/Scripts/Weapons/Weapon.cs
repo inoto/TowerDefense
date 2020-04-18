@@ -100,28 +100,28 @@ namespace TowerDefense
 		
 		protected virtual bool TrackTarget()
 		{
-			// if (Target == null)
-			// 	return false;
-   //
-			// if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
-			// {
-			// 	Target = null;
-   //              return false;
-			// }
-			//
+			if (Target == null)
+				return false;
+   
+			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
+			{
+				Target = null;
+                return false;
+			}
+			
 			return true;
 		}
 
 		protected virtual bool AcquireTarget()
 		{
-			// _targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
-			// targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
-			// if (targetsCount > 0)
-			// {
-			// 	Target = DefineTarget();
-   //              return true;
-			// }
-			// Target = null;
+			_targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
+			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
+			if (targetsCount > 0)
+			{
+				Target = DefineTarget();
+                return true;
+			}
+			Target = null;
 			return false;
 		}
 

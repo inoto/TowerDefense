@@ -5,7 +5,7 @@ namespace TowerDefense
 {
 	public class SoldierWeapon : Weapon
 	{
-		[SerializeField][ReadOnly] bool followingTarget = false;
+		// [SerializeField][ReadOnly] bool followingTarget = false;
 		Order followingOrder;
 
         protected override bool TrackTarget()
@@ -15,11 +15,11 @@ namespace TowerDefense
 
 			if (Target.IsDied || !Target.GameObj.activeSelf)
 			{
-				if (followingTarget)
-				{
-					followingTarget = false;
+				// if (followingTarget)
+				// {
+				// 	followingTarget = false;
 					// _unit.OrderEnded(followingOrder);
-				}
+				// }
 
                 RaiseTargetDiedEvent();
 				Target = null;
@@ -27,18 +27,18 @@ namespace TowerDefense
 				return false;
 			}
 
-			if (!followingTarget && !Physics2D.IsTouching(_collider, Target.Collider))
+			if (!Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				followingTarget = true;
+				// followingTarget = true;
 
                 moveByTransform.AssignTransform(Target.GameObj.transform);
                 RaiseTargetOutOfRangeEvent();
 				// _unit.AddOrder(mbt);
 				// followingOrder = mbt;
 			}
-			else if (followingTarget && Physics2D.IsTouching(_collider, Target.Collider))
+			else if (Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				followingTarget = false;
+				// followingTarget = false;
 
 				// _unit.OrderEnded(followingOrder);
                 RaiseTargetInRangeEvent();
