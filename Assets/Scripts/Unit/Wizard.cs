@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
@@ -12,13 +13,17 @@ namespace TowerDefense
 
         public bool CreatedManually = false;
         public int ReagentReward = 0;
+        [SerializeField] Image MagicIcon = null;
+        [SerializeField] List<WizardMagic> Magics;
 
         void Start()
         {
             LoadData();
-            StartCoroutine(CheckCreatedManually());
-        }
 
+            StartCoroutine(CheckCreatedManually());
+
+
+        }
 
         void LoadData()
         {
@@ -34,18 +39,56 @@ namespace TowerDefense
             // FoodReward = StatsData.FoodReward;
         }
 
+        void Reset()
+        {
+            MagicIcon.gameObject.SetActive(false);
+        }
+
         IEnumerator CheckCreatedManually()
         {
             yield return new WaitForSeconds(2f);
-            if (CreatedManually)
-            {
-                
-            }
+            // if (CreatedManually)
+            // {
+                CastSomething();
+            // }
         }
 
         public void OnClick()
         {
             ClickedEvent?.Invoke(this);
+        }
+
+        void CastSomething()
+        {
+            int rand = Random.Range(0, Magics.Count-1);
+            var magic = Magics[rand];
+
+            MagicIcon.sprite = magic.Icon;
+            MagicIcon.color = magic.IconColor;
+            MagicIcon.gameObject.SetActive(true);
+            magic.gameObject.SetActive(true);
+
+            magic.DurationEndedEvent += CastEnded;
+        }
+
+        void CastEnded(WizardMagic magic)
+        {
+            magic.DurationEndedEvent -= CastEnded;
+
+            MagicIcon.gameObject.SetActive(false);
+
+            Invoke("CastSomething", 10f);
+        }
+
+        protected override void Corpse()
+        {
+            base.Corpse();
+
+            foreach (var magic in Magics)
+            {
+                magic.gameObject.SetActive(false);
+            }
+            MagicIcon.gameObject.SetActive(false);
         }
     }
 }

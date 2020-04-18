@@ -123,5 +123,12 @@ namespace TowerDefense
             AttackingWizard = false;
 			NowFree();
         }
+
+        protected override void Corpse()
+        {
+			base.Corpse();
+
+			StopMoving();
+        }
     }
 }

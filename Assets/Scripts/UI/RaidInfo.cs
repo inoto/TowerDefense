@@ -37,6 +37,7 @@ namespace TowerDefense
         {
             Hide();
             Wizard.ClickedEvent += Show;
+            
         }
 
         void Show(Wizard wizard)
@@ -89,10 +90,18 @@ namespace TowerDefense
                 cloud.MoreSoldiersButtonClickedEvent += MoreSoldiersButtonClicked;
                 cloud.LessSoldiersButtonClickedEvent += LessSoldiersButtonClicked;
             }
+            Building.SoldiersCountChangedEvent += UpdateSoldiersCount;
+        }
+
+        void UpdateSoldiersCount(Building building)
+        {
+            clouds[building].UpdateText();
         }
 
         public void Hide()
         {
+            Building.SoldiersCountChangedEvent -= UpdateSoldiersCount;
+
             foreach (var b in clouds.Keys)
             {
                 clouds[b].MoreSoldiersButtonClickedEvent -= MoreSoldiersButtonClicked;

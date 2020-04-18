@@ -20,7 +20,7 @@ namespace TowerDefense
 		{
 			Projectile.MissedEvent += SpawnMissFloatingText;
 			Unit.DiedEvent += SpawnFoodFloatingText;
-			Farm.FoodProvidedEvent += SpawnFarmFoodFloatingText;
+			PlayerController.FoodAmountChangedEvent += SpawnFoodFloatingText;
 //			Enemy.DamagedEvent += ShowDamageFloatingText;
 			RangeIndicator.ShowEvent += ShowLocator;
 			RangeIndicator.HideEvent += HideLocator;
@@ -30,8 +30,8 @@ namespace TowerDefense
 		{
 			Projectile.MissedEvent -= SpawnMissFloatingText;
 			Unit.DiedEvent -= SpawnFoodFloatingText;
-			Farm.FoodProvidedEvent -= SpawnFarmFoodFloatingText;
-//			Enemy.DamagedEvent -= ShowDamageFloatingText;
+            PlayerController.FoodAmountChangedEvent -= SpawnFoodFloatingText;
+			//			Enemy.DamagedEvent -= ShowDamageFloatingText;
 			RangeIndicator.ShowEvent -= ShowLocator;
 			RangeIndicator.HideEvent -= HideLocator;
 		}
@@ -67,15 +67,16 @@ namespace TowerDefense
 			floatingText.StartMoving();
 		}
 		
-		void SpawnFarmFoodFloatingText(Farm farm, int amount)
-		{
-			if (amount < 1)
-				return;
-			
-			FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
-			floatingText.transform.position = farm.transform.position;
+		void SpawnFoodFloatingText(int amount, Transform trans)
+        {
+            string mark = "";
+            if (amount > 1)
+                mark = "+";
+
+            FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();
+			floatingText.transform.position = trans.position;
 			floatingText.Color(FoodColor);
-			floatingText.Text("+" + amount);
+			floatingText.Text(mark + amount);
 			floatingText.Icon(FoodIconSprite, FoodColor);
 			
 			floatingText.StartMoving();

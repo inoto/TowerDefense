@@ -25,13 +25,13 @@ namespace TowerDefense
 		void OnEnable()
 		{
 			Unit.DiedEvent += ChangeValue;
-			Farm.FoodProvidedEvent += FarmProvided;
+			PlayerController.FoodAmountChangedEvent += FoodAmountChanged;
 		}
 
 		void OnDisable()
 		{
 			Unit.DiedEvent -= ChangeValue;
-			Farm.FoodProvidedEvent += FarmProvided;
+            PlayerController.FoodAmountChangedEvent -= FoodAmountChanged;
 		}
 
 		void ChangeValue(Unit unit)
@@ -43,7 +43,7 @@ namespace TowerDefense
 			}
 		}
 		
-		void FarmProvided(Farm farm, int amount)
+		void FoodAmountChanged(int amount, Transform trans)
 		{
 			foodCount += amount;
 			UpdateValue();

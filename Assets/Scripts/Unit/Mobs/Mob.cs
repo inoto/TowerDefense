@@ -49,5 +49,12 @@ namespace TowerDefense
                 // AddOrder(mbp, CurrentOrder == null);
 			}
         }
+
+        protected override void Corpse()
+        {
+            base.Corpse();
+
+            StopMoving();
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace TowerDefense
 				
 				// _unit.AddOrder(this);
                 RaiseTargetAcquiredEvent();
+                moveByTransform.StopMoving();
 				return true;
 			}
 			Target = null;

@@ -7,8 +7,6 @@ namespace TowerDefense
 {
 	public class Farm : MonoBehaviour, IAlive, ITargetable
 	{
-		public static event Action<Farm, int> FoodProvidedEvent;
-
 		public bool IsActive;
 		[BoxGroup("Income")]
 		[SerializeField] float Interval = 2f;
@@ -44,7 +42,7 @@ namespace TowerDefense
 			{
 				yield return new WaitForSeconds(Interval);
 
-				FoodProvidedEvent?.Invoke(this, Amount);
+                PlayerController.Instance.AddFood(Amount, transform);
 			}
 			
 			yield return null;

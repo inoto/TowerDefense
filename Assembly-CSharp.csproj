@@ -133,6 +133,7 @@
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
     <Compile Include="Assets\Scripts\Input\InputMouse.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Projectiles\ProjectileArrow.cs" />
@@ -173,6 +174,8 @@
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\Wizard.cs" />
     <Compile Include="Assets\Scripts\Unit\WizardMagic.cs" />
+    <Compile Include="Assets\Scripts\Unit\WizardMagicDanger.cs" />
+    <Compile Include="Assets\Scripts\Unit\WizardMagicStarvation.cs" />
     <Compile Include="Assets\Scripts\Utils\AbstractSingleton.cs" />
     <Compile Include="Assets\Scripts\Utils\Bezier.cs" />
     <Compile Include="Assets\Scripts\Utils\Cheets.cs" />

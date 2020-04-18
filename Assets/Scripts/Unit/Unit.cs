@@ -20,15 +20,11 @@ namespace TowerDefense
 		
 		[Header("Unit")]
 		public bool IsActive = false;
-		[Space]
-		public Transform RotationTransform;
-		[Space]
-		public Queue<Order> NotStartedOrders = new Queue<Order>();
-		public Order CurrentOrder;
-		
-		Stack<Order> startedOrders = new Stack<Order>();
-		
-		Transform _transform;
+
+        [Space]
+        public Transform RotationTransform;
+
+        Transform _transform;
 		Collider2D _collider;
 
 		[Header("Orders")]
@@ -64,84 +60,7 @@ namespace TowerDefense
             ResetSprite();
 		}
 
-		void LogOrders()
-		{
-			StringBuilder sb = new StringBuilder($"{gameObject.name} orders: \n");
-			foreach (Order order in NotStartedOrders)
-			{
-				if (CurrentOrder == order)
-					sb.Append(">>");
-				sb.Append(order.GetType().Name);
-				sb.Append("\n");
-			}
-			
-			if (NotStartedOrders.Count > 0)
-			    Debug.Log(sb.ToString());
-		}
-
-		public virtual void AddOrder(Order order, bool startImmediate = true)
-		{
-			Debug.Log($"{gameObject.name} AddOrder [{order.GetType().Name}]");
-            
-			if (startImmediate)
-			{
-				if (CurrentOrder != null)
-				{
-					startedOrders.Push(CurrentOrder);
-					CurrentOrder.Pause();
-				}
-				ActivateOrder(order);
-			}
-            else
-            {
-                if (!NotStartedOrders.Contains(order))
-                    NotStartedOrders.Enqueue(order);
-				LogOrders();
-            }
-        }
-
-		void ActivateOrder(Order order)
-		{
-			Debug.Log($"{gameObject.name} ActivateOrder [{order.GetType().Name}]");
-			CurrentOrder = order;
-			order.Activate();
-			// LogOrders();
-		}
-
-		public virtual void OrderEnded(Order order) // TODO: add events
-		{
-			// if (!NotStartedOrders.Contains(order))
-			// 	return;
-			
-			order.Pause();
-            CurrentOrder = null;
-			
-			Debug.Log($"{gameObject.name} OrderEnded [{order.GetType().Name}]");
-
-			if (startedOrders.Count > 0)
-			{
-                Order previousOrder = startedOrders.Pop();
-				if (previousOrder is MoveByPath mbp)
-					mbp.AssignToClosestWaypoint();
-
-				ActivateOrder(previousOrder);
-			}
-			else
-			{
-                if (NotStartedOrders.Count > 0)
-                {
-                    Order nextOrder = NotStartedOrders.Dequeue();
-                    if (nextOrder is MoveByPath mbp)
-                        mbp.AssignToClosestWaypoint();
-
-					ActivateOrder(nextOrder); // is it good to use first?
-                }
-            }
-
-			LogOrders();
-		}
-
-		public virtual void ArrivedDestination()
+        public virtual void ArrivedDestination()
 		{
 			ArrivedDestinationEvent?.Invoke(this);
 			ArrivedDestinationInstanceEvent?.Invoke();
@@ -150,7 +69,7 @@ namespace TowerDefense
 
 		protected void StopMoving()
 		{
-			StopAllCoroutines();
+			_moveByTransform.StopMoving();
 //			animator.Play("Idle");
 //			animator.speed = 1f;
 		}
@@ -169,14 +88,14 @@ namespace TowerDefense
 		}
 
 		public void RaiseDiedEvent()
-		{
-			Corpse();
+        {
+            Corpse();
 			DiedEvent?.Invoke(this);
 			DiedInstanceEvent?.Invoke();
 		}
 
 		// used by Animator
-		void Corpse()
+		protected virtual void Corpse()
 		{
 			// animator.enabled = false;
 			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));

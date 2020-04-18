@@ -362,6 +362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 436675140}
+  - component: {fileID: 436675138}
   m_Layer: 0
   m_Name: CONTROLLERS
   m_TagString: Untagged
@@ -369,6 +370,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &436675138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436675137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a7f80293d3f594093da61718401994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &436675140
 Transform:
   m_ObjectHideFlags: 0
@@ -3250,7 +3263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 1
   RotationTransform: {fileID: 1232263563}
-  CurrentOrder: {fileID: 0}
   _healthy: {fileID: 2123324229}
   _moveByTransform: {fileID: 2123324227}
   CreatedManually: 0
@@ -5573,12 +5585,12 @@ PrefabInstance:
     - target: {fileID: 8427562506097124368, guid: bf51c2b72d6ffb94e801845c126fe95a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 8427562506097124368, guid: bf51c2b72d6ffb94e801845c126fe95a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.24
+      value: 2.77
       objectReference: {fileID: 0}
     - target: {fileID: 8427562506097124368, guid: bf51c2b72d6ffb94e801845c126fe95a,
         type: 3}
@@ -5630,8 +5642,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 845955897409243931, guid: bf51c2b72d6ffb94e801845c126fe95a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf51c2b72d6ffb94e801845c126fe95a, type: 3}
 --- !u!1 &8419494374254241940
 GameObject:
