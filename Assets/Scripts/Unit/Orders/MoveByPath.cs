@@ -8,6 +8,7 @@ namespace TowerDefense
 	public class MoveByPath : Order
 	{
 		public static event Action<MoveByPath, string> LookingForPathEvent;
+        public event Action EndOfPathArrivedEvent;
 
 		const float MAX_WAYPOINT_OFFSET = 0.1f;
 
@@ -26,6 +27,8 @@ namespace TowerDefense
 		Vector2 footPoint;
 		
 		AttachmentPoints _attachments;
+        Weapon weapon;
+        MoveByTransform moveByTransform;
 
 		protected override void Awake()
 		{
@@ -33,7 +36,9 @@ namespace TowerDefense
 
 			_attachments = GetComponent<AttachmentPoints>();
 			_attachments.Points.TryGetValue("Foot", out footPoint);
-		}
+            weapon = GetComponentInChildren<Weapon>();
+            moveByTransform = GetComponent<MoveByTransform>();
+        }
 
 		public void SetPath(string pathName)
 		{
@@ -43,28 +48,49 @@ namespace TowerDefense
 			                     Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET));
 			LookingForPathEvent?.Invoke(this, pathName);
 
-			_unit.DiedInstanceEvent += Pause;
+			// _unit.DiedInstanceEvent += Pause;
 		}
 
 		public void AssignPath(BezierCurve path)
 		{
 			this.path = path;
-			
-			_unit.AddOrder(this, _unit.CurrentOrder == null);
-		}
+
+			// _unit.AddOrder(this, _unit.CurrentOrder == null);
+            Activate();
+        }
 
 		public override void Activate()
 		{
 			base.Activate();
 			waypoint = path.Anchors[segment] + offset;
 			isMoving = true;
+
+            weapon.TargetAcquiredEvent += TargetAcquiredEvent;
         }
-		
-		public override void Pause()
+
+        void TargetAcquiredEvent()
+        {
+            weapon.TargetAcquiredEvent -= TargetAcquiredEvent;
+
+			Pause();
+
+            weapon.TargetDiedEvent += ContinueMoving;
+            weapon.TargetOutOfRangeEvent += ContinueMoving;
+		}
+
+        void ContinueMoving()
+        {
+            weapon.TargetDiedEvent -= ContinueMoving;
+            weapon.TargetOutOfRangeEvent -= ContinueMoving;
+
+			isMoving = true;
+
+            weapon.TargetAcquiredEvent += TargetAcquiredEvent;
+		}
+
+        public override void Pause()
 		{
-			_unit.DiedInstanceEvent -= Pause;
-			
-			isMoving = false;
+            isMoving = false;
 		}
 
 		void Update()
@@ -97,7 +123,8 @@ namespace TowerDefense
 		{
 			isMoving = false;
 			_unit.ArrivedDestination();
-			_unit.OrderEnded(this);
+			// _unit.OrderEnded(this);
+            EndOfPathArrivedEvent?.Invoke();
 		}
 
 		public void AssignToClosestWaypoint()

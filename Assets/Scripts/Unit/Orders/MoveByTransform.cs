@@ -13,6 +13,8 @@ namespace TowerDefense
 		Quaternion quat;
 
 		AttachmentPoints _attachments;
+        Weapon weapon;
+        MoveByPath moveByPath;
 		
 		protected override void Awake()
 		{
@@ -20,24 +22,36 @@ namespace TowerDefense
 
 			_attachments = GetComponent<AttachmentPoints>();
 			_attachments.Points.TryGetValue("Foot", out footPoint);
-		}
+            weapon = GetComponentInChildren<Weapon>();
+            moveByPath = GetComponent<MoveByPath>();
+        }
 		
-		public void Init(Transform transform)
+		public void AssignTransform(Transform trans)
 		{
 			isMoving = false;
-			destination = transform;
-			StartMoving();
-		}
+			destination = trans;
+            isMoving = true;
+
+			weapon.TargetOutOfRangeEvent += StopMoving;
+        }
 		
 		void StartMoving()
 		{
+            weapon.TargetInRangeEvent -= StartMoving;
+
 			isMoving = true;
+
+            weapon.TargetOutOfRangeEvent += StopMoving;
 		}
 		
 		public void StopMoving()
 		{
+            weapon.TargetOutOfRangeEvent -= StopMoving;
+
 			isMoving = false;
-		}
+
+            weapon.TargetInRangeEvent += StartMoving;
+        }
 
 		void Update()
 		{

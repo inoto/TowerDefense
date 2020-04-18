@@ -8,7 +8,6 @@ namespace TowerDefense
 	{
         public bool CreatedManually = false;
 		public int FoodReward = 0;
-		public int ReagentReward = 0;
 
         [SerializeField] MobStatsData StatsData;
         [SerializeField] MoveByPath _moveByPath;
@@ -38,7 +37,6 @@ namespace TowerDefense
             mbt.Speed = (float) StatsData.Speed;
 
             FoodReward = StatsData.FoodReward;
-            ReagentReward = StatsData.ReagentReward;
         }
 	
 		IEnumerator CheckCreatedManually()

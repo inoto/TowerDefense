@@ -18,7 +18,7 @@ namespace TowerDefense
 		
 		void Start()
 		{
-			GetComponent<Healthy>().Init(this);
+			
 		}
 
 		void Corpse()

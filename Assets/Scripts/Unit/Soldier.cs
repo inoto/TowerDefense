@@ -11,17 +11,20 @@ namespace TowerDefense
 		
 		public bool InBuilding = false;
 		public Specialization Specialization;
+        public bool AttackingWizard = false;
 
 		[SerializeField] bool Movable = true;
 		
 		Building building;
+        SoldierWeapon weapon;
 		
 		protected override void Awake()
 		{
 			base.Awake();
 			
 			Specialization = GetComponent<Specialization>();
-		}
+            weapon = GetComponentInChildren<SoldierWeapon>();
+        }
 
 		void Start()
 		{
@@ -38,7 +41,10 @@ namespace TowerDefense
 		}
 
         public void AssignToBuilding(Building building)
-		{
+        {
+            if (AttackingWizard)
+                return;
+
 			if (this.building != null)
 				UnAssignFromBuilding();
 			
@@ -46,11 +52,14 @@ namespace TowerDefense
 			building.AddSoldier(this);
 			ChangedBuildingEvent?.Invoke(this, this.building);
 
-			GetComponent<MoveByTransform>().Init(building.transform);
+			GetComponent<MoveByTransform>().AssignTransform(building.transform);
 		}
 		
 		public void NowFree()
 		{
+            if (AttackingWizard)
+                return;
+
 			if (building != null)
 				UnAssignFromBuilding();
 			
@@ -84,7 +93,35 @@ namespace TowerDefense
 				building.ActivateSoldier();
 			}
 
-            gameObject.SetActive(false);
+            if (AttackingWizard)
+            {
+                Weapon weapon = GetComponentInChildren<SoldierWeapon>();
+            }
+			else
+                gameObject.SetActive(false);
 		}
-	}
+
+        public void AttackWizard(Wizard wizard)
+        {
+            if (AttackingWizard)
+                return;
+
+            if (building != null)
+                UnAssignFromBuilding();
+
+            AttackingWizard = true;
+			_moveByTransform.AssignTransform(wizard.transform);
+            weapon.TargetDiedEvent += TargetDiedEvent;
+            // AddOrder(_moveByTransform);
+
+        }
+
+        void TargetDiedEvent()
+        {
+            weapon.TargetDiedEvent -= TargetDiedEvent;
+
+            AttackingWizard = false;
+			NowFree();
+        }
+    }
 }

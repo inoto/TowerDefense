@@ -5,11 +5,12 @@ using UnityEngine.EventSystems;
 
 namespace TowerDefense
 {
-	[RequireComponent(typeof(BoxCollider))]
+	[RequireComponent(typeof(Collider2D))]
 	public class Selectable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		public static event Action<Tower> TowerClickedEvent;
 		public static event Action<Selectable, List<ConstructData>> BuildPlaceClickedEvent;
+        public static event Action<Wizard> WizardClickedEvent;
 		
 		static Selectable selected;
 
@@ -39,12 +40,21 @@ namespace TowerDefense
 				selected = this;
 				return;
 			}
-		}
+
+            Wizard wizard = GetComponent<Wizard>();
+            if (wizard != null)
+            {
+				WizardClickedEvent?.Invoke(wizard);
+                selected = this;
+                return;
+            }
+        }
 
 		void ClearSelection()
 		{
 			TowerInfo.Instance.Hide();
 			ConstructionWheel.Instance.Hide();
+			RaidInfo.Instance.Hide();
 			selected = null;
 		}
 		

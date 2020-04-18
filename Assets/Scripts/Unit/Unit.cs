@@ -12,6 +12,7 @@ namespace TowerDefense
 		public static event Action<Unit> DiedEvent;
 		public event Action DiedInstanceEvent;
 		public static event Action<Unit, int, DamageType> DamagedEvent;
+        public event Action<int, DamageType> DamagedInstanceEvent;
 		public static event Action<Unit> ArrivedDestinationEvent;
 		public event Action ArrivedDestinationInstanceEvent;
 		public event Action OrderEndedEvent;
@@ -54,14 +55,11 @@ namespace TowerDefense
 		{
 			IsActive = false;
 			StopAllCoroutines();
-		}
+        }
 
         void Reset()
         {
             IsActive = true;
-
-			if (_healthy != null)
-                _healthy.Init(this);
 
             ResetSprite();
 		}
@@ -167,6 +165,7 @@ namespace TowerDefense
 		public void RaiseDamagedEvent(int damage, DamageType type)
 		{
 			DamagedEvent?.Invoke(this, damage, type);
+			DamagedInstanceEvent?.Invoke(damage, type);
 		}
 
 		public void RaiseDiedEvent()
@@ -198,14 +197,9 @@ namespace TowerDefense
 		public GameObject GameObj => gameObject;
 		public bool IsDied => _healthy.IsDied;
 
-        public Vector2 Position
-        {
-            get
-            {
-                return _transform.position;
-			}
-        } 
-		// public Vector2 Waypoint => _moveByPath.WaypointPoint;
+        public Vector2 Position => _transform.position;
+
+        // public Vector2 Waypoint => _moveByPath.WaypointPoint;
 		// public int PathIndex => _moveByPath.PathIndex;
 		public float Health => _healthy.CurrentHealth;
 		public int MaxHealth => _healthy.MaxHealth;

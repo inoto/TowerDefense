@@ -29,7 +29,7 @@ namespace TowerDefense
 		void Start()
 		{
 			Init();
-			GetComponent<Healthy>().Init(this);
+			
 		}
 
 		void Init()

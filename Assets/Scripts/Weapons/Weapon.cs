@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public abstract class Weapon : Order
+	public class Weapon : Order
 	{
 		public enum Priority
 		{
@@ -18,6 +18,12 @@ namespace TowerDefense
 			MostDangerous,
 			LargestBunch
 		}
+
+        public event Action TargetAcquiredEvent;
+        public event Action TargetDiedEvent;
+        public event Action TargetOutOfRangeEvent;
+        public event Action TargetInRangeEvent;
+
 
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
 		public DamageType DamageType = DamageType.Physical;
@@ -45,12 +51,17 @@ namespace TowerDefense
 		
 		protected Collider2D _collider;
 
+        protected MoveByTransform moveByTransform;
+        protected MoveByPath moveByPath;
+
 		protected override void Awake()
 		{
 			base.Awake();
 
 			_collider = GetComponent<Collider2D>();
-		}
+            moveByTransform = GetComponentInParent<MoveByTransform>();
+            moveByPath = GetComponentInParent<MoveByPath>();
+        }
 
 		void OnEnable()
 		{
@@ -89,28 +100,28 @@ namespace TowerDefense
 		
 		protected virtual bool TrackTarget()
 		{
-			if (Target == null)
-				return false;
-
-			if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
-			{
-				Target = null;
-                return false;
-			}
-			
+			// if (Target == null)
+			// 	return false;
+   //
+			// if (Target.IsDied || !Physics2D.IsTouching(_collider, Target.Collider))
+			// {
+			// 	Target = null;
+   //              return false;
+			// }
+			//
 			return true;
 		}
 
 		protected virtual bool AcquireTarget()
 		{
-			_targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
-			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
-			if (targetsCount > 0)
-			{
-				Target = DefineTarget();
-                return true;
-			}
-			Target = null;
+			// _targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
+			// targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
+			// if (targetsCount > 0)
+			// {
+			// 	Target = DefineTarget();
+   //              return true;
+			// }
+			// Target = null;
 			return false;
 		}
 
@@ -139,6 +150,27 @@ namespace TowerDefense
 			SimplePool.Spawn(ProjectilePrefab, (Vector2)transform.position+ProjectileStartPointOffset, _transform.rotation)
 				.GetComponent<Projectile>()
 				.Init(this);
+		}
+
+        protected void RaiseTargetAcquiredEvent()
+        {
+			TargetAcquiredEvent?.Invoke();
+        }
+
+        protected void RaiseTargetDiedEvent()
+        {
+			TargetDiedEvent?.Invoke();
+        }
+
+        protected void RaiseTargetOutOfRangeEvent()
+        {
+			TargetOutOfRangeEvent?.Invoke();
+        }
+
+        protected void RaiseTargetInRangeEvent()
+        {
+            TargetInRangeEvent?.Invoke();
+
 		}
 
 		protected virtual void OnDrawGizmos()

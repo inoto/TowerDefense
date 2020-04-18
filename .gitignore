@@ -16,3 +16,7 @@ sysinfo.txt
 *.apk
 *.exe
 *.unitypackage
+
+# VS
+*vs/
+*.lock

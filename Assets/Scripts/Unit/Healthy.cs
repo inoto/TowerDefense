@@ -11,8 +11,11 @@ namespace TowerDefense
 	
 	public class Healthy : MonoBehaviour
 	{
-		public bool IsActive;
-		[Space]
+        // public static event Action<Unit> DiedEvent;
+        public event Action DiedInstanceEvent;
+        // public static event Action<Unit, int, DamageType> DamagedEvent;
+        public event Action<int, DamageType> DamagedInstanceEvent;
+
 		[SerializeField] HealthBar HealthBar;
 		[Space]
 		public bool Damageable = true;
@@ -23,15 +26,24 @@ namespace TowerDefense
 		public bool Damaged = false;
 		public bool IsDied = false;
 		
-		IAlive alive;
+		IAlive _alive;
 
-		public void Init(IAlive alive)
-		{
-			this.alive = alive;
-			Damaged = false;
-			IsDied = false;
+        void Awake()
+        {
+            _alive = GetComponent<IAlive>();
+        }
 
-			ResetHealth();
+		void Start()
+        {
+            Reset();
+        }
+
+        void Reset()
+        {
+            Damaged = false;
+            IsDied = false;
+
+            ResetHealth();
 		}
 
         public void SetMaxHealth(int value)
@@ -86,14 +98,14 @@ namespace TowerDefense
 				Die();
 			}
 			
-			alive?.RaiseDamagedEvent(damage, type);
+			_alive?.RaiseDamagedEvent(damage, type);
 		}
 		
 		void Die()
 		{
 			IsDied = true;
 			
-			alive?.RaiseDiedEvent();
+			_alive?.RaiseDiedEvent();
 		}
 	}
 }

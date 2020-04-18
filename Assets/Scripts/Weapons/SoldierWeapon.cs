@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-	public class MobWeapon : Weapon
+	public class SoldierWeapon : Weapon
 	{
-		// [SerializeField][ReadOnly] bool followingTarget = false;
+		[SerializeField][ReadOnly] bool followingTarget = false;
 		Order followingOrder;
 
         protected override bool TrackTarget()
@@ -15,12 +15,11 @@ namespace TowerDefense
 
 			if (Target.IsDied || !Target.GameObj.activeSelf)
 			{
-				// if (followingTarget)
-				// {
-					// followingTarget = false;
+				if (followingTarget)
+				{
+					followingTarget = false;
 					// _unit.OrderEnded(followingOrder);
-					// RaiseTargetInRangeEvent();
-				// }
+				}
 
                 RaiseTargetDiedEvent();
 				Target = null;
@@ -28,22 +27,21 @@ namespace TowerDefense
 				return false;
 			}
 
-			if (!Physics2D.IsTouching(_collider, Target.Collider))
+			if (!followingTarget && !Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				// followingTarget = true;
+				followingTarget = true;
 
-				// moveByTransform.AssignTransform(Target.GameObj.transform);
+                moveByTransform.AssignTransform(Target.GameObj.transform);
                 RaiseTargetOutOfRangeEvent();
 				// _unit.AddOrder(mbt);
 				// followingOrder = mbt;
-                return false;
-            }
-			else
+			}
+			else if (followingTarget && Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				// followingTarget = false;
+				followingTarget = false;
 
 				// _unit.OrderEnded(followingOrder);
-				RaiseTargetInRangeEvent();
+                RaiseTargetInRangeEvent();
 				followingOrder = null;
 			}
 
@@ -59,9 +57,9 @@ namespace TowerDefense
 				Target = DefineTarget();
                 if (Target == null)
 					return false;
-
-                RaiseTargetAcquiredEvent();
+				
 				// _unit.AddOrder(this);
+                RaiseTargetAcquiredEvent();
 				return true;
 			}
 			Target = null;
