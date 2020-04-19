@@ -43,7 +43,7 @@ namespace TowerDefense
 			}
 		}
 		
-		void FoodAmountChanged(int amount, Transform trans)
+		void FoodAmountChanged(int amount, int food, Transform trans)
 		{
 			foodCount += amount;
 			UpdateValue();

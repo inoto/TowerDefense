@@ -10,10 +10,26 @@ namespace TowerDefense
 		void Start()
 		{
 			HideAllIcons();
-			Icons[4].SetActive(true); // temporary enable 1
+			Icons[3].SetActive(true); // morale is 0
 		}
 
-		void HideAllIcons()
+        void OnEnable()
+        {
+			PlayerController.MoraleChangedEvent += PlayerControllerOnMoraleChangedEvent;
+        }
+
+        void OnDisable()
+        {
+            PlayerController.MoraleChangedEvent -= PlayerControllerOnMoraleChangedEvent;
+        }
+
+		void PlayerControllerOnMoraleChangedEvent(int amount, int morale)
+        {
+            HideAllIcons();
+            Icons[morale+3].SetActive(true);
+		}
+
+        void HideAllIcons()
 		{
 			foreach (var icon in Icons)
 			{

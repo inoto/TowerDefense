@@ -5,27 +5,42 @@ namespace TowerDefense
 {
     public class PlayerController : Singleton<PlayerController>
     {
-        public static event Action<int, Transform> FoodAmountChangedEvent;
-        public static event Action<int, Transform> ReagentsAmountChangedEvent;
+        public static event Action<int, int, Transform> FoodAmountChangedEvent;
+        public static event Action<int, int, Transform> ReagentsAmountChangedEvent;
+        public static event Action<int, int> MoraleChangedEvent;
 
-        int food;
-        int reagents;
+        public int Food = 0;
+        public int Reagents = 0;
+        public int Morale = 0;
+
+        public int MinMoraleIfStarvation = -1;
+
+        void Start()
+        {
+
+        }
 
         public void AddFood(int amount, Transform trans)
         {
-            food += amount;
-            FoodAmountChangedEvent?.Invoke(amount, trans);
+            Food += amount;
+            FoodAmountChangedEvent?.Invoke(amount, Food, trans);
         }
 
         public void SpendFood(int amount, Transform trans)
         {
-            AddFood(-amount, trans);
+            if (Food >= amount)
+                AddFood(-amount, trans);
+            else if (Morale > MinMoraleIfStarvation)
+            {
+                Morale -= 1;
+                MoraleChangedEvent?.Invoke(-1, Morale);
+            }
         }
 
         public void AddReagents(int amount, Transform trans)
         {
-            reagents += amount;
-            ReagentsAmountChangedEvent?.Invoke(amount, trans);
+            Reagents += amount;
+            ReagentsAmountChangedEvent?.Invoke(amount, Reagents, trans);
         }
 
         public void SpendReagents(int amount, Transform trans)

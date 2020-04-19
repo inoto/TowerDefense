@@ -67,7 +67,7 @@ namespace TowerDefense
 			floatingText.StartMoving();
 		}
 		
-		void SpawnFoodFloatingText(int amount, Transform trans)
+		void SpawnFoodFloatingText(int amount, int food, Transform trans)
         {
             string mark = "";
             if (amount > 0)

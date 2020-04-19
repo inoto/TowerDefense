@@ -9,7 +9,6 @@ namespace TowerDefense
 
         protected override void Tick()
         {
-            Debug.Log("Damage tick");
             var soldiers = GameObject.FindObjectsOfType<Soldier>(); // TODO: do not use Find
             foreach (var soldier in soldiers)
             {
