@@ -17,10 +17,20 @@ namespace TowerDefense
             FoodAmountChangedEvent?.Invoke(amount, trans);
         }
 
+        public void SpendFood(int amount, Transform trans)
+        {
+            AddFood(-amount, trans);
+        }
+
         public void AddReagents(int amount, Transform trans)
         {
             reagents += amount;
             ReagentsAmountChangedEvent?.Invoke(amount, trans);
+        }
+
+        public void SpendReagents(int amount, Transform trans)
+        {
+            AddReagents(-amount, trans);
         }
     }
 }

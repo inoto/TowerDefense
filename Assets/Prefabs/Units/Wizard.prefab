@@ -444,6 +444,7 @@ MonoBehaviour:
   RotationTransform: {fileID: 4615459229906887790}
   _healthy: {fileID: 4699917861362664297}
   _moveByTransform: {fileID: 5559644260269843571}
+  StatsData: {fileID: 11400000, guid: 4f683ceb5eea1be478dd4e8982971d56, type: 2}
   CreatedManually: 0
   ReagentReward: 0
   MagicIcon: {fileID: 2906636029139756052}

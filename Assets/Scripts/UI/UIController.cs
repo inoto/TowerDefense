@@ -70,7 +70,7 @@ namespace TowerDefense
 		void SpawnFoodFloatingText(int amount, Transform trans)
         {
             string mark = "";
-            if (amount > 1)
+            if (amount > 0)
                 mark = "+";
 
             FloatingText floatingText = SimplePool.Spawn(FloatingTextPrefab).GetComponent<FloatingText>();

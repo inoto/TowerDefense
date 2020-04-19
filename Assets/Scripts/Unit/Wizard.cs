@@ -11,6 +11,7 @@ namespace TowerDefense
     {
         public static event Action<Wizard> ClickedEvent;
 
+        [SerializeField] MobStatsData StatsData;
         public bool CreatedManually = false;
         public int ReagentReward = 0;
         [SerializeField] Image MagicIcon = null;
@@ -27,16 +28,16 @@ namespace TowerDefense
 
         void LoadData()
         {
-            // _healthy.SetMaxHealth(StatsData.Hp);
-            //
+            _healthy.SetMaxHealth(StatsData.Hp);
+            
             // MobWeapon weapon = GetComponentInChildren<MobWeapon>();
             // weapon.DamageMin = StatsData.DamageMin;
             // weapon.DamageMax = StatsData.DamageMax;
             // weapon.AttackInterval = StatsData.AttackRate;
-            //
-            // _healthy.ArmorType = StatsData.Armor;
-            //
-            // FoodReward = StatsData.FoodReward;
+            
+            _healthy.ArmorType = StatsData.Armor;
+            
+            ReagentReward = StatsData.ReagentReward;
         }
 
         void Reset()

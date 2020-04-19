@@ -60,13 +60,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96338764db194b098e6b3db1b6f5b865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsActive: 0
+  IsActive: 1
   CanAttackTarget: 2
   DamageType: 0
   LayerMask:
     serializedVersion: 2
     m_Bits: 6144
-  Range: 0.5
+  Ranged: 0
   AttackInterval: 3
   LaunchProgress: 0
   DamageMin: 8
@@ -177,8 +177,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 8618036464056410988}
+  _healthy: {fileID: 1881558741405918776}
+  _moveByTransform: {fileID: 5888148378769355624}
+  CreatedManually: 0
   FoodReward: 2
-  ReagentReward: 0
+  StatsData: {fileID: 11400000, guid: 1159dccc6ab560b4eb7b4b719277d45e, type: 2}
+  _moveByPath: {fileID: 8385280280396580717}
 --- !u!114 &1881558741405918776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173f63f3ac1ecbc40931d972e9d58aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsActive: 0
   HealthBar: {fileID: 7812412869456837715}
   Damageable: 1
   MaxHealth: 20
@@ -559,6 +562,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 913502141549211429, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1620207121765355161, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_Name
@@ -577,13 +585,18 @@ PrefabInstance:
     - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 129
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995048875130317070, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: dca81851af6bd8941aae8525f30ddfe4,
+      objectReference: {fileID: 21300000, guid: 0566fd3bd74710d4a982b92c43f2c90f,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49f955e6240cff34b8147f78f67f3499, type: 3}

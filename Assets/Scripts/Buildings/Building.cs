@@ -27,10 +27,21 @@ namespace TowerDefense
 			if (initialized)
 				return;
 
+			Wave.EndedEvent += WaveOnEndedEvent;
+
 			StartCoroutine(CheckCreatedManually());
 		}
 
-		IEnumerator CheckCreatedManually()
+        void WaveOnEndedEvent(int waveNumber)
+        {
+            // int counter = 0;
+            // foreach (var soldier in Soldiers.Where(s => s.InBuilding))
+            //     counter += 1;
+			if (SoldiersCountInBuilding > 0)
+			    PlayerController.Instance.SpendFood(SoldiersCountInBuilding, transform);
+		}
+
+        IEnumerator CheckCreatedManually()
 		{
 			yield return new WaitForSeconds(0.1f);
 			if (!initialized)
