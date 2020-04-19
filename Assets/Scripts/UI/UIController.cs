@@ -13,6 +13,8 @@ namespace TowerDefense
 		[SerializeField] Color MissColor;
 		[SerializeField] Color FoodColor;
 		[SerializeField] Sprite FoodIconSprite;
+        [SerializeField] Image GameOverOverlay;
+        [SerializeField] GameObject GameOverElements;
 		
 		bool locatorInUse = false;
 		
@@ -24,17 +26,37 @@ namespace TowerDefense
 //			Enemy.DamagedEvent += ShowDamageFloatingText;
 			RangeIndicator.ShowEvent += ShowLocator;
 			RangeIndicator.HideEvent += HideLocator;
+
+			GameController.GameOverEvent += OnGameOverEvent;
         }
 
-        void OnDisable()
-		{
-			Projectile.MissedEvent -= SpawnMissFloatingText;
-			Unit.DiedEvent -= SpawnFoodFloatingText;
-            PlayerController.FoodAmountChangedEvent -= SpawnFoodFloatingText;
-			//			Enemy.DamagedEvent -= ShowDamageFloatingText;
-			RangeIndicator.ShowEvent -= ShowLocator;
-			RangeIndicator.HideEvent -= HideLocator;
-		}
+        void OnGameOverEvent()
+        {
+            
+            GameOverElements.SetActive(false);
+
+			GameOverOverlay.gameObject.SetActive(true);
+            GameOverOverlay.gameObject.LeanAlpha(0f, 0f);
+			LeanTween.alpha(GameOverOverlay.gameObject, 1f, 2f)
+                .setIgnoreTimeScale(true)
+                .setOnComplete(OnOverlayAppeared);
+
+        }
+
+        void OnOverlayAppeared()
+        {
+            GameOverElements.SetActive(true);
+        }
+
+  //       void OnDisable()
+		// {
+		// 	Projectile.MissedEvent -= SpawnMissFloatingText;
+		// 	Unit.DiedEvent -= SpawnFoodFloatingText;
+  //           PlayerController.FoodAmountChangedEvent -= SpawnFoodFloatingText;
+		// 	//			Enemy.DamagedEvent -= ShowDamageFloatingText;
+		// 	RangeIndicator.ShowEvent -= ShowLocator;
+		// 	RangeIndicator.HideEvent -= HideLocator;
+		// }
 
 		void Start()
 		{

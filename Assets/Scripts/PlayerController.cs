@@ -14,6 +14,7 @@ namespace TowerDefense
         public int Morale = 0;
 
         public int MinMoraleIfStarvation = -1;
+        bool starvation = false;
 
         void Start()
         {
@@ -24,16 +25,21 @@ namespace TowerDefense
         {
             Food += amount;
             FoodAmountChangedEvent?.Invoke(amount, Food, trans);
+            if (starvation && Food > 0)
+            {
+                starvation = false;
+                ChangeMorale(1);
+            }
         }
 
         public void SpendFood(int amount, Transform trans)
         {
             if (Food >= amount)
                 AddFood(-amount, trans);
-            else if (Morale > MinMoraleIfStarvation)
+            else if (!starvation && Morale > MinMoraleIfStarvation)
             {
-                Morale -= 1;
-                MoraleChangedEvent?.Invoke(-1, Morale);
+                starvation = true;
+                ChangeMorale(-1);
             }
         }
 
@@ -46,6 +52,12 @@ namespace TowerDefense
         public void SpendReagents(int amount, Transform trans)
         {
             AddReagents(-amount, trans);
+        }
+
+        public void ChangeMorale(int amount)
+        {
+            Morale += amount;
+            MoraleChangedEvent?.Invoke(amount, Morale);
         }
     }
 }
