@@ -12,8 +12,19 @@ namespace TowerDefense
 
 			Spawn01();
 			Spawn02();
-			// Spawn03();
-		}
+
+            float longestTime = 0f;
+            foreach (var mob in WaveData.Mobs)
+            {
+				float time = mob.MobCount * mob.Interval;
+                if (time > longestTime)
+                {
+                    longestTime = time;
+                } 
+            }
+
+            Invoke("EndWave", longestTime);
+        }
 
 		void Spawn01()
 		{

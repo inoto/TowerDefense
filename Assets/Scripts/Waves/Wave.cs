@@ -57,18 +57,11 @@ namespace TowerDefense
 			int mobCounter = 0;
 			while (mobCounter < mobCount)
 			{
-				float timeElapsed = 0;
-				while (timeElapsed < interval)
-				{
-					timeElapsed += Time.fixedDeltaTime;
-					//Debug.Log(Time.deltaTime.ToString());
-					yield return null;
-				}
+				yield return new WaitForSeconds(interval);
 				SpawnMob(mobPrefab, pathName);
 				mobCounter += 1;
 			}
-			EndWave();
-		}
+        }
 
 		void SpawnMob(GameObject mobPrefab, string pathName)
 		{

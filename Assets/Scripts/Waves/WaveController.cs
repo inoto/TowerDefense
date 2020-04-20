@@ -21,23 +21,14 @@ namespace TowerDefense
 	public class WaveController : MonoBehaviour
 	{
 		public int CurrentWaveNumber = 0;
-		public Wave CurrentWave;
 
         int currentChild = 0;
-		
-		void OnEnable()
-		{
-			Wave.EndedEvent += StartNextWave;
-		}
 
-		void OnDisable()
-		{
-			Wave.EndedEvent -= StartNextWave;
-		}
-
-		void Start()
+        void Start()
 		{
 			StartNextWave(1);
+
+            Wave.EndedEvent += StartNextWave;
 		}
 
 		void StartNextWave(int waveNumber)
@@ -50,8 +41,7 @@ namespace TowerDefense
                 if (wave.gameObject.activeSelf && wave.Active)
                 {
                     currentChild = i+1;
-					CurrentWave = wave;
-                    CurrentWave.InitWave(CurrentWaveNumber);
+                    wave.InitWave(CurrentWaveNumber);
                     return;
                 }
             }

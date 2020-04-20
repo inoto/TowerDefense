@@ -32,14 +32,15 @@ namespace TowerDefense
 
         void OnGameOverEvent()
         {
-            
             GameOverElements.SetActive(false);
 
+            GameOverOverlay.color.SetAlpha(0f);
 			GameOverOverlay.gameObject.SetActive(true);
-            GameOverOverlay.gameObject.LeanAlpha(0f, 0f);
-			LeanTween.alpha(GameOverOverlay.gameObject, 1f, 2f)
-                .setIgnoreTimeScale(true)
-                .setOnComplete(OnOverlayAppeared);
+            
+            // LeanTween.alpha(GameOverOverlay.rectTransform, 0f, 3f).setIgnoreTimeScale(true);
+			// GameOverOverlay.CrossFadeAlpha(1f, 3f, true);
+
+            LeanTween.delayedCall(1f, OnOverlayAppeared).setIgnoreTimeScale(true);
 
         }
 
