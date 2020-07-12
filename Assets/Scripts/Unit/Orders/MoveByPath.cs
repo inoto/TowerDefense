@@ -25,12 +25,13 @@ namespace TowerDefense
 		Quaternion quat;
 		Vector2 offset;
 		Vector2 footPoint;
-		
+        float spriteYoffset = 0.01f;
+
 		AttachmentPoints _attachments;
         Weapon weapon;
         MoveByTransform moveByTransform;
 
-		protected override void Awake()
+        protected override void Awake()
 		{
 			base.Awake();
 
@@ -117,11 +118,19 @@ namespace TowerDefense
 				waypoint = path.Anchors[segment] + offset;
 			}
 			_transform.position += (Vector3)desired * Time.fixedDeltaTime * Speed / 100;
-		}
+
+            if (_unit.RotationTransform.localPosition.y > _unit.SpriteMaxY)
+                spriteYoffset = -0.005f;
+            else if (_unit.RotationTransform.localPosition.y < -_unit.SpriteMaxY)
+                spriteYoffset = 0.005f;
+            spriteYoffset *= _unit.SpriteYSpeed;
+            _unit.RotationTransform.localPosition += new Vector3(0, spriteYoffset, 0);
+        }
 
 		void ArrivedDestination()
 		{
 			isMoving = false;
+            spriteYoffset = 0f;
 			_unit.ArrivedDestination();
 			// _unit.OrderEnded(this);
             EndOfPathArrivedEvent?.Invoke();

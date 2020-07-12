@@ -23,6 +23,8 @@ namespace TowerDefense
 
         [Space]
         public Transform RotationTransform;
+        public float SpriteYSpeed = 1f;
+        public float SpriteMaxY = 0.03f;
 
         Transform _transform;
 		Collider2D _collider;
@@ -70,15 +72,11 @@ namespace TowerDefense
 		protected void StopMoving()
 		{
 			_moveByTransform.StopMoving();
-//			animator.Play("Idle");
-//			animator.speed = 1f;
-		}
+        }
 		
 		void ResetSprite()
 		{
-//			animator.enabled = true;
-//			animator.Play("Idle");
-			LeanTween.alpha(gameObject, 1f, 0f);
+            LeanTween.alpha(gameObject, 1f, 0f);
 		}
 
 		public void RaiseDamagedEvent(int damage, DamageType type)
@@ -97,8 +95,7 @@ namespace TowerDefense
 		// used by Animator
 		protected virtual void Corpse()
 		{
-			// animator.enabled = false;
-			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
+            LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 
 #region ITargetable
