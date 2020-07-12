@@ -63,6 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\CustomToolbar\Scripts\Editor\CustomToolbar.cs" />
+    <Compile Include="Assets\Plugins\CustomToolbar\Scripts\Editor\LeftToolbarPanel.cs" />
+    <Compile Include="Assets\Plugins\CustomToolbar\Scripts\Editor\RightToolbarPanel.cs" />
+    <Compile Include="Assets\Plugins\CustomToolbar\Scripts\Editor\ToolbarCallback.cs" />
     <Compile Include="Assets\Plugins\NaughtyAttributes\Scripts\Editor\Attributes\BaseAttribute.cs" />
     <Compile Include="Assets\Plugins\NaughtyAttributes\Scripts\Editor\Attributes\FieldDrawerAttribute.cs" />
     <Compile Include="Assets\Plugins\NaughtyAttributes\Scripts\Editor\Attributes\IAttribute.cs" />
