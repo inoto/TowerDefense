@@ -65,6 +65,7 @@ public static class SimplePool {
 			this.prefab = prefab;
 			
 			parent = new GameObject(prefab.name + "_pool");
+            parent.transform.parent = root.transform;
 
 			// If Stack uses a linked list internally, then this
 			// whole initialQty thing is a placebo that we could
@@ -181,8 +182,13 @@ public static class SimplePool {
 		public Pool myPool;
 	}
 
-	// All of our pools
+    static GameObject root;
 	static Dictionary< GameObject, Pool > pools;
+
+    static SimplePool()
+    {
+        root = new GameObject("ObjectPool");
+    }
 
 	/// <summary>
 	/// Initialize our dictionary.
@@ -213,7 +219,7 @@ public static class SimplePool {
 	/// Spawn/Despawn sequence is going to be pretty darn quick and
 	/// this avoids code duplication.
 	/// </summary>
-	static public void Preload(GameObject prefab, int qty = 1) {
+    public static void Preload(GameObject prefab, int qty = 1) {
 		Init(prefab, qty);
 
 		// Make an array to grab the objects we're about to pre-spawn.
@@ -227,8 +233,8 @@ public static class SimplePool {
 			Despawn( obs[i] );
 		}
 	}
-	
-	static public void Preload(GameObject prefab, Transform parent, int qty = 1) {
+
+    public static void Preload(GameObject prefab, Transform parent, int qty = 1) {
 		Init(prefab, parent, qty);
 
 		// Make an array to grab the objects we're about to pre-spawn.
@@ -243,7 +249,7 @@ public static class SimplePool {
 		}
 	}
 
-	static public void Reset()
+    public static void Reset()
 	{
 		pools.Clear();
 		pools = null;
@@ -256,13 +262,13 @@ public static class SimplePool {
 	/// after spawning -- but remember that toggling IsActive will also
 	/// call that function.
 	/// </summary>
-	static public GameObject Spawn(GameObject prefab, Vector3 pos, Quaternion rot) {
+    public static GameObject Spawn(GameObject prefab, Vector3 pos, Quaternion rot) {
 		Init(prefab);
 
 		return pools[prefab].Spawn(pos, rot);
 	}
-	
-	static public GameObject Spawn(GameObject prefab) {
+
+    public static GameObject Spawn(GameObject prefab) {
 		Init(prefab);
 
 		return pools[prefab].Spawn();
@@ -271,7 +277,7 @@ public static class SimplePool {
 	/// <summary>
 	/// Despawn the specified gameobject back into its pool.
 	/// </summary>
-	static public void Despawn(GameObject obj) {
+	public static void Despawn(GameObject obj) {
 		PoolMember pm = obj.GetComponent<PoolMember>();
 		if(pm == null) {
 //				Debug.Log ("Object '"+obj.name+"' wasn't spawned from a pool. Destroying it instead.");

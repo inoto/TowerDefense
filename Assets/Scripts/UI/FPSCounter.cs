@@ -7,31 +7,30 @@ namespace TowerDefense
 {
 	public class FPSCounter : MonoBehaviour
 	{
-		float deltaTime = 0f;
-		
-		TextMeshProUGUI _textMeshPro;
+		[SerializeField] TextAnchor alignment = TextAnchor.UpperLeft;
+		[SerializeField] int fontSize = 25;
+		[SerializeField] Color textColor = new Color(0.0f, 0.0f, 0.5f, 1.0f);
 
-		void Awake()
+		float deltaTime = 0.0f;
+		GUIStyle style = new GUIStyle();
+
+		void Update()
 		{
-			_textMeshPro = GetComponent<TextMeshProUGUI>();
+			deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 		}
 
-		IEnumerator Start()
+		void OnGUI()
 		{
-			deltaTime = Time.unscaledDeltaTime;
-			while (true)
-			{
-				if (Time.timeScale > 0)
-				{
-					deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-					_textMeshPro.text = (1.0f / Time.unscaledDeltaTime).ToString("F1");
-				}
-				else
-				{
-					_textMeshPro.text = "paused";
-				}
-				yield return new WaitForSeconds (0.5f);
-			}
+			int w = Screen.width, h = Screen.height;
+
+			Rect rect = new Rect(0, 0, w, h * 2 / 100);
+			style.alignment = alignment;
+			style.fontSize = fontSize;
+			style.normal.textColor = textColor;
+			float msec = deltaTime * 1000.0f;
+			float fps = 1.0f / deltaTime;
+			string text = $"{msec:0.0} ms ({fps:0.} fps)";
+			GUI.Label(rect, text, style);
 		}
 	}
 }
