@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3187821940685304510}
   - component: {fileID: 708525566198702784}
   - component: {fileID: 1744245071905157493}
-  m_Layer: 9
+  m_Layer: 17
   m_Name: BuildPlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,6 +108,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 692113151601181614, guid: 31dfa192a48323d46a26ab55a733eb94,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 3470067773838276896, guid: 31dfa192a48323d46a26ab55a733eb94,
         type: 3}

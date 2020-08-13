@@ -14,9 +14,12 @@ namespace TowerDefense
 		public static event Action<Building> SoldiersCountChangedEvent;
 		public event Action SoldiersCountChangedSingleEvent;
 
+		[SerializeField] int maxSoldiersCount = 3;
+
 		public List<Soldier> Soldiers;
 		public int SoldiersCount => Soldiers.Count;
 		public int SoldiersCountInBuilding => Soldiers.Count(s => s.InBuilding);
+		public int MaxSoldiersCount => maxSoldiersCount;
 		
 		protected bool initialized = false;
 

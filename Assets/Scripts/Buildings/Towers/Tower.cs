@@ -15,9 +15,6 @@ namespace TowerDefense
         public static event Action<Tower> ClickedEvent;
 		public static event Action<Tower, SoldiersDispenser.Priority> PriorityChangedEvent;
 		public static event Action<Tower> DesiredChangedEvent;
-		public static event Action<Tower> DragStartedEvent;
-		public static event Action<Vector2> DragMovedEvent;
-		public static event Action<Vector2> DragEndedEvent;
 
 		public event Action SpecChangedSingleEvent;
 		
@@ -143,20 +140,5 @@ namespace TowerDefense
         {
 			throw new NotImplementedException();
 		}
-
-        public void OnDragStarted(Vector2 point)
-        {
-			DragStartedEvent?.Invoke(this);
-        }
-
-        public void OnDragMoved(Vector2 point)
-        {
-	        DragMovedEvent?.Invoke(point);
-        }
-
-        public void OnDragEnded(Vector2 point)
-        {
-	        DragEndedEvent?.Invoke(point);
-        }
     }
 }

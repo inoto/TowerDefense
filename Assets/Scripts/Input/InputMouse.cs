@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TowerDefense
 {
@@ -8,43 +9,36 @@ namespace TowerDefense
 
         RaycastHit2D[] results = new RaycastHit2D[10];
         public static IClickable selected = null;
+        public static IDraggable draggable = null;
 
-        bool swipeStarted = false;
+		bool dragStarted = false;
         Vector2 startPoint = Vector2.zero;
-        IClickable swipeClickable;
 
         void Update()
         {
 	        if (Input.GetMouseButtonDown(0))
 	        {
-		        swipeClickable = FindClickable();
-		        if (swipeClickable != null)
-		        {
-			        swipeStarted = true;
-			        swipeClickable.OnDragStarted(Input.mousePosition);
-		        }
+		        draggable = FindDraggable();
+		        draggable?.OnDragStarted(Input.mousePosition);
 	        }
             else if (Input.GetMouseButtonUp(0))
 	        {
-		        if (swipeClickable == null)
+		        if (draggable == null)
 			        return;
 
-		        IClickable c = FindClickable();
-		        if (c != null && c != swipeClickable)
-		        {
-					swipeClickable.OnDragEnded(Input.mousePosition);
-		        }
+				draggable.OnDragEnded(Input.mousePosition);
+				draggable = null;
 	        }
             else if (Input.GetMouseButton(0) && (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0))
 	        {
-		        if (swipeClickable == null)
+		        if (draggable == null)
 			        return;
 
-				swipeClickable.OnDragMoved(Input.mousePosition);
+				draggable.OnDragMoved(Input.mousePosition);
 			}
         }
 
-        IClickable FindClickable()
+        IDraggable FindDraggable()
         {
 	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
 		        Vector2.zero, results, Mathf.Infinity, clickableLayers);
@@ -53,7 +47,7 @@ namespace TowerDefense
 
 	        // Debug.Log($"hits count {hits}");
 	        Debug.Log($"last hit {results[hits - 1].transform.name}");
-	        return results[hits - 1].transform.gameObject.GetComponent<IClickable>();
+	        return results[hits - 1].transform.gameObject.GetComponent<IDraggable>();
         }
 
         public static void ClearSelection()
@@ -62,6 +56,7 @@ namespace TowerDefense
             ConstructionWheel.Instance.Hide();
             RaidInfo.Instance.Hide();
             selected = null;
+            draggable = null;
         }
     }
 }

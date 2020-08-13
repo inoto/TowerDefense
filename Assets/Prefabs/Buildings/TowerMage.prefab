@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 7828427511425486444}
   - component: {fileID: 617141021059423018}
   - component: {fileID: 1521610499332554764}
+  - component: {fileID: -2451230603623990126}
   m_Layer: 9
   m_Name: TowerMage
   m_TagString: Untagged
@@ -210,6 +211,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-2451230603623990126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347750961285234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff81d8811a24e9a4b947a4251cf02b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickableLayers:
+    serializedVersion: 2
+    m_Bits: 82432
 --- !u!1001 &2153277828475281080
 PrefabInstance:
   m_ObjectHideFlags: 0

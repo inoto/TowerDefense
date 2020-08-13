@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8198346725571613127}
   - component: {fileID: 8774561207161834584}
   - component: {fileID: 6479964499301800850}
-  m_Layer: 9
+  - component: {fileID: 7310346753822730505}
+  m_Layer: 16
   m_Name: Camp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +49,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010320067, y: -0.18507493}
+  m_Offset: {x: 0.01, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -59,7 +60,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.88411736, y: 0.56088805}
+  m_Size: {x: 1, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &8774561207161834584
 MonoBehaviour:
@@ -88,6 +89,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   Balance: 1
+--- !u!114 &7310346753822730505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738599816406478243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff81d8811a24e9a4b947a4251cf02b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickableLayers:
+    serializedVersion: 2
+    m_Bits: 82432
 --- !u!1001 &5498855530330244846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,10 +216,30 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5978745966595231128, guid: 2c97df3141a68474cba9464b90269c71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779599828540206871, guid: 2c97df3141a68474cba9464b90269c71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376235898327812607, guid: 2c97df3141a68474cba9464b90269c71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 7768187341680764758, guid: 2c97df3141a68474cba9464b90269c71,
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768187341680764758, guid: 2c97df3141a68474cba9464b90269c71,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c97df3141a68474cba9464b90269c71, type: 3}
@@ -363,7 +399,7 @@ PrefabInstance:
     - target: {fileID: 2548381693612080123, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3135269945718432484, guid: abc5ec4cec098064eaf326aa7366852b,
         type: 3}

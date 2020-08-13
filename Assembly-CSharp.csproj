@@ -111,8 +111,6 @@
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\References\RequiredReferences.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\ReorderableList\ReorderableList.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\SerializableDictionaryBase.cs" />
-    <Compile Include="Assets\ScriptableObjects\MobStatsData.cs" />
-    <Compile Include="Assets\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\Background.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\BezierCurveCreator.cs" />
@@ -122,6 +120,7 @@
     <Compile Include="Assets\Scripts\Buildings\BuildPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Building.cs" />
     <Compile Include="Assets\Scripts\Buildings\Camp.cs" />
+    <Compile Include="Assets\Scripts\Buildings\DragArrowMaker.cs" />
     <Compile Include="Assets\Scripts\Buildings\Farm.cs" />
     <Compile Include="Assets\Scripts\Buildings\Gates.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Tower.cs" />
@@ -132,6 +131,7 @@
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\IClickable.cs" />
+    <Compile Include="Assets\Scripts\IDraggable.cs" />
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
     <Compile Include="Assets\Scripts\Input\InputMouse.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
@@ -143,12 +143,17 @@
     <Compile Include="Assets\Scripts\Projectiles\ProjectileMagicSphere.cs" />
     <Compile Include="Assets\Scripts\Road\Road.cs" />
     <Compile Include="Assets\Scripts\Road\RoadCreator.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\LevelData.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\MobStatsData.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
     <Compile Include="Assets\Scripts\SoldiersDispenser.cs" />
     <Compile Include="Assets\Scripts\UI\CampCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\ChooseSpecWheel.cs" />
+    <Compile Include="Assets\Scripts\UI\DragArrow.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
+    <Compile Include="Assets\Scripts\UI\InterToolsFactory.cs" />
     <Compile Include="Assets\Scripts\UI\RaidInfo.cs" />
     <Compile Include="Assets\Scripts\UI\RangeIndicator.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\AvailableSoldiersResource.cs" />
@@ -158,7 +163,6 @@
     <Compile Include="Assets\Scripts\UI\Resources\MoraleResource.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\ReagentResource.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\WaveResource.cs" />
-    <Compile Include="Assets\Scripts\UI\SwipeArrow.cs" />
     <Compile Include="Assets\Scripts\UI\TowerCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\TowerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />

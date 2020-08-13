@@ -9,6 +9,7 @@ namespace TowerDefense
     {
         public List<MobData> Mobs;
         public List<WizardData> Wizards;
+        public float TimeAfterWave;
 
         [Serializable]
         public class MobData
