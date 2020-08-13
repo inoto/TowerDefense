@@ -28,19 +28,27 @@ namespace TowerDefense
 			gameObject.SetActive(false);
 		}
 
-		public void Start(Vector2 point)
+		public bool Start(GameObject owner)
 		{
-			var building = owner.GetComponent<Building>();
-			if (building != null)
+			this.owner = owner;
+			var ownerBuilding = owner.GetComponent<Building>();
+			if (ownerBuilding != null && ownerBuilding.SoldiersCount <= 0)
 			{
-				if (building.SoldiersCount <= 0)
-					return;
+				return false;
+			}
+
+			var targetBuilding = owner.GetComponent<Building>();
+			if (targetBuilding != null)
+			{
+				if (targetBuilding.SoldiersCount <= 0)
+					return false;
 			}
 
 			lineRenderer.Points[1] = lineRenderer.Points[0] =
 				Camera.main.WorldToScreenPoint(owner.transform.position);
 			lineRenderer.SetVerticesDirty();
 			gameObject.SetActive(true);
+			return true;
 		}
 
 		public void UpdatePosition(Vector2 point, GameObject target)

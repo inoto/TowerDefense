@@ -15,6 +15,7 @@ namespace TowerDefense
 		public event Action SoldiersCountChangedSingleEvent;
 
 		[SerializeField] int maxSoldiersCount = 3;
+		[SerializeField] int startSoldiersCount = 0;
 
 		public List<Soldier> Soldiers;
 		public int SoldiersCount => Soldiers.Count;
@@ -23,19 +24,26 @@ namespace TowerDefense
 		
 		protected bool initialized = false;
 
-		void Start()
+		protected virtual void Start()
 		{
 			Instances.Add(this);
 			
 			if (initialized)
 				return;
 
-			Wave.EndedEvent += WaveOnEndedEvent;
+			Wave.EndedEvent += OnWaveEndedEvent;
 
-			StartCoroutine(CheckCreatedManually());
+			Soldiers = new List<Soldier>(maxSoldiersCount);
+			for (int i = 0; i < startSoldiersCount; i++)
+			{
+				var soldier = UnitFactory.Instance.CreateSoldier();
+				soldier.transform.position = transform.position;
+				soldier.AssignToBuilding(this);
+			}
+			initialized = true;
 		}
 
-        void WaveOnEndedEvent(int waveNumber)
+        void OnWaveEndedEvent(int waveNumber)
         {
             // int counter = 0;
             // foreach (var soldier in Soldiers.Where(s => s.InBuilding))
@@ -44,26 +52,7 @@ namespace TowerDefense
 			    PlayerController.Instance.SpendFood(SoldiersCountInBuilding, transform);
 		}
 
-        IEnumerator CheckCreatedManually()
-		{
-			yield return new WaitForSeconds(0.1f);
-			if (!initialized)
-			{
-				Init();
-				BuiltEvent?.Invoke(this);
-			}
-		}
-
-		public virtual void Init()
-		{
-			if (initialized)
-				return;
-			
-			Soldiers = new List<Soldier>();
-			initialized = true;
-		}
-		
-		public virtual void AddSoldier(Soldier soldier)
+        public virtual void AddSoldier(Soldier soldier)
 		{
 			Soldiers.Add(soldier);
 		}

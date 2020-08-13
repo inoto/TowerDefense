@@ -17,9 +17,9 @@ namespace TowerDefense
 			_canvas = GetComponentInChildren<CampCanvas>();
 		}
 
-		public override void Init()
+		protected override void Start()
 		{
-			base.Init();
+			base.Start();
 			
 			_canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}

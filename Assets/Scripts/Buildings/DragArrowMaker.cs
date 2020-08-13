@@ -12,11 +12,9 @@ namespace TowerDefense
 		public void OnDragStarted(Vector2 point)
 		{
 			dragArrow = InterToolsFactory.Instance.CreateDragArrow();
-			dragArrow.Init(gameObject);
-			if (dragArrow != null)
-			{
-				dragArrow.Start(point);
-			}
+			var success = dragArrow.Start(gameObject);
+			if (!success)
+				dragArrow = null;
 		}
 
 		public void OnDragMoved(Vector2 point)
@@ -26,8 +24,6 @@ namespace TowerDefense
 				int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(point),
 					Vector2.zero, results, Mathf.Infinity, clickableLayers);
 
-				// Debug.Log($"hits count {hits}");
-				// Debug.Log($"last hit {results[hits - 1].transform.name}");
 				if (hits > 0)
 				{
 					dragArrow.UpdatePosition(point, results[hits - 1].transform.gameObject);
@@ -44,8 +40,6 @@ namespace TowerDefense
 				int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(point),
 					Vector2.zero, results, Mathf.Infinity, clickableLayers);
 
-				// Debug.Log($"hits count {hits}");
-				// Debug.Log($"last hit {results[hits - 1].transform.name}");
 				if (hits > 0)
 				{
 					dragArrow.End(results[hits - 1].transform.gameObject);

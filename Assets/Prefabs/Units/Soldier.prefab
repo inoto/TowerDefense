@@ -54,7 +54,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 6807698820096271209}
-  CurrentOrder: {fileID: 0}
+  SpriteYSpeed: 1
+  SpriteMaxY: 0.03
   _healthy: {fileID: 6247893295143434781}
   _moveByTransform: {fileID: 8455721943437846746}
   InBuilding: 0
@@ -89,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 1
-  Speed: 40
+  Speed: 60
   isMoving: 0
 --- !u!114 &9165510485623413685
 MonoBehaviour:
@@ -275,7 +276,6 @@ MonoBehaviour:
   DamageMax: 10
   ProjectilePrefab: {fileID: 0}
   ProjectileStartPointOffset: {x: 0, y: 0}
-  followingTarget: 0
 --- !u!1001 &114352862156269913
 PrefabInstance:
   m_ObjectHideFlags: 0

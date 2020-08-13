@@ -98,8 +98,7 @@ namespace TowerDefense
 			
 			GameObject go = Instantiate(slot.BuildingPrefab);
 			go.transform.position = _buildPlace.transform.position;
-			go.GetComponent<Building>().Init();
-			
+
 			Destroy(_buildPlace.gameObject);
 		}
 	}

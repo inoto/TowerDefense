@@ -179,6 +179,7 @@
     <Compile Include="Assets\Scripts\Unit\Soldier.cs" />
     <Compile Include="Assets\Scripts\Unit\Specialization.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
+    <Compile Include="Assets\Scripts\Unit\UnitFactory.cs" />
     <Compile Include="Assets\Scripts\Unit\Wizard.cs" />
     <Compile Include="Assets\Scripts\Unit\WizardMagic.cs" />
     <Compile Include="Assets\Scripts\Unit\WizardMagicDanger.cs" />

@@ -60,9 +60,9 @@ namespace TowerDefense
 			SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
 		}
 
-		public override void Init()
+		protected override void Start()
 		{
-			base.Init();
+			base.Start();
 
 			Weapon.gameObject.SetActive(false);
 			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
