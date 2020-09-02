@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace TowerDefense
 {
-	public class TowerInfo : MonoBehaviour
+	public class UITowerInfo : UILevelControl
 	{
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
@@ -112,7 +112,7 @@ namespace TowerDefense
 			}
 
 			gameObject.SetActive(false);
-			ChooseSpecWheel.Instance.Hide();
+			// UIChooseSpecWheel.Instance.Hide();
 		}
 		
 		// using by button
@@ -206,7 +206,8 @@ namespace TowerDefense
 		public void SpecChoose()
 		{
 			SpecChooseLabelText1.gameObject.SetActive(false);
-			ChooseSpecWheel.Instance.Show(ChooseSpecButton.transform, tower);
+			// UIChooseSpecWheel.Instance.Show(ChooseSpecButton.transform, tower);
+			UILevelControlsManager.Instance.GetControl(UILevelControlsManager.LevelControl.ChooseSpecWheel);
 		}
 		
 		// using by button
@@ -217,7 +218,7 @@ namespace TowerDefense
 
 			tower.Canvas.SetNoSpecIcon(false);
 			SpecIsActive();
-			ChooseSpecWheel.Instance.Hide();
+			// UIChooseSpecWheel.Instance.Hide();
 		}
 
 		void UpdateSpec()

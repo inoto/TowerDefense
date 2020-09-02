@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-    public class RaidInfo : MonoBehaviour
+    public class UIRaidInfo : UILevelControl
     {
         Transform _transform;
 

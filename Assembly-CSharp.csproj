@@ -150,11 +150,8 @@
     <Compile Include="Assets\Scripts\Selectable.cs" />
     <Compile Include="Assets\Scripts\SoldiersDispenser.cs" />
     <Compile Include="Assets\Scripts\UI\CampCanvas.cs" />
-    <Compile Include="Assets\Scripts\UI\ChooseSpecWheel.cs" />
-    <Compile Include="Assets\Scripts\UI\DragArrow.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
-    <Compile Include="Assets\Scripts\UI\RaidInfo.cs" />
     <Compile Include="Assets\Scripts\UI\RangeIndicator.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\AvailableSoldiersResource.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\FoodResource.cs" />
@@ -164,10 +161,13 @@
     <Compile Include="Assets\Scripts\UI\Resources\ReagentResource.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\WaveResource.cs" />
     <Compile Include="Assets\Scripts\UI\TowerCanvas.cs" />
-    <Compile Include="Assets\Scripts\UI\TowerInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UIChooseSpecWheel.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
-    <Compile Include="Assets\Scripts\UI\UILevel.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDragArrow.cs" />
     <Compile Include="Assets\Scripts\UI\UILevelControl.cs" />
+    <Compile Include="Assets\Scripts\UI\UILevelControlsManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIRaidInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UITowerInfo.cs" />
     <Compile Include="Assets\Scripts\Unit\Armor.cs" />
     <Compile Include="Assets\Scripts\Unit\AttachmentPoints.cs" />
     <Compile Include="Assets\Scripts\Unit\HealthBar.cs" />

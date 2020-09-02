@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace TowerDefense
 {
-	public class ChooseSpecWheel : Singleton<ChooseSpecWheel>
+	public class UIChooseSpecWheel : UILevelControl
 	{
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
@@ -15,10 +15,8 @@ namespace TowerDefense
 		
 		Transform _transform;
 
-		protected override void Awake()
+		void Awake()
 		{
-			base.Awake();
-
 			_transform = GetComponent<Transform>();
 
 			Hide();

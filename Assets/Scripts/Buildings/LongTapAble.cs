@@ -17,8 +17,8 @@ namespace TowerDefense
 			{
 				case Type.TowerInfo:
 				{
-					var towerInfo = UILevel.Instance.CreateTowerInfo();
-					towerInfo?.Show(this);
+					var towerInfo = UILevelControlsManager.Instance.GetControl(UILevelControlsManager.LevelControl.TowerInfo) as UITowerInfo;
+					towerInfo.Show(this);
 					break;
 				}
 			}

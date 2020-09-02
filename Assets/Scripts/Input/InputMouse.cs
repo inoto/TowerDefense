@@ -15,6 +15,8 @@ namespace TowerDefense
         [SerializeField] LayerMask longTapableFilter = 0;
         [SerializeField] float detectionTime = 0.5f;
 
+		[Header("Tap")]
+		[SerializeField] LayerMask tapableFilter = 0;
         
 
         RaycastHit2D[] results = new RaycastHit2D[10];
@@ -53,7 +55,7 @@ namespace TowerDefense
 	                else
 	                {
 						longTapTimer += Time.deltaTime;
-						if (longTapTimer >= detectionTime)
+						if (longTapAbleSelected == null && longTapTimer >= detectionTime)
 						{
 							LongTapDetect();
 							longTapTimer = 0;
@@ -66,10 +68,8 @@ namespace TowerDefense
 	                return;
                 }
 
-		        if (Input.GetAxis("Mouse X") == 0f || Input.GetAxis("Mouse Y") == 0f)
-			        return;
-
-				draggable.OnDragMoved(Input.mousePosition);
+		        if (Math.Abs(Input.GetAxis("Mouse X")) > 0f || Math.Abs(Input.GetAxis("Mouse Y")) > 0f)
+			        draggable.OnDragMoved(Input.mousePosition);
 	        }
         }
 
@@ -88,14 +88,14 @@ namespace TowerDefense
 		        return;
 	        }
 
-	        Debug.Log($"LongTapDetect on {results[hits - 1].transform.name}");
+	        // Debug.Log($"LongTapDetect on {results[hits - 1].transform.name}");
 	        longTapAbleSelected = results[hits - 1].transform.gameObject.GetComponent<LongTapAble>();
 	        longTapAbleSelected?.OnLongTap(Input.mousePosition);
 		}
 
         void StartDrag()
         {
-	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(startPoint),
 		        Vector2.zero, results, Mathf.Infinity, draggableFilter);
 	        if (hits == 0)
 		        return;

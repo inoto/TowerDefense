@@ -19,7 +19,7 @@ namespace TowerDefense
 		// public Button.ButtonClickedEvent Actions;
 	}
 	
-	public class ConstructionWheel : MonoBehaviour
+	public class ConstructionWheel : UILevelControl
 	{
 		[SerializeField] GameObject SlotPrefab;
 		[SerializeField] List<ConstructionWheelSlot> SlotsList;
