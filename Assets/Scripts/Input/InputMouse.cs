@@ -6,22 +6,22 @@ namespace TowerDefense
     public class InputMouse : MonoBehaviour
     {
         [Header("Drag")]
-        [SerializeField] LayerMask draggableLayers = 0;
+        [SerializeField] LayerMask draggableFilter = 0;
         [SerializeField] float minLengthToStart = 1f;
 
-        [SerializeField] bool dragStarted = false;
-        [SerializeField] bool dragMoving = false;
-        [SerializeField] float distance = 0f;
+        bool dragStarted = false;
 
-		[Header("Long tap")]
-        [SerializeField] LayerMask longTapableLayers = 0;
+        [Header("Long tap")]
+        [SerializeField] LayerMask longTapableFilter = 0;
         [SerializeField] float detectionTime = 0.5f;
 
         
 
         RaycastHit2D[] results = new RaycastHit2D[10];
-        public static IClickable selected = null;
-        public static IDraggable draggable = null;
+        public static LongTapAble longTapAbleSelected = null;
+        public static DragArrowMaker draggable = null;
+
+        float longTapTimer = 0;
 
 		// bool dragStarted = false;
         Vector2 startPoint = Vector2.zero;
@@ -34,7 +34,7 @@ namespace TowerDefense
 	        }
             else if (Input.GetMouseButtonUp(0))
 	        {
-		        if (draggable == null)
+		        if (!dragStarted)
 			        return;
 
 				draggable.OnDragEnded(Input.mousePosition);
@@ -43,15 +43,26 @@ namespace TowerDefense
 	        }
             else if (Input.GetMouseButton(0))
 	        {
-		        dragMoving = false;
-		        Vector2 diff = startPoint - (Vector2)Input.mousePosition;
-		        distance = diff.magnitude;
-                if (draggable == null)
+		        if (!dragStarted)
                 {
+	                Vector2 diff = startPoint - (Vector2)Input.mousePosition;
 	                if (diff.magnitude >= minLengthToStart)
 	                {
 		                StartDrag();
 	                }
+	                else
+	                {
+						longTapTimer += Time.deltaTime;
+						if (longTapTimer >= detectionTime)
+						{
+							LongTapDetect();
+							longTapTimer = 0;
+						}
+						else
+						{
+							TapDetect();
+						}
+					}
 	                return;
                 }
 
@@ -59,29 +70,46 @@ namespace TowerDefense
 			        return;
 
 				draggable.OnDragMoved(Input.mousePosition);
-				dragMoving = true;
 	        }
         }
+
+        void TapDetect()
+        {
+	        ClearSelection();
+		}
+
+        void LongTapDetect()
+        {
+	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+		        Vector2.zero, results, Mathf.Infinity, longTapableFilter);
+	        if (hits == 0)
+	        {
+		        longTapAbleSelected = null;
+		        return;
+	        }
+
+	        Debug.Log($"LongTapDetect on {results[hits - 1].transform.name}");
+	        longTapAbleSelected = results[hits - 1].transform.gameObject.GetComponent<LongTapAble>();
+	        longTapAbleSelected?.OnLongTap(Input.mousePosition);
+		}
 
         void StartDrag()
         {
 	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
-		        Vector2.zero, results, Mathf.Infinity, draggableLayers);
+		        Vector2.zero, results, Mathf.Infinity, draggableFilter);
 	        if (hits == 0)
 		        return;
 
-	        Debug.Log($"last hit {results[hits - 1].transform.name}");
-	        draggable = results[hits - 1].transform.gameObject.GetComponent<IDraggable>();
+	        Debug.Log($"StartDrag on {results[hits - 1].transform.name}");
+	        draggable = results[hits - 1].transform.gameObject.GetComponent<DragArrowMaker>();
 	        draggable?.OnDragStarted(Input.mousePosition);
 	        dragStarted = true;
         }
 
         public static void ClearSelection()
         {
-            TowerInfo.Instance.Hide();
-            ConstructionWheel.Instance.Hide();
-            RaidInfo.Instance.Hide();
-            selected = null;
+	        // hide all
+            longTapAbleSelected = null;
             draggable = null;
         }
     }

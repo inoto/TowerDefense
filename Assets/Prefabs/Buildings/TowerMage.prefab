@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 60629785584949406}
   - component: {fileID: 114231414643803216}
   - component: {fileID: 5284811585941149946}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,9 +125,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6494051971715682568}
   - component: {fileID: 7828427511425486444}
-  - component: {fileID: 617141021059423018}
   - component: {fileID: 1521610499332554764}
   - component: {fileID: -2451230603623990126}
+  - component: {fileID: 6072786071088706591}
   m_Layer: 9
   m_Name: TowerMage
   m_TagString: Untagged
@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9069a98880e094249986cccfb472fdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSoldiersCount: 3
+  startSoldiersCount: 0
   Soldiers: []
   Cost: 6
   Icon: {fileID: 0}
@@ -173,18 +175,6 @@ MonoBehaviour:
   SpecDataAsset: {fileID: 0}
   Canvas: {fileID: 3914627328765478452}
   damageMultiplierFromSoldiersCount: 0.25
---- !u!114 &617141021059423018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347750961285234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62033811fbf87f54a9a5db7c794b988b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1521610499332554764
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,9 +213,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff81d8811a24e9a4b947a4251cf02b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickableLayers:
+  dragEndFilter:
     serializedVersion: 2
     m_Bits: 82432
+--- !u!114 &6072786071088706591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347750961285234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e52c42a48af854a97e0f6083a7f685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiType: 0
 --- !u!1001 &2153277828475281080
 PrefabInstance:
   m_ObjectHideFlags: 0

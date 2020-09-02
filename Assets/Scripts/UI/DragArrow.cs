@@ -17,18 +17,7 @@ namespace TowerDefense
 			lineRenderer = GetComponent<UILineRenderer>();
 		}
 
-		void Start()
-		{
-			
-		}
-
-		public void Init(GameObject owner)
-		{
-			this.owner = owner;
-			gameObject.SetActive(false);
-		}
-
-		public bool Start(GameObject owner)
+		public bool Show(GameObject owner)
 		{
 			this.owner = owner;
 			var ownerBuilding = owner.GetComponent<Building>();

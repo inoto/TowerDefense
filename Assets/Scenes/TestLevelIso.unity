@@ -975,14 +975,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167aefd41b7f41e489201247689c1f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggableLayers:
+  draggableFilter:
     serializedVersion: 2
     m_Bits: 66048
   minLengthToStart: 15
-  dragStarted: 0
-  dragMoving: 0
-  distance: 0
-  longTapableLayers:
+  longTapableFilter:
     serializedVersion: 2
     m_Bits: 512
   detectionTime: 0.5
@@ -2618,10 +2615,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8901121728352678826}
     m_Modifications:
-    - target: {fileID: 1220021309157758, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 1347750961285234, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
       propertyPath: m_Name
       value: TowerMage
@@ -2686,8 +2679,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 617141021059423018, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
 --- !u!4 &1294821680 stripped
 Transform:
@@ -3014,10 +3006,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8901121728352678826}
     m_Modifications:
-    - target: {fileID: 1220021309157758, guid: f94f55b98de5327438489d0223c2f362, type: 3}
-      propertyPath: m_Layer
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 1347750961285234, guid: f94f55b98de5327438489d0223c2f362, type: 3}
       propertyPath: m_Name
       value: TowerCannon
@@ -4154,6 +4142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragArrowPrefab: {fileID: 6008101803738659400, guid: 3e28e8a3cd6b8924884bf4736a9fbde1,
     type: 3}
+  towerInfoPrefab: {fileID: 0}
+  raidInfoPrefab: {fileID: 0}
+  chooseSpecWheelPrefab: {fileID: 0}
 --- !u!1 &1948361760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4495,11 +4486,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPSCounter
       objectReference: {fileID: 0}
-    - target: {fileID: 1218799039874126022, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1218799039874126023, guid: 8e239c37e7baf03409c64dc4b4661959,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4604,31 +4590,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218799039874126040, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218799039874126040, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218799039874126040, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 1218799039874126040, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1218799039874126041, guid: 8e239c37e7baf03409c64dc4b4661959,
-        type: 3}
-      propertyPath: fontSize
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e239c37e7baf03409c64dc4b4661959, type: 3}
@@ -4907,6 +4868,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310346753822730505, guid: 23fbd61b62f9a494c943fd6ebac0dcca,
+        type: 3}
+      propertyPath: dragEndFilter.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 8774561207161834584, guid: 23fbd61b62f9a494c943fd6ebac0dcca,
         type: 3}

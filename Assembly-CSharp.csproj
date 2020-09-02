@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Buildings\DragArrowMaker.cs" />
     <Compile Include="Assets\Scripts\Buildings\Farm.cs" />
     <Compile Include="Assets\Scripts\Buildings\Gates.cs" />
+    <Compile Include="Assets\Scripts\Buildings\LongTapAble.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="Assets\Scripts\UI\DragArrow.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />
-    <Compile Include="Assets\Scripts\UI\InterToolsFactory.cs" />
     <Compile Include="Assets\Scripts\UI\RaidInfo.cs" />
     <Compile Include="Assets\Scripts\UI\RangeIndicator.cs" />
     <Compile Include="Assets\Scripts\UI\Resources\AvailableSoldiersResource.cs" />
@@ -166,6 +166,8 @@
     <Compile Include="Assets\Scripts\UI\TowerCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\TowerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
+    <Compile Include="Assets\Scripts\UI\UILevel.cs" />
+    <Compile Include="Assets\Scripts\UI\UILevelControl.cs" />
     <Compile Include="Assets\Scripts\Unit\Armor.cs" />
     <Compile Include="Assets\Scripts\Unit\AttachmentPoints.cs" />
     <Compile Include="Assets\Scripts\Unit\HealthBar.cs" />

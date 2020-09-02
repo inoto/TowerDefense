@@ -19,7 +19,7 @@ namespace TowerDefense
 		// public Button.ButtonClickedEvent Actions;
 	}
 	
-	public class ConstructionWheel : Singleton<ConstructionWheel>
+	public class ConstructionWheel : MonoBehaviour
 	{
 		[SerializeField] GameObject SlotPrefab;
 		[SerializeField] List<ConstructionWheelSlot> SlotsList;
@@ -28,31 +28,23 @@ namespace TowerDefense
 		
 		Transform _transform;
 
-		protected override void Awake()
+		 void Awake()
 		{
-			base.Awake();
-
 			_transform = GetComponent<Transform>();
 			
 //			for (int i = 0; i < slotsArray.Length; i++)
 //				slotsArray[i].gameObject.SetActive(false);
 		}
 
-		void Start()
-		{
-			Hide();
-			BuildPlace.ClickedEvent += Show;
-		}
-
 		public void Show(BuildPlace buildPlace, List<ConstructData> constructDataList)
         {
-            if (InputMouse.selected == buildPlace)
+            if (InputMouse.longTapAbleSelected == buildPlace)
                 return;
 
-            if (InputMouse.selected != null)
+            if (InputMouse.longTapAbleSelected != null)
                 InputMouse.ClearSelection();
 
-			InputMouse.selected = buildPlace;
+			// InputMouse.longTapAbleSelected = buildPlace;
 			_buildPlace = buildPlace;
 
 			gameObject.SetActive(true);

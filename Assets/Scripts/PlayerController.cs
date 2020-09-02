@@ -13,7 +13,7 @@ namespace TowerDefense
         public int Reagents = 0;
         public int Morale = 0;
 
-        public int MinMoraleIfStarvation = -1;
+        public int MinMoraleIfStarvation = -1; // TODO: move to config
         bool starvation = false;
 
         void Start()

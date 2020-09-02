@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 4804314584400920786}
   - component: {fileID: 4656426180208101632}
   - component: {fileID: 2615415891278663081}
+  - component: {fileID: 7528139707303107055}
   m_Layer: 9
   m_Name: TowerArcher
   m_TagString: Untagged
@@ -163,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfd816c07de8454688922b900c9efa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSoldiersCount: 3
+  startSoldiersCount: 0
   Soldiers: []
   Cost: 4
   Icon: {fileID: 0}
@@ -211,9 +214,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff81d8811a24e9a4b947a4251cf02b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickableLayers:
+  dragEndFilter:
     serializedVersion: 2
     m_Bits: 82432
+--- !u!114 &7528139707303107055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219004363690880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e52c42a48af854a97e0f6083a7f685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiType: 0
 --- !u!1001 &1148102424939167198
 PrefabInstance:
   m_ObjectHideFlags: 0

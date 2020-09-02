@@ -55,9 +55,7 @@ namespace TowerDefense
 
 		void ClearSelection()
 		{
-			TowerInfo.Instance.Hide();
-			ConstructionWheel.Instance.Hide();
-			RaidInfo.Instance.Hide();
+			// hide all
 			selected = null;
 		}
 		

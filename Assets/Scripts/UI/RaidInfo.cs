@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-    public class RaidInfo : Singleton<RaidInfo>
+    public class RaidInfo : MonoBehaviour
     {
         Transform _transform;
 
@@ -26,30 +26,14 @@ namespace TowerDefense
         Dictionary<Building, RaidInfoTowerCloud> clouds = new Dictionary<Building, RaidInfoTowerCloud>();
         List<GameObject> arrowLinesList = new List<GameObject>();
 
-        protected override void Awake()
+	    void Awake()
         {
-            base.Awake();
-
-            _transform = GetComponent<Transform>();
+	        _transform = GetComponent<Transform>();
         }
 
-        void Start()
+	    public void Show(LongTapAble longTapAble)
         {
-            Hide();
-            Wizard.ClickedEvent += Show;
-            
-        }
-
-        void Show(Wizard wizard)
-        {
-            if (InputMouse.selected == wizard)
-                return;
-
-            if (InputMouse.selected != null)
-                InputMouse.ClearSelection();
-
-            InputMouse.selected = wizard;
-            this.wizard = wizard;
+            wizard = longTapAble.GetComponent<Wizard>();
 
             clouds.Clear();
             SoldiersCountText.text = soldiersCount.ToString();
