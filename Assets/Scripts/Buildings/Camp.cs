@@ -38,14 +38,24 @@ namespace TowerDefense
 			_canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}
 
-		public override Soldier RemoveSoldier()
+		public override Soldier RemoveLastSoldier()
 		{
-			Soldier soldier = base.RemoveSoldier();
+			Soldier soldier = base.RemoveLastSoldier();
 
-			SoldierUnassignedEvent?.Invoke(soldier);
+			// SoldierUnassignedEvent?.Invoke(soldier);
+
+			_canvas.UpdateCounterText(SoldiersCountInBuilding); // not calling, need to rework all these events
+			
+			return soldier;
+		}
+
+		public override List<Soldier> RemoveSoldiers(List<bool> indexes)
+		{
+			List<Soldier> soldiers = base.RemoveSoldiers(indexes);
 
 			_canvas.UpdateCounterText(SoldiersCountInBuilding);
-			return soldier;
+
+			return soldiers;
 		}
 	}
 }

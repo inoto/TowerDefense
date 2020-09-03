@@ -11,13 +11,15 @@ namespace TowerDefense
 			DragArrow = 0,
 			TowerInfo,
 			RaidInfo,
-			ChooseSpecWheel
+			ChooseSpecWheel,
+			SoldierChoice
 		}
 
 		[SerializeField] UIDragArrow dragArrow = null;
 		[SerializeField] UITowerInfo towerInfo = null;
 		[SerializeField] UIRaidInfo raidInfo = null;
 		[SerializeField] UIChooseSpecWheel chooseSpecWheel = null;
+		[SerializeField] UISoldierChoice soldierChoice = null;
 
 		public UILevelControl GetControl(LevelControl type, bool activate = true)
 		{
@@ -50,6 +52,13 @@ namespace TowerDefense
 					HideAll();
 					chooseSpecWheel.gameObject.SetActive(activate);
 					control = chooseSpecWheel;
+					break;
+				}
+				case LevelControl.SoldierChoice:
+				{
+					HideAll();
+					soldierChoice.gameObject.SetActive(activate);
+					control = soldierChoice;
 					break;
 				}
 			}

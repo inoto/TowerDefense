@@ -63,15 +63,39 @@ namespace TowerDefense
 			SoldiersCountChangedSingleEvent?.Invoke();
 		}
 
-		public virtual Soldier RemoveSoldier()
+		public virtual Soldier RemoveSoldier(int index)
 		{
-			Soldier soldier = Soldiers[Soldiers.Count-1];
-			Soldiers.RemoveAt(Soldiers.Count-1);
+			Soldier soldier = Soldiers[index];
+			Soldiers.RemoveAt(index);
 
 			SoldiersCountChangedEvent?.Invoke(this);
 			SoldiersCountChangedSingleEvent?.Invoke();
 
 			return soldier;
+		}
+
+		public virtual List<Soldier> RemoveSoldiers(List<bool> indexes)
+		{
+			List<Soldier> soldiersToRemove = new List<Soldier>();
+			for (int i = 0; i < indexes.Count; i++)
+			{
+				if (indexes[i])
+					soldiersToRemove.Add(Soldiers[i]);
+			}
+			for (int i = 0; i < soldiersToRemove.Count; i++)
+			{
+				Soldiers.Remove(soldiersToRemove[i]);
+			}
+
+			SoldiersCountChangedEvent?.Invoke(this);
+			SoldiersCountChangedSingleEvent?.Invoke();
+
+			return soldiersToRemove;
+		}
+
+		public virtual Soldier RemoveLastSoldier()
+		{
+			return RemoveSoldier(Soldiers.Count - 1);
 		}
 	}
 }

@@ -51,9 +51,9 @@ namespace TowerDefense
 			base.ActivateSoldier();
 		}
 
-		public override Soldier RemoveSoldier()
+		public override Soldier RemoveLastSoldier()
 		{
-			Soldier soldier = base.RemoveSoldier();
+			Soldier soldier = base.RemoveLastSoldier();
 
 			if (soldier.InBuilding)
 			{

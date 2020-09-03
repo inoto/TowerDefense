@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace TowerDefense
 {
@@ -8,6 +9,10 @@ namespace TowerDefense
 
 		RaycastHit2D[] results = new RaycastHit2D[10];
 		UIDragArrow _dragArrow;
+
+		Building building;
+		Building targetBuilding;
+		Wizard targetWizard;
 
 		public void OnDragStarted(Vector2 point)
 		{
@@ -55,25 +60,72 @@ namespace TowerDefense
 					var target = results[hits - 1].transform.gameObject;
 					if (target != null && target.GetInstanceID() != GetInstanceID())
 					{
-						var building = target.GetComponent<Building>();
-						if (building != null)
+						building = GetComponent<Building>();
+
+						targetBuilding = target.GetComponent<Building>();
+						if (targetBuilding != null)
 						{
-							if (building.SoldiersCount >= building.MaxSoldiersCount)
+							if (targetBuilding.SoldiersCount >= targetBuilding.MaxSoldiersCount)
 								return;
 
-							GetComponent<Building>().RemoveSoldier().AssignToBuilding(building);
+							if (building.SoldiersCount == 1)
+							{
+								building.RemoveLastSoldier().AssignToBuilding(targetBuilding);
+							}
+							else
+							{
+								var control = UILevelControlsManager.Instance
+										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as
+									UISoldierChoice;
+								control.Show(building);
+								control.GoButtonClickedEvent += OnGoButtonClicked;
+							}
 						}
 
-						var wizard = target.GetComponent<Wizard>();
-						if (wizard != null)
+						targetWizard = target.GetComponent<Wizard>();
+						if (targetWizard != null)
 						{
-							GetComponent<Building>().RemoveSoldier().AttackWizard(wizard);
+							if (building.SoldiersCount == 1)
+							{
+								building.RemoveLastSoldier().AssignToBuilding(targetBuilding);
+							}
+							else
+							{
+								var control = UILevelControlsManager.Instance
+										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as
+									UISoldierChoice;
+								control.Show(building);
+								control.GoButtonClickedEvent += OnGoButtonClicked;
+							}
 						}
 					}
 				}
 
 				_dragArrow.End();
 				_dragArrow = null;
+			}
+		}
+
+		void OnGoButtonClicked(UISoldierChoice control, List<bool> soldiersMarkers)
+		{
+			control.GoButtonClickedEvent -= OnGoButtonClicked;
+
+			if (targetBuilding != null)
+			{
+				var soldiers = building.RemoveSoldiers(soldiersMarkers);
+				for (int i = 0; i < soldiers.Count; i++)
+				{
+					soldiers[i].AssignToBuilding(targetBuilding);
+				}
+				
+			}
+			else if (targetWizard != null)
+			{
+				var soldiers = building.RemoveSoldiers(soldiersMarkers);
+				for (int i = 0; i < soldiers.Count; i++)
+				{
+					soldiers[i].AttackWizard(targetWizard);
+				}
 			}
 		}
 	}

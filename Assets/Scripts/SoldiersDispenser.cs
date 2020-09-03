@@ -99,7 +99,7 @@ namespace TowerDefense
 				{
 					Tower t = FindTowerWithHigherPriority(tower);
 					if (t != null)
-						tower.RemoveSoldier().AssignToBuilding(t);
+						tower.RemoveLastSoldier().AssignToBuilding(t);
 				}
 			}
 		}
@@ -113,7 +113,7 @@ namespace TowerDefense
 			}
 			else if (tower.DesiredCount < tower.Soldiers.Count)
 			{
-				tower.RemoveSoldier().NowFree();
+				tower.RemoveLastSoldier().NowFree();
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace TowerDefense
 			if (debug) Debug.Log($"FindSoldier for tower: {tower.gameObject.name}");
 			Camp camp = FindClosestCamp(tower.transform, true);
 			if (camp != null)
-				return camp.RemoveSoldier();
+				return camp.RemoveLastSoldier();
 			
 			List<Tower> towers = new List<Tower>();
 			
@@ -151,7 +151,7 @@ namespace TowerDefense
 				}
 			}
 			if (towers.Count > 0)
-				return WeighLowPriority(tower.transform, towers).RemoveSoldier();
+				return WeighLowPriority(tower.transform, towers).RemoveLastSoldier();
 
 			return null;
 		}

@@ -138,7 +138,7 @@ namespace TowerDefense
                 {
                     for (int i = 0; i < clouds[b].DesiredSoldiersCount; i++)
                     {
-                        b.RemoveSoldier().AttackWizard(wizard);
+                        b.RemoveLastSoldier().AttackWizard(wizard);
                     }
                 }
             }

@@ -97,13 +97,22 @@ namespace TowerDefense
 			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 		}
 
-		public override Soldier RemoveSoldier()
+		public override Soldier RemoveLastSoldier()
 		{
-			Soldier soldier = base.RemoveSoldier();
+			Soldier soldier = base.RemoveLastSoldier();
 			
 			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 			
 			return soldier;
+		}
+
+		public override List<Soldier> RemoveSoldiers(List<bool> indexes)
+		{
+			List<Soldier> soldiers = base.RemoveSoldiers(indexes);
+
+			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+
+			return soldiers;
 		}
 		
 		public void HideCanvas()
