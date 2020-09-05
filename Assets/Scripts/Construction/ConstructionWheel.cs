@@ -41,8 +41,8 @@ namespace TowerDefense
             if (InputMouse.longTapAbleSelected == buildPlace)
                 return;
 
-            if (InputMouse.longTapAbleSelected != null)
-                InputMouse.ClearSelection();
+            // if (InputMouse.longTapAbleSelected != null)
+            //     InputMouse.ClearSelection();
 
 			// InputMouse.longTapAbleSelected = buildPlace;
 			_buildPlace = buildPlace;

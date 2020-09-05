@@ -40,6 +40,8 @@ namespace TowerDefense
 		[SerializeField] TextMeshProUGUI SpecNameText;
 		[SerializeField] Image SpecIcon;
 		[SerializeField] Button ResetSpecButton;
+
+		public Tower Tower => tower;
 		
 		Transform _transform;
 		Tower tower;
@@ -49,12 +51,14 @@ namespace TowerDefense
 			_transform = GetComponent<Transform>();
 		}
 
-		public void Show(LongTapAble longtapAble)
+		public void Show(LongTapAble longTapable)
 		{
+			Owner = longTapable.gameObject;
+
 			DesiredLabelText.gameObject.SetActive(false);
 			PriorityLabelText.gameObject.SetActive(false);
 
-			tower = longtapAble.GetComponent<Tower>();
+			this.tower = longTapable.GetComponent<Tower>();
 
 			tower.SoldiersCountChangedSingleEvent += UpdateSoldiersCount;
 			tower.SoldiersCountChangedSingleEvent += UpdateStats;
@@ -75,7 +79,7 @@ namespace TowerDefense
 			UpdateSpec();
 
 			LeanTween.scale(gameObject, Vector3.zero, 0f);
-			gameObject.SetActive(true);
+			Show();
 			StartShowAnimation();
 		}
 
@@ -100,7 +104,7 @@ namespace TowerDefense
 			PriorityLabelText.gameObject.SetActive(true);
 		}
 
-		public void Hide()
+		public override void Hide()
 		{
 			if (tower != null)
 			{
@@ -111,8 +115,7 @@ namespace TowerDefense
 				tower = null;
 			}
 
-			gameObject.SetActive(false);
-			// UIChooseSpecWheel.Instance.Hide();
+			base.Hide();
 		}
 		
 		// using by button

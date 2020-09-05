@@ -35,6 +35,9 @@ namespace TowerDefense
 
 		public void Show(Building building)
 		{
+			if (UILevelControlsManager.Instance.IsSomeControlShown)
+				return;
+
 			this.soldiers = building.Soldiers;
 
 			soldiersMarkers.Clear();
@@ -53,7 +56,7 @@ namespace TowerDefense
 			}
 
 			transform.position = building.transform.position;
-			gameObject.SetActive(true);
+			Show();
 		}
 
 		public void OnSoldierClicked(int index)
@@ -74,12 +77,12 @@ namespace TowerDefense
 		void OnGoButtonClicked()
 		{
 			GoButtonClickedEvent?.Invoke(this, soldiersMarkers);
-			gameObject.SetActive(false);
+			Hide();
 		}
 
 		void OnCancelButtonClicked()
 		{
-			gameObject.SetActive(false);
+			Hide();
 		}
 	}
 }

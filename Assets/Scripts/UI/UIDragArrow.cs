@@ -13,10 +13,12 @@ namespace TowerDefense
 			lineRenderer = GetComponent<UILineRenderer>();
 		}
 
-		public bool Show(Vector2 worldPoint)
+		public bool Show(Transform trans)
 		{
+			Owner = trans.gameObject;
+
 			lineRenderer.Points[1] = lineRenderer.Points[0] =
-				Camera.main.WorldToScreenPoint(worldPoint);
+				Camera.main.WorldToScreenPoint(trans.position);
 			lineRenderer.SetVerticesDirty();
 			gameObject.SetActive(true);
 			return true;
@@ -39,7 +41,7 @@ namespace TowerDefense
 
 		public void End()
 		{
-			gameObject.SetActive(false);
+			Hide();
 		}
 	}
 }

@@ -17,6 +17,8 @@ namespace TowerDefense
 		public void OnDragStarted(Vector2 point)
 		{
 			_dragArrow = UILevelControlsManager.Instance.GetControl(UILevelControlsManager.LevelControl.DragArrow) as UIDragArrow;
+			if (UILevelControlsManager.Instance.IsSomeControlShown)
+				UILevelControlsManager.Instance.Clear();
 
 			var ownerBuilding = GetComponent<Building>();
 			if (ownerBuilding != null && ownerBuilding.SoldiersCount <= 0)
@@ -25,7 +27,7 @@ namespace TowerDefense
 				_dragArrow = null;
 			}
 			else
-				_dragArrow.Show(transform.position);
+				_dragArrow.Show(transform);
 		}
 
 		public void OnDragMoved(Vector2 point)
@@ -38,9 +40,9 @@ namespace TowerDefense
 				if (hits > 0)
 				{
 					var target = results[hits - 1].transform.gameObject;
-					if (target != null && target.GetInstanceID() != GetInstanceID())
+					if (target != null)
 					{
-						_dragArrow.UpdatePosition(point, true);
+						_dragArrow.UpdatePosition(point, target.GetInstanceID() != gameObject.GetInstanceID());
 					}
 				}
 				else
@@ -58,7 +60,7 @@ namespace TowerDefense
 				if (hits > 0)
 				{
 					var target = results[hits - 1].transform.gameObject;
-					if (target != null && target.GetInstanceID() != GetInstanceID())
+					if (target != null && target.GetInstanceID() != gameObject.GetInstanceID())
 					{
 						building = GetComponent<Building>();
 
@@ -75,8 +77,7 @@ namespace TowerDefense
 							else
 							{
 								var control = UILevelControlsManager.Instance
-										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as
-									UISoldierChoice;
+										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as UISoldierChoice;
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 							}
@@ -87,7 +88,7 @@ namespace TowerDefense
 						{
 							if (building.SoldiersCount == 1)
 							{
-								building.RemoveLastSoldier().AssignToBuilding(targetBuilding);
+								building.RemoveLastSoldier().AttackWizard(targetWizard);
 							}
 							else
 							{

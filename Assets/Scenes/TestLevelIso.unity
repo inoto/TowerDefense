@@ -1126,6 +1126,7 @@ GameObject:
   - component: {fileID: 435374208}
   - component: {fileID: 435374207}
   - component: {fileID: 435374209}
+  - component: {fileID: 435374210}
   m_Layer: 5
   m_Name: Soldier
   m_TagString: Untagged
@@ -1233,6 +1234,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &435374210
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435374205}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &436675137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,7 +1723,10 @@ MonoBehaviour:
   detectionTime: 0.5
   tapableFilter:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  uiFilter:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!1 &609682278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,6 +2111,7 @@ GameObject:
   - component: {fileID: 748464464}
   - component: {fileID: 748464463}
   - component: {fileID: 748464462}
+  - component: {fileID: 748464465}
   m_Layer: 5
   m_Name: Soldier (2)
   m_TagString: Untagged
@@ -2201,6 +2219,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748464460}
   m_CullTransparentMesh: 0
+--- !u!65 &748464465
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748464460}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!21 &792914856
 Material:
   serializedVersion: 6
@@ -3777,7 +3808,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8431449471060242565, guid: 9cf73cf7d2364f84aa315062fd570cd1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9cf73cf7d2364f84aa315062fd570cd1, type: 3}
 --- !u!1 &1365938009
 GameObject:
@@ -4178,6 +4210,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3539490937218247139}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1394502902 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4174189027736833763, guid: 9cf73cf7d2364f84aa315062fd570cd1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1356595825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1394502903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394502902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1003e2b90d6decc41b43e636ea813358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1529626816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5573,6 +5623,7 @@ GameObject:
   - component: {fileID: 1784997141}
   - component: {fileID: 1784997140}
   - component: {fileID: 1784997139}
+  - component: {fileID: 1784997142}
   m_Layer: 5
   m_Name: Soldier (1)
   m_TagString: Untagged
@@ -5680,6 +5731,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784997137}
   m_CullTransparentMesh: 0
+--- !u!65 &1784997142
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784997137}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1828253536
 GameObject:
   m_ObjectHideFlags: 0

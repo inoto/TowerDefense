@@ -15,8 +15,11 @@ namespace TowerDefense
         [SerializeField] LayerMask longTapableFilter = 0;
         [SerializeField] float detectionTime = 0.5f;
 
+        bool longTapped = false;
+
 		[Header("Tap")]
 		[SerializeField] LayerMask tapableFilter = 0;
+		[SerializeField] LayerMask uiFilter = 0;
         
 
         RaycastHit2D[] results = new RaycastHit2D[10];
@@ -36,46 +39,67 @@ namespace TowerDefense
 	        }
             else if (Input.GetMouseButtonUp(0))
 	        {
-		        if (!dragStarted)
+		        if (!dragStarted && !longTapped)
+		        {
+			        TapDetect();
 			        return;
+		        }
 
-				draggable.OnDragEnded(Input.mousePosition);
-				draggable = null;
-				dragStarted = false;
+				if (dragStarted)
+				{
+					draggable.OnDragEnded(Input.mousePosition);
+					draggable = null;
+					dragStarted = false;
+				}
+				if (longTapped)
+				{
+					longTapAbleSelected = null;
+					longTapped = false;
+				}
 	        }
             else if (Input.GetMouseButton(0))
 	        {
-		        if (!dragStarted)
-                {
-	                Vector2 diff = startPoint - (Vector2)Input.mousePosition;
-	                if (diff.magnitude >= minLengthToStart)
-	                {
-		                StartDrag();
-	                }
-	                else
-	                {
-						longTapTimer += Time.deltaTime;
-						if (longTapAbleSelected == null && longTapTimer >= detectionTime)
-						{
-							LongTapDetect();
-							longTapTimer = 0;
-						}
-						else
-						{
-							TapDetect();
-						}
-					}
-	                return;
-                }
+		        if (dragStarted)
+		        {
+			        if (Math.Abs(Input.GetAxis("Mouse X")) > 0f || Math.Abs(Input.GetAxis("Mouse Y")) > 0f)
+				        draggable.OnDragMoved(Input.mousePosition);
+			        return;
+		        }
 
-		        if (Math.Abs(Input.GetAxis("Mouse X")) > 0f || Math.Abs(Input.GetAxis("Mouse Y")) > 0f)
-			        draggable.OnDragMoved(Input.mousePosition);
+		        if (longTapped)
+			        return;
+
+		        Vector2 diff = startPoint - (Vector2)Input.mousePosition;
+                if (diff.magnitude >= minLengthToStart)
+                {
+	                StartDrag();
+                }
+                else
+                {
+					longTapTimer += Time.deltaTime;
+					if (longTapTimer >= detectionTime)
+					{
+						LongTapDetect();
+						longTapTimer = 0;
+					}
+                }
 	        }
         }
 
         void TapDetect()
         {
-	        ClearSelection();
+	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+		        Vector2.zero, results, Mathf.Infinity, uiFilter);
+	        if (hits > 0)
+		        return;
+
+	        hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+		        Vector2.zero, results, Mathf.Infinity, tapableFilter);
+	        if (hits == 0)
+		        return;
+
+	        Debug.Log($"# Input # TapDetect on {results[hits - 1].transform.gameObject.name}");
+	        results[hits - 1].transform.gameObject.GetComponent<TapAble>().OnTap(Input.mousePosition);
 		}
 
         void LongTapDetect()
@@ -84,11 +108,12 @@ namespace TowerDefense
 		        Vector2.zero, results, Mathf.Infinity, longTapableFilter);
 	        if (hits == 0)
 	        {
-		        longTapAbleSelected = null;
+		        // longTapAbleSelected = null;
 		        return;
 	        }
 
-	        // Debug.Log($"LongTapDetect on {results[hits - 1].transform.name}");
+	        longTapped = true;
+	        Debug.Log($"# Input # LongTapDetect on {results[hits - 1].transform.gameObject.name}");
 	        longTapAbleSelected = results[hits - 1].transform.gameObject.GetComponent<LongTapAble>();
 	        longTapAbleSelected?.OnLongTap(Input.mousePosition);
 		}
@@ -100,17 +125,10 @@ namespace TowerDefense
 	        if (hits == 0)
 		        return;
 
-	        Debug.Log($"StartDrag on {results[hits - 1].transform.name}");
+	        Debug.Log($"# Input # StartDrag on {results[hits - 1].transform.gameObject.name}");
 	        draggable = results[hits - 1].transform.gameObject.GetComponent<DragArrowMaker>();
 	        draggable?.OnDragStarted(Input.mousePosition);
 	        dragStarted = true;
-        }
-
-        public static void ClearSelection()
-        {
-	        // hide all
-            longTapAbleSelected = null;
-            draggable = null;
         }
     }
 }

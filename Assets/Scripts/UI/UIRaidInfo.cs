@@ -33,6 +33,9 @@ namespace TowerDefense
 
 	    public void Show(LongTapAble longTapAble)
         {
+	        if (UILevelControlsManager.Instance.IsSomeControlShown)
+		        return;
+
             wizard = longTapAble.GetComponent<Wizard>();
 
             clouds.Clear();

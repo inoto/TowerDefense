@@ -120,10 +120,10 @@
     <Compile Include="Assets\Scripts\Buildings\BuildPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Building.cs" />
     <Compile Include="Assets\Scripts\Buildings\Camp.cs" />
-    <Compile Include="Assets\Scripts\Buildings\DragArrowMaker.cs" />
     <Compile Include="Assets\Scripts\Buildings\Farm.cs" />
     <Compile Include="Assets\Scripts\Buildings\Gates.cs" />
-    <Compile Include="Assets\Scripts\Buildings\LongTapAble.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Input\DragArrowMaker.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Input\LongTapAble.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />
@@ -135,6 +135,7 @@
     <Compile Include="Assets\Scripts\IDraggable.cs" />
     <Compile Include="Assets\Scripts\Input\InputKeyboard.cs" />
     <Compile Include="Assets\Scripts\Input\InputMouse.cs" />
+    <Compile Include="Assets\Scripts\Input\TapAble.cs" />
     <Compile Include="Assets\Scripts\Path\PathCreator.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Projectiles\BombExplosion.cs" />
