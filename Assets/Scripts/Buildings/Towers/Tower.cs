@@ -39,7 +39,7 @@ namespace TowerDefense
 		[SerializeField] SpecializationsSettings SpecDataAsset;
 
 		protected Weapon Weapon;
-		[HideInInspector] public TowerCanvas Canvas;
+		// [HideInInspector] public TowerCanvas Canvas;
 		protected Transform SpriteTransform;
 
 		public virtual int[] Damage
@@ -56,7 +56,7 @@ namespace TowerDefense
 		protected virtual void Awake()
 		{
 			Weapon = GetComponentInChildren<Weapon>();
-			Canvas = GetComponentInChildren<TowerCanvas>();
+			// Canvas = GetComponentInChildren<TowerCanvas>();
 			SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
 		}
 
@@ -65,7 +65,7 @@ namespace TowerDefense
 			base.Start();
 
 			Weapon.gameObject.SetActive(false);
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 		}
 
 		public virtual void AddDesired()
@@ -74,7 +74,7 @@ namespace TowerDefense
 				return;
 
 			DesiredCount += 1;
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 
 			DesiredChangedEvent?.Invoke(this);
 		}
@@ -85,7 +85,7 @@ namespace TowerDefense
 				return;
 
 			DesiredCount -= 1;
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 
 			DesiredChangedEvent?.Invoke(this);
 		}
@@ -94,14 +94,14 @@ namespace TowerDefense
 		{
 			base.ActivateSoldier();
 			
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 		}
 
 		public override Soldier RemoveLastSoldier()
 		{
 			Soldier soldier = base.RemoveLastSoldier();
 			
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 			
 			return soldier;
 		}
@@ -110,19 +110,19 @@ namespace TowerDefense
 		{
 			List<Soldier> soldiers = base.RemoveSoldiers(indexes);
 
-			Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
 
 			return soldiers;
 		}
 		
 		public void HideCanvas()
 		{
-			Canvas.gameObject.SetActive(false);
+			// Canvas.gameObject.SetActive(false);
 		}
 
 		public void ShowCanvas()
 		{
-			Canvas.gameObject.SetActive(true);
+			// Canvas.gameObject.SetActive(true);
 		}
 		
 		public void SetSpec(Specialization.Type spec)

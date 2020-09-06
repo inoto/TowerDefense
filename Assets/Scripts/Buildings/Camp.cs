@@ -10,18 +10,18 @@ namespace TowerDefense
 		public static event Action<Soldier> SoldierAssignedEvent;
 		public static event Action<Soldier> SoldierUnassignedEvent;
 
-		CampCanvas _canvas;
+		// CampCanvas _canvas;
 
 		void Awake()
 		{
-			_canvas = GetComponentInChildren<CampCanvas>();
+			// _canvas = GetComponentInChildren<CampCanvas>();
 		}
 
 		protected override void Start()
 		{
 			base.Start();
 			
-			_canvas.UpdateCounterText(SoldiersCountInBuilding);
+			// _canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}
 
 		public override void AddSoldier(Soldier soldier)
@@ -35,7 +35,7 @@ namespace TowerDefense
 		{
 			base.ActivateSoldier();
 			
-			_canvas.UpdateCounterText(SoldiersCountInBuilding);
+			// _canvas.UpdateCounterText(SoldiersCountInBuilding);
 		}
 
 		public override Soldier RemoveLastSoldier()
@@ -44,7 +44,7 @@ namespace TowerDefense
 
 			// SoldierUnassignedEvent?.Invoke(soldier);
 
-			_canvas.UpdateCounterText(SoldiersCountInBuilding); // not calling, need to rework all these events
+			// _canvas.UpdateCounterText(SoldiersCountInBuilding); // not calling, need to rework all these events
 			
 			return soldier;
 		}
@@ -53,7 +53,7 @@ namespace TowerDefense
 		{
 			List<Soldier> soldiers = base.RemoveSoldiers(indexes);
 
-			_canvas.UpdateCounterText(SoldiersCountInBuilding);
+			// _canvas.UpdateCounterText(SoldiersCountInBuilding);
 
 			return soldiers;
 		}

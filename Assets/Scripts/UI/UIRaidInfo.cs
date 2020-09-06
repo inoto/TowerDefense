@@ -77,17 +77,17 @@ namespace TowerDefense
                 cloud.MoreSoldiersButtonClickedEvent += MoreSoldiersButtonClicked;
                 cloud.LessSoldiersButtonClickedEvent += LessSoldiersButtonClicked;
             }
-            Building.SoldiersCountChangedEvent += UpdateSoldiersCount;
+            Building.AnySoldiersCountChangedEvent += UpdateAnySoldiersCount;
         }
 
-        void UpdateSoldiersCount(Building building)
+        void UpdateAnySoldiersCount(Building building)
         {
             clouds[building].UpdateText();
         }
 
         public void Hide()
         {
-            Building.SoldiersCountChangedEvent -= UpdateSoldiersCount;
+            Building.AnySoldiersCountChangedEvent -= UpdateAnySoldiersCount;
 
             foreach (var b in clouds.Keys)
             {

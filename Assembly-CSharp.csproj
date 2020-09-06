@@ -169,6 +169,8 @@
     <Compile Include="Assets\Scripts\UI\UILevelControlsManager.cs" />
     <Compile Include="Assets\Scripts\UI\UIRaidInfo.cs" />
     <Compile Include="Assets\Scripts\UI\UISoldierChoice.cs" />
+    <Compile Include="Assets\Scripts\UI\UISoldiersCountCloud.cs" />
+    <Compile Include="Assets\Scripts\UI\UISoldiersCountCloudManager.cs" />
     <Compile Include="Assets\Scripts\UI\UITowerInfo.cs" />
     <Compile Include="Assets\Scripts\Unit\Armor.cs" />
     <Compile Include="Assets\Scripts\Unit\AttachmentPoints.cs" />

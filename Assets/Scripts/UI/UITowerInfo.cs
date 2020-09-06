@@ -13,20 +13,6 @@ namespace TowerDefense
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
 
-		[Header("Desired cloud")]
-		[SerializeField] TextMeshProUGUI ValueText;
-		[SerializeField] TextMeshProUGUI DesiredLabelText;
-		[SerializeField] Button[] DesiredButtons;
-		[SerializeField] Image[] DesiredButtonsOutline;
-		
-		[Header("Priority cloud")]
-		[SerializeField] TextMeshProUGUI PriorityLabelText;
-		[SerializeField] TextMeshProUGUI PriorityText;
-		[Tooltip("from Low to High")]
-		[SerializeField] Color[] PriorityColors;
-		[SerializeField] Button[] PriorityButtons;
-		[SerializeField] Image[] PriorityButtonsOutline;
-		
 		[Header("Stats cloud")]
 		[SerializeField] TextMeshProUGUI StatsLabelText;
 		[SerializeField] TextMeshProUGUI DamageText;
@@ -55,26 +41,17 @@ namespace TowerDefense
 		{
 			Owner = longTapable.gameObject;
 
-			DesiredLabelText.gameObject.SetActive(false);
-			PriorityLabelText.gameObject.SetActive(false);
-
 			this.tower = longTapable.GetComponent<Tower>();
 
-			tower.SoldiersCountChangedSingleEvent += UpdateSoldiersCount;
-			tower.SoldiersCountChangedSingleEvent += UpdateStats;
+			// tower.SoldiersCountChangedEvent += UpdateSoldiersCount;
+			tower.SoldiersCountChangedEvent += UpdateStats;
 			tower.SpecChangedSingleEvent += SpecChanged;
-			tower.HideCanvas();
+			// tower.HideCanvas();
 
-			for (int i = 0; i < DesiredButtons.Length; i++)
-				DesiredButtons[i].interactable = false;
-			for (int i = 0; i < PriorityButtons.Length; i++)
-				PriorityButtons[i].interactable = false;
 			ChooseSpecButton.interactable = false;
 			ResetSpecButton.interactable = false;
 
-			UpdateSoldiersCount();
-			UpdateDesiredCount();
-			UpdatePriority();
+			// UpdateSoldiersCount();
 			UpdateStats();
 			UpdateSpec();
 
@@ -93,106 +70,24 @@ namespace TowerDefense
 
 		void ShowAnimationCompleted()
 		{
-			for (int i = 0; i < DesiredButtons.Length; i++)
-				DesiredButtons[i].interactable = true;
-			for (int i = 0; i < PriorityButtons.Length; i++)
-				PriorityButtons[i].interactable = true;
 			ChooseSpecButton.interactable = true;
 			ResetSpecButton.interactable = true;
-			
-			DesiredLabelText.gameObject.SetActive(true);
-			PriorityLabelText.gameObject.SetActive(true);
 		}
 
 		public override void Hide()
 		{
 			if (tower != null)
 			{
-				tower.SoldiersCountChangedSingleEvent -= UpdateSoldiersCount;
-				tower.SoldiersCountChangedSingleEvent -= UpdateStats;
+				// tower.SoldiersCountChangedEvent -= UpdateSoldiersCount;
+				tower.SoldiersCountChangedEvent -= UpdateStats;
 				tower.SpecChangedSingleEvent -= SpecChanged;
-				tower.ShowCanvas();
+				// tower.ShowCanvas();
 				tower = null;
 			}
 
 			base.Hide();
 		}
-		
-		// using by button
-		public void DesiredAdd()
-		{
-			tower.AddDesired();
-			UpdateSoldiersCount();
-			UpdateDesiredCount();
-		}
 
-		// using by button
-		public void DesiredRemove()
-		{
-			tower.RemoveDesired();
-			UpdateSoldiersCount();
-			UpdateDesiredCount();
-		}
-
-		// using by button
-		public void PriorityUp()
-		{
-			tower.PriorityForDesired += 1;
-			UpdatePriority();
-		}
-		
-		// using by button
-		public void PriorityDown()
-		{
-			tower.PriorityForDesired -= 1;
-			UpdatePriority();
-		}
-
-		void UpdateSoldiersCount()
-		{
-			ValueText.text = $"{tower.SoldiersCountInBuilding}/{tower.DesiredCount}";
-		}
-		
-		void UpdateDesiredCount()
-		{
-			if (tower.DesiredCount <= 0)
-			{
-				DesiredButtonsOutline[1].gameObject.SetActive(false);
-			}
-			else if (tower.DesiredCount >= tower.MaxDesired)
-			{
-				DesiredButtonsOutline[0].gameObject.SetActive(false);
-			}
-			else
-			{
-				if (!DesiredButtonsOutline[1].gameObject.activeSelf)
-					DesiredButtonsOutline[1].gameObject.SetActive(true);
-				if (!DesiredButtonsOutline[0].gameObject.activeSelf)
-					DesiredButtonsOutline[0].gameObject.SetActive(true);
-			}
-		}
-
-		void UpdatePriority()
-		{
-			PriorityText.text = tower.PriorityForDesired.ToString();
-			PriorityText.color = PriorityColors[(int)tower.PriorityForDesired];
-			if (tower.PriorityForDesired <= SoldiersDispenser.Priority.Low)
-			{
-				PriorityButtonsOutline[1].gameObject.SetActive(false);
-			}
-			else if (tower.PriorityForDesired >= SoldiersDispenser.Priority.High)
-			{
-				PriorityButtonsOutline[0].gameObject.SetActive(false);
-			}
-			else
-			{
-				if (!PriorityButtonsOutline[1].gameObject.activeSelf)
-					PriorityButtonsOutline[1].gameObject.SetActive(true);
-				if (!PriorityButtonsOutline[0].gameObject.activeSelf)
-					PriorityButtonsOutline[0].gameObject.SetActive(true);
-			}
-		}
-		
 		void UpdateStats()
 		{
 			if (tower.Damage[1] <= 0)
@@ -219,7 +114,7 @@ namespace TowerDefense
 			if (tower.Specialization == Specialization.Type.None)
 				return;
 
-			tower.Canvas.SetNoSpecIcon(false);
+			// tower.Canvas.SetNoSpecIcon(false);
 			SpecIsActive();
 			// UIChooseSpecWheel.Instance.Hide();
 		}
@@ -236,7 +131,7 @@ namespace TowerDefense
 		public void SpecReset()
 		{
 			tower.SetSpec(Specialization.Type.None);
-			tower.Canvas.SetNoSpecIcon(true);
+			// tower.Canvas.SetNoSpecIcon(true);
 
 			SpecIsEmpty();
 		}

@@ -11,8 +11,8 @@ namespace TowerDefense
 		public static List<Building> Instances = new List<Building>();
 		
 		public static event Action<Building> BuiltEvent;
-		public static event Action<Building> SoldiersCountChangedEvent;
-		public event Action SoldiersCountChangedSingleEvent;
+		public static event Action<Building> AnySoldiersCountChangedEvent;
+		public event Action SoldiersCountChangedEvent;
 
 		[SerializeField] int maxSoldiersCount = 3;
 		[SerializeField] int startSoldiersCount = 0;
@@ -55,12 +55,13 @@ namespace TowerDefense
         public virtual void AddSoldier(Soldier soldier)
 		{
 			Soldiers.Add(soldier);
+			SoldiersCountChangedEvent?.Invoke();
 		}
 
 		public virtual void ActivateSoldier()
 		{
-			SoldiersCountChangedEvent?.Invoke(this);
-			SoldiersCountChangedSingleEvent?.Invoke();
+			AnySoldiersCountChangedEvent?.Invoke(this);
+			SoldiersCountChangedEvent?.Invoke();
 		}
 
 		public virtual Soldier RemoveSoldier(int index)
@@ -68,8 +69,8 @@ namespace TowerDefense
 			Soldier soldier = Soldiers[index];
 			Soldiers.RemoveAt(index);
 
-			SoldiersCountChangedEvent?.Invoke(this);
-			SoldiersCountChangedSingleEvent?.Invoke();
+			AnySoldiersCountChangedEvent?.Invoke(this);
+			SoldiersCountChangedEvent?.Invoke();
 
 			return soldier;
 		}
@@ -87,8 +88,8 @@ namespace TowerDefense
 				Soldiers.Remove(soldiersToRemove[i]);
 			}
 
-			SoldiersCountChangedEvent?.Invoke(this);
-			SoldiersCountChangedSingleEvent?.Invoke();
+			AnySoldiersCountChangedEvent?.Invoke(this);
+			SoldiersCountChangedEvent?.Invoke();
 
 			return soldiersToRemove;
 		}
