@@ -28,6 +28,7 @@ namespace TowerDefense
 				go.transform.position = (Vector2)building.transform.position + attachmentPoints.Points[AttachmentPointName];
 				clouds.Add(go.GetComponent<UISoldiersCountCloud>());
 				clouds[clouds.Count-1].Attach(building);
+				building.SoldiersCountCloud = clouds[clouds.Count - 1];
 				go.SetActive(true);
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TowerDefense
 {
@@ -30,6 +31,11 @@ namespace TowerDefense
 
 		// bool dragStarted = false;
         Vector2 startPoint = Vector2.zero;
+
+        void Start()
+        {
+	        // Physics2D.queriesStartInColliders = false;
+        }
 
         void Update()
         {
@@ -91,15 +97,23 @@ namespace TowerDefense
 	        int hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
 		        Vector2.zero, results, Mathf.Infinity, uiFilter);
 	        if (hits > 0)
-		        return;
+	        {
+				var button = results[0].transform.GetComponent<UIButton>();
+				if (button != null)
+				{
+					button.OnTap(Input.mousePosition);
+					
+				}
+				return;
+	        }
 
 	        hits = Physics2D.RaycastNonAlloc(Camera.main.ScreenToWorldPoint(Input.mousePosition),
 		        Vector2.zero, results, Mathf.Infinity, tapableFilter);
 	        if (hits == 0)
 		        return;
 
-	        Debug.Log($"# Input # TapDetect on {results[hits - 1].transform.gameObject.name}");
-	        results[hits - 1].transform.gameObject.GetComponent<TapAble>().OnTap(Input.mousePosition);
+	        Debug.Log($"# Input # TapDetect on {results[0].transform.gameObject.name}");
+	        results[0].transform.gameObject.GetComponent<TapAble>().OnTap(Input.mousePosition);
 		}
 
         void LongTapDetect()

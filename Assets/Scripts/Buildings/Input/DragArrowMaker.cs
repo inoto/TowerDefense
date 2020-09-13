@@ -16,7 +16,7 @@ namespace TowerDefense
 
 		public void OnDragStarted(Vector2 point)
 		{
-			_dragArrow = UILevelControlsManager.Instance.GetControl(UILevelControlsManager.LevelControl.DragArrow) as UIDragArrow;
+			_dragArrow = UILevelControlsManager.Instance.GetControl<UIDragArrow>(UILevelControlsManager.LevelControl.DragArrow);
 			if (UILevelControlsManager.Instance.IsSomeControlShown)
 				UILevelControlsManager.Instance.Clear();
 
@@ -76,8 +76,7 @@ namespace TowerDefense
 							}
 							else
 							{
-								var control = UILevelControlsManager.Instance
-										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as UISoldierChoice;
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 							}
@@ -92,9 +91,7 @@ namespace TowerDefense
 							}
 							else
 							{
-								var control = UILevelControlsManager.Instance
-										.GetControl(UILevelControlsManager.LevelControl.SoldierChoice, false) as
-									UISoldierChoice;
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 							}

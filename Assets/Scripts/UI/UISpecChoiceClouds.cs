@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 namespace TowerDefense
 {
-	public class UIChooseSpecWheel : UILevelControl
+	public class UISpecChoiceClouds : UILevelControl
 	{
 		[SerializeField] float ShowAnimationTime = 0.1f;
 		[SerializeField] LeanTweenType ShowAnimationTween = LeanTweenType.notUsed;
-		[SerializeField] Button[] Buttons;
+		[SerializeField] UIButton[] Buttons;
 		
 		bool isShown = false;
 		Tower tower;
@@ -19,49 +19,53 @@ namespace TowerDefense
 		{
 			_transform = GetComponent<Transform>();
 
-			Hide();
+			for (int i = 0; i < Buttons.Length; i++)
+			{
+				var i1 = i;
+				Buttons[i].OnClickedEvent += () => SpecButtonClicked(i1);
+			}
 		}
 
 		public void Show(Transform buttonTransform, Tower tower)
 		{
-			if (isShown)
-				return;
-			
-			isShown = true;
+			// if (isShown)
+			// 	return;
+			//
+			// isShown = true;
 			this.tower = tower;
 
-			gameObject.SetActive(true);
 			Vector3 newPos = (Vector2)buttonTransform.position;
 			newPos.z -= 1;
 			_transform.position = newPos;
 			
 			_transform.localScale = Vector3.zero;
-			float scaleTime = 0.1f;
-			LeanTween.scale(gameObject, Vector3.one, scaleTime);
+			LeanTween.scale(gameObject, Vector3.one, ShowAnimationTime).setOnComplete(ActivateSlots);
 
-			LeanTween.delayedCall(scaleTime, ActivateSlots);
+			// LeanTween.delayedCall(scaleTime, ActivateSlots);
+
+			Show();
 		}
 		
 		void ActivateSlots()
 		{
 			for (int i = 0; i < Buttons.Length; i++)
-				Buttons[i].interactable = true;
+				Buttons[i].Interactable = true;
 		}
 
-		public void Hide()
+		public override void Hide()
 		{
-			isShown = false;
+			// isShown = false;
 			
 			for (int i = 0; i < Buttons.Length; i++)
-				Buttons[i].interactable = false;
-			
-			gameObject.SetActive(false);
+				Buttons[i].Interactable = false;
+
+			base.Hide();
 		}
 
-		// using by button
-		public void SpecSet(int value)
+		public void SpecButtonClicked(int value)
 		{
-			tower.SetSpec((Specialization.Type)value);
+			Debug.Log($"SpecButtonClicked {value}");
+			tower.SetSpec((Specialization.Type)(value + 1));
 			Hide();
 		}
 	}

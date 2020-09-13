@@ -278,10 +278,10 @@ MonoBehaviour:
   ShowAnimationTime: 0.1
   ShowAnimationTween: 0
   Buttons:
-  - {fileID: 6284892481679868388}
-  - {fileID: 6284892481612996447}
-  - {fileID: 6284892480419671416}
-  - {fileID: 6284892482440199571}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &3364246149061045736
 MonoBehaviour:
   m_ObjectHideFlags: 0

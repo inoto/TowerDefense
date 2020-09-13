@@ -8,11 +8,11 @@ namespace TowerDefense
 	{
 		public enum Type
 		{
-			None,
-			Strength,
-			Agility,
-			Intellect,
-			Cunning
+			None = 0,
+			Militant,
+			Insightful,
+			Thoughtful,
+			Mysterious
 		}
 		
 		public int[] SpecPoints;

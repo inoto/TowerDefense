@@ -1,11 +1,13 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TowerDefense
 {
 	public class UISoldiersCountCloud : MonoBehaviour
 	{
 		[SerializeField] TextMeshProUGUI textMeshPro = null;
+		[SerializeField] Image specEmptyIcon = null;
 
 		Building building;
 
@@ -27,6 +29,11 @@ namespace TowerDefense
 		void OnSoldiersCountChanged()
 		{
 			textMeshPro.text = $"{building.SoldiersCount}";
+		}
+
+		public void ShowSpecEmptyIcon(bool show)
+		{
+			specEmptyIcon.gameObject.SetActive(show);
 		}
 
 		void OnDrawGizmosSelected()

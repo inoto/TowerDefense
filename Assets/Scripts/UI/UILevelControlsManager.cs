@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
 namespace TowerDefense
@@ -11,90 +13,78 @@ namespace TowerDefense
 			DragArrow = 0,
 			TowerInfo,
 			RaidInfo,
-			ChooseSpecWheel,
-			SoldierChoice
+			SoldierChoice,
+			SpecChoice
 		}
 
 		[SerializeField] UIDragArrow dragArrow = null;
 		[SerializeField] UITowerInfo towerInfo = null;
 		[SerializeField] UIRaidInfo raidInfo = null;
-		[SerializeField] UIChooseSpecWheel chooseSpecWheel = null;
+		[SerializeField] UISpecChoiceClouds _specChoiceClouds = null;
 		[SerializeField] UISoldierChoice soldierChoice = null;
 
 		public bool IsSomeControlShown => currentlyShownControl != null;
 		public UILevelControl CurrentlyShownControl => currentlyShownControl;
 
 		UILevelControl currentlyShownControl;
+		// UILevelControl currentlyShownChooseSpec
+
+		[Serializable]
+		public class LevelControlsDict : SerializableDictionaryBase<LevelControl, UILevelControl> {}
+
+		public LevelControlsDict LevelControls = new LevelControlsDict(); 
 
 		void Start()
 		{
-			dragArrow.ShownEvent += OnControlShown;
-			towerInfo.ShownEvent += OnControlShown;
-			raidInfo.ShownEvent += OnControlShown;
-			chooseSpecWheel.ShownEvent += OnControlShown;
-			soldierChoice.ShownEvent += OnControlShown;
+			// dragArrow.ShownEvent += OnControlShown;
+			// towerInfo.ShownEvent += OnControlShown;
+			// raidInfo.ShownEvent += OnControlShown;
+			// // _specChoiceClouds.ShownEvent += OnControlShown;
+			// soldierChoice.ShownEvent += OnControlShown;
+			foreach (var kvp in LevelControls)
+			{
+				kvp.Value.Hide();
+				if (kvp.Key == LevelControl.SpecChoice)
+					continue;
+
+				kvp.Value.ShownEvent += OnControlShown;
+			}
 		}
 
 		void OnDestroy()
 		{
-			dragArrow.ShownEvent -= OnControlShown;
-			towerInfo.ShownEvent -= OnControlShown;
-			raidInfo.ShownEvent -= OnControlShown;
-			chooseSpecWheel.ShownEvent -= OnControlShown;
-			soldierChoice.ShownEvent -= OnControlShown;
+			// dragArrow.ShownEvent -= OnControlShown;
+			// towerInfo.ShownEvent -= OnControlShown;
+			// raidInfo.ShownEvent -= OnControlShown;
+			// // _specChoiceClouds.ShownEvent -= OnControlShown;
+			// soldierChoice.ShownEvent -= OnControlShown;
+			foreach (var kvp in LevelControls)
+			{
+				if (kvp.Key == LevelControl.SpecChoice)
+					continue;
+
+				kvp.Value.ShownEvent -= OnControlShown;
+			}
 		}
 
-		public UILevelControl GetControl(LevelControl type, bool activate = false)
+		public T GetControl<T>(LevelControl type) where T : class
 		{
-			UILevelControl control = null;
-			switch (type)
-			{
-				case LevelControl.DragArrow:
-				{
-					// HideAll();
-					// dragArrow.gameObject.SetActive(activate);
-					control = dragArrow;
-					break;
-				}
-				case LevelControl.TowerInfo:
-				{
-					// HideAll();
-					// towerInfo.gameObject.SetActive(activate);
-					control = towerInfo;
-					break;
-				}
-				case LevelControl.RaidInfo:
-				{
-					// HideAll();
-					// raidInfo.gameObject.SetActive(activate);
-					control = raidInfo;
-					break;
-				}
-				case LevelControl.ChooseSpecWheel:
-				{
-					// HideAll();
-					// chooseSpecWheel.gameObject.SetActive(activate);
-					control = chooseSpecWheel;
-					break;
-				}
-				case LevelControl.SoldierChoice:
-				{
-					// HideAll();
-					// soldierChoice.gameObject.SetActive(activate);
-					control = soldierChoice;
-					break;
-				}
-			}
-
-			return control;
+			return LevelControls[type].GetComponent<T>();
 		}
 
 		void HideAll()
 		{
-			dragArrow.gameObject.SetActive(false);
-			towerInfo.gameObject.SetActive(false);
-			raidInfo.gameObject.SetActive(false);
-			chooseSpecWheel.gameObject.SetActive(false);
+			// dragArrow.gameObject.SetActive(false);
+			// towerInfo.gameObject.SetActive(false);
+			// raidInfo.gameObject.SetActive(false);
+			// // _specChoiceClouds.gameObject.SetActive(false);
+			foreach (var kvp in LevelControls)
+			{
+				if (kvp.Key == LevelControl.SpecChoice)
+					continue;
+
+				kvp.Value.gameObject.SetActive(false);
+			}
 		}
 
 		void OnControlShown(UILevelControl control)

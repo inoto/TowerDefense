@@ -31,6 +31,7 @@ namespace TowerDefense
 		
 		Transform _transform;
 		Tower tower;
+		UISpecChoiceClouds specChoiceControl;
 
 		void Awake()
 		{
@@ -49,6 +50,7 @@ namespace TowerDefense
 			// tower.HideCanvas();
 
 			ChooseSpecButton.interactable = false;
+			ChooseSpecButton.onClick.AddListener(SpecChoiceButtonClicked);
 			ResetSpecButton.interactable = false;
 
 			// UpdateSoldiersCount();
@@ -84,6 +86,8 @@ namespace TowerDefense
 				// tower.ShowCanvas();
 				tower = null;
 			}
+			if (specChoiceControl != null)
+				specChoiceControl.Hide();
 
 			base.Hide();
 		}
@@ -100,12 +104,13 @@ namespace TowerDefense
 			AttackSpeedText.text = tower.AttackSpeed > 0 ? tower.AttackSpeed.ToString() : "-";
 		}
 
-		// using by button
-		public void SpecChoose()
+		public void SpecChoiceButtonClicked()
 		{
 			SpecChooseLabelText1.gameObject.SetActive(false);
-			// UIChooseSpecWheel.Instance.Show(ChooseSpecButton.transform, tower);
-			UILevelControlsManager.Instance.GetControl(UILevelControlsManager.LevelControl.ChooseSpecWheel);
+
+			specChoiceControl = UILevelControlsManager.Instance
+				.GetControl<UISpecChoiceClouds>(UILevelControlsManager.LevelControl.SpecChoice);
+			specChoiceControl.Show(ChooseSpecButton.transform, tower);
 		}
 		
 		// using by button
@@ -116,7 +121,7 @@ namespace TowerDefense
 
 			// tower.Canvas.SetNoSpecIcon(false);
 			SpecIsActive();
-			// UIChooseSpecWheel.Instance.Hide();
+			// UISpecChoiceClouds.Instance.Hide();
 		}
 
 		void UpdateSpec()

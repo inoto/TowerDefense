@@ -21,6 +21,7 @@ namespace TowerDefense
 		public int SoldiersCount => Soldiers.Count;
 		public int SoldiersCountInBuilding => Soldiers.Count(s => s.InBuilding);
 		public int MaxSoldiersCount => maxSoldiersCount;
+		public UISoldiersCountCloud SoldiersCountCloud;
 		
 		protected bool initialized = false;
 
