@@ -167,13 +167,13 @@ MonoBehaviour:
   maxSoldiersCount: 3
   startSoldiersCount: 0
   Soldiers: []
+  SoldiersCountCloud: {fileID: 0}
   Cost: 4
   Icon: {fileID: 0}
   MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
   SpecDataAsset: {fileID: 0}
-  Canvas: {fileID: 0}
   weaponPrefab: {fileID: 1085882470352526}
   Weapons: []
 --- !u!61 &4656426180208101632
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 82432
+    m_Bits: 344576
 --- !u!114 &7528139707303107055
 MonoBehaviour:
   m_ObjectHideFlags: 0

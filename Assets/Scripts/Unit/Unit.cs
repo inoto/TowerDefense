@@ -64,9 +64,9 @@ namespace TowerDefense
 
         public virtual void ArrivedDestination()
 		{
+			StopMoving();
 			ArrivedDestinationEvent?.Invoke(this);
 			ArrivedDestinationInstanceEvent?.Invoke();
-			StopMoving();
 		}
 
 		protected void StopMoving()

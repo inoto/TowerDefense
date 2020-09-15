@@ -76,6 +76,7 @@
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\PreferencesWindow.cs" />
     <Compile Include="Assets\Rotary Heart\SerializableDictionary\Editor\SupportWindow.cs" />
     <Compile Include="Assets\Scripts\BezierCurve\Editor\BezierCurveEditor.cs" />
+    <Compile Include="Assets\Scripts\Extensions\Editor\TransformEditor.cs" />
     <Compile Include="Assets\Scripts\Path\Editor\PathCreatorEditor.cs" />
     <Compile Include="Assets\Scripts\Path\Editor\PathCreatorViewer.cs" />
     <Compile Include="Assets\Scripts\Road\Editor\RoadCreatorEditor.cs" />

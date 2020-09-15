@@ -77,6 +77,7 @@ MonoBehaviour:
   maxSoldiersCount: 6
   startSoldiersCount: 3
   Soldiers: []
+  SoldiersCountCloud: {fileID: 0}
 --- !u!114 &6479964499301800850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 262656
 --- !u!114 &9128434325999179366
 MonoBehaviour:
   m_ObjectHideFlags: 0

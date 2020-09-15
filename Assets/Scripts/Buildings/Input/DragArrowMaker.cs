@@ -13,6 +13,7 @@ namespace TowerDefense
 		Building building;
 		Building targetBuilding;
 		Wizard targetWizard;
+		Food targetFood;
 
 		public void OnDragStarted(Vector2 point)
 		{
@@ -96,6 +97,21 @@ namespace TowerDefense
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 							}
 						}
+
+						targetFood = target.GetComponent<Food>();
+						if (targetFood != null)
+						{
+							if (building.SoldiersCount == 1)
+							{
+								building.RemoveLastSoldier().TakeFood(targetFood);
+							}
+							else
+							{
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
+								control.Show(building);
+								control.GoButtonClickedEvent += OnGoButtonClicked;
+							}
+						}
 					}
 				}
 
@@ -123,6 +139,14 @@ namespace TowerDefense
 				for (int i = 0; i < soldiers.Count; i++)
 				{
 					soldiers[i].AttackWizard(targetWizard);
+				}
+			}
+			else if (targetFood != null)
+			{
+				var soldiers = building.RemoveSoldiers(soldiersMarkers);
+				for (int i = 0; i < soldiers.Count; i++)
+				{
+					soldiers[i].TakeFood(targetFood);
 				}
 			}
 		}

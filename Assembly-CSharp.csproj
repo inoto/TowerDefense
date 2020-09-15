@@ -130,6 +130,8 @@
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerMage.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
+    <Compile Include="Assets\Scripts\Food.cs" />
+    <Compile Include="Assets\Scripts\FoodMerger.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\IClickable.cs" />
     <Compile Include="Assets\Scripts\IDraggable.cs" />

@@ -168,13 +168,13 @@ MonoBehaviour:
   maxSoldiersCount: 3
   startSoldiersCount: 0
   Soldiers: []
+  SoldiersCountCloud: {fileID: 0}
   Cost: 6
   Icon: {fileID: 0}
   MaxDesired: 3
   DesiredCount: 1
   Specialization: 0
   SpecDataAsset: {fileID: 0}
-  Canvas: {fileID: 0}
   attackMultiplierFromSoldiersCount: 0.25
 --- !u!61 &7233261268116998332
 BoxCollider2D:
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 82432
+    m_Bits: 344576
 --- !u!114 &4883545283971321715
 MonoBehaviour:
   m_ObjectHideFlags: 0

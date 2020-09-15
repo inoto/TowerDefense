@@ -12,11 +12,14 @@ namespace TowerDefense
 		public bool InBuilding = false;
 		public Specialization Specialization;
         public bool AttackingWizard = false;
+        public bool IsBusy = false;
 
 		[SerializeField] bool Movable = true;
 		
 		Building building;
         SoldierWeapon weapon;
+
+        Food targetFood;
 		
 		protected override void Awake()
 		{
@@ -52,7 +55,7 @@ namespace TowerDefense
 			building.AddSoldier(this);
 			ChangedBuildingEvent?.Invoke(this, this.building);
 
-			GetComponent<MoveByTransform>().AssignTransform(building.transform);
+			_moveByTransform.AssignTransform(building.transform);
 		}
 		
 		public void NowFree()
@@ -87,18 +90,18 @@ namespace TowerDefense
 		{
 			base.ArrivedDestination();
 			
-			if (building != null)
-			{
-				InBuilding = true;
-				building.ActivateSoldier();
-			}
+			// if (building != null)
+			// {
+			// 	InBuilding = true;
+			// 	building.ActivateSoldier();
+			// }
 
-            if (AttackingWizard)
-            {
-                Weapon weapon = GetComponentInChildren<SoldierWeapon>();
-            }
-			else
-                gameObject.SetActive(false);
+   //          if (AttackingWizard)
+   //          {
+   //              Weapon weapon = GetComponentInChildren<SoldierWeapon>();
+   //          }
+			// else
+   //              gameObject.SetActive(false);
 		}
 
         public void AttackWizard(Wizard wizard)
@@ -112,8 +115,43 @@ namespace TowerDefense
             AttackingWizard = true;
 			_moveByTransform.AssignTransform(wizard.transform);
             weapon.TargetDiedEvent += TargetDiedEvent;
-            // AddOrder(_moveByTransform);
+        }
 
+        public void TakeFood(Food food)
+        {
+	        if (IsBusy)
+		        return;
+
+	        if (InBuilding)
+		        ExitTower();
+	        else
+		        StopMoving();
+	        targetFood = food;
+	        IsBusy = true;
+
+	        _moveByTransform.AssignTransform(food.transform);
+	        ArrivedDestinationInstanceEvent += GetFood;
+        }
+
+        void GetFood()
+        {
+	        ArrivedDestinationInstanceEvent -= GetFood;
+
+	        PlayerController.Instance.AddFood(targetFood.Amount, targetFood.transform);
+	        targetFood.IsUsed = true;
+	        Destroy(targetFood.gameObject);
+	        IsBusy = false;
+
+	        _moveByTransform.AssignTransform(building.transform);
+	        ArrivedDestinationInstanceEvent += EnterBuilding;
+        }
+
+        void EnterBuilding()
+        {
+	        ArrivedDestinationInstanceEvent -= EnterBuilding;
+
+	        InBuilding = true;
+			gameObject.SetActive(false);
         }
 
         void TargetDiedEvent()
@@ -124,7 +162,19 @@ namespace TowerDefense
 			NowFree();
         }
 
-        protected override void Corpse()
+		// void OnTriggerEnter2D(Collider2D other)
+		// {
+		// 	var food = other.GetComponent<Food>();
+		// 	if (food != null)
+		// 	{
+		// 		PlayerController.Instance.Food += food.Amount;
+		// 		food.IsUsed = true;
+		// 		Destroy(food.gameObject);
+		// 		ArrivedDestination();
+		// 	}
+		// }
+
+		protected override void Corpse()
         {
 			base.Corpse();
 
