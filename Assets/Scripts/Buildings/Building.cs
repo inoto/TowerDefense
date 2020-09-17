@@ -106,7 +106,7 @@ namespace TowerDefense
 			for (int i = 0; i < indexes.Count; i++)
 			{
 				if (Soldiers[indexes[i]].CurrentlyInBuilding)
-					UnloadSoldier(i);
+					UnloadSoldier(indexes[i]);
 
 				unloadedSoldiers.Add(Soldiers[indexes[i]]);
 			}
@@ -134,7 +134,7 @@ namespace TowerDefense
 			for (int i = 0; i < indexes.Count; i++)
 			{
 				if (Soldiers[indexes[i]].CurrentlyInBuilding)
-					UnloadSoldier(i);
+					UnloadSoldier(indexes[i]);
 
 				soldiersToRemove.Add(Soldiers[indexes[i]]);
 			}

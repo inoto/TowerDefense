@@ -69,7 +69,11 @@ namespace TowerDefense
 						if (targetBuilding != null)
 						{
 							if (targetBuilding.SoldiersCount >= targetBuilding.MaxSoldiersCount)
+							{
+								_dragArrow.End();
+								_dragArrow = null;
 								return;
+							}
 
 							if (building.SoldiersCount == 1)
 							{
@@ -78,7 +82,7 @@ namespace TowerDefense
 							else
 							{
 								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
-								control.Show(building);
+								control.Show(building, targetBuilding);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 							}
 						}

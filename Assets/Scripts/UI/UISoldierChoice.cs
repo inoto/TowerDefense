@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +16,11 @@ namespace TowerDefense
 		[SerializeField] Button goButton = null;
 		[SerializeField] Button cancelButton = null;
 
-		List<Soldier> soldiers;
+		List<Image> images = new List<Image>();
+		List<Button> buttons = new List<Button>();
 		List<bool> soldiersMarkers = new List<bool>();
+		List<Soldier> soldiers;
+		Building targetBuilding;
 
 		void Awake()
 		{
@@ -24,21 +28,27 @@ namespace TowerDefense
 
 			for (int i = 0; i < grid.transform.childCount; i++)
 			{
-				var button = grid.transform.GetChild(i).GetComponentInChildren<Button>();
+				var child = grid.transform.GetChild(i);
+
+				images.Add(child.GetComponentInChildren<Image>());
+
+				var button = child.GetComponentInChildren<Button>();
 				var i1 = i;
 				button.onClick.AddListener(() => OnSoldierClicked(i1));
+				buttons.Add(button);
 			}
 
 			goButton.onClick.AddListener(OnGoButtonClicked);
 			cancelButton.onClick.AddListener(OnCancelButtonClicked);
 		}
 
-		public void Show(Building building)
+		public void Show(Building building, Building targetBuilding = null)
 		{
 			if (UILevelControlsManager.Instance.IsSomeControlShown)
 				return;
 
 			this.soldiers = building.Soldiers;
+			this.targetBuilding = targetBuilding;
 
 			soldiersMarkers.Clear();
 			for (int i = 0; i < soldiers.Count; i++)
@@ -50,7 +60,8 @@ namespace TowerDefense
 					grid.transform.GetChild(i).gameObject.SetActive(false);
 				else
 				{
-					grid.transform.GetChild(i).GetComponent<Image>().color = greyColor;
+					images[i].color = greyColor;
+					buttons[i].interactable = true;
 					grid.transform.GetChild(i).gameObject.SetActive(true);
 				}
 			}
@@ -61,16 +72,39 @@ namespace TowerDefense
 
 		public void OnSoldierClicked(int index)
 		{
-			var image = grid.transform.GetChild(index).GetComponentInChildren<Image>();
 			if (!soldiersMarkers[index])
 			{
-				image.color = Color.green;
+				images[index].color = Color.green;
 				soldiersMarkers[index] = true;
 			}
 			else
 			{
-				image.color = greyColor;
+				images[index].color = greyColor;
 				soldiersMarkers[index] = false;
+			}
+
+			if (targetBuilding == null)
+				return;
+			if (soldiersMarkers.Count(e => e) + targetBuilding.SoldiersCount >= targetBuilding.MaxSoldiersCount)
+			{
+				for (int i = 0; i < soldiersMarkers.Count; i++)
+				{
+					if (soldiersMarkers[i])
+						continue;
+
+					buttons[i].interactable = false;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < soldiersMarkers.Count; i++)
+				{
+					if (soldiersMarkers[i])
+						continue;
+
+					if (!buttons[i].interactable)
+						buttons[i].interactable = true;
+				}
 			}
 		}
 
