@@ -29,28 +29,23 @@ namespace TowerDefense
 		
 		public override float AttackSpeed => Weapons.Count > 0 ? Weapons[0].AttackInterval : 0;
 
-		public override void ActivateSoldier()
+		public override void LoadSoldier(int index)
 		{
+			base.LoadSoldier(index);
+
 			GameObject go = Instantiate(weaponPrefab, transform, true);
-			go.transform.position = SpriteTransform.position;
+			go.transform.position = spriteTransform.position;
 			go.SetActive(true);
 			Weapons.Add(go.GetComponent<Weapon>());
-			
-			base.ActivateSoldier();
 		}
 
-		public override Soldier RemoveLastSoldier()
+		public override Soldier UnloadSoldier(int index)
 		{
-			Soldier soldier = base.RemoveLastSoldier();
+			Weapon last = Weapons[Weapons.Count - 1];
+			Weapons.Remove(last);
+			Destroy(last.gameObject);
 
-			if (soldier.InBuilding)
-			{
-				Weapon last = Weapons[Weapons.Count - 1];
-				Weapons.Remove(last);
-				Destroy(last.gameObject);
-			}
-
-			return soldier;
+			return base.UnloadSoldier(index);
 		}
 	}
 }

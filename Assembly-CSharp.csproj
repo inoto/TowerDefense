@@ -151,7 +151,6 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\MobStatsData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
-    <Compile Include="Assets\Scripts\SoldiersDispenser.cs" />
     <Compile Include="Assets\Scripts\UI\CampCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />

@@ -49,7 +49,7 @@ namespace TowerDefense
 			                     Random.Range(-MAX_WAYPOINT_OFFSET, MAX_WAYPOINT_OFFSET));
 			LookingForPathEvent?.Invoke(this, pathName);
 
-			// _unit.DiedInstanceEvent += Pause;
+			// _unit.DiedEvent += Pause;
 		}
 
 		public void AssignPath(BezierCurve path)

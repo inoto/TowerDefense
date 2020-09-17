@@ -24,12 +24,12 @@ namespace TowerDefense
 
 		void OnEnable()
 		{
-			Unit.DiedEvent += ChangeValue;
+			Unit.AnyDiedEvent += ChangeValue;
 		}
 
 		void OnDisable()
 		{
-			Unit.DiedEvent -= ChangeValue;
+			Unit.AnyDiedEvent -= ChangeValue;
 		}
 
 		void ChangeValue(Unit unit)

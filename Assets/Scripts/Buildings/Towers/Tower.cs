@@ -1,130 +1,50 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
-	public class Tower : Building, IClickable
+	public class Tower : Building
     {
         public static event Action<Tower> ClickedEvent;
-		public static event Action<Tower, SoldiersDispenser.Priority> PriorityChangedEvent;
-		public static event Action<Tower> DesiredChangedEvent;
 
-		public event Action SpecChangedSingleEvent;
+        public event Action SpecChangedSingleEvent;
 		
 		[Header("Tower")]
 		public int Cost = 0;
 		public Sprite Icon;
-		public int MaxDesired = 3;
-		public int DesiredCount = 0;
-		SoldiersDispenser.Priority priorityForDesired = SoldiersDispenser.Priority.Normal;
-		public SoldiersDispenser.Priority PriorityForDesired
-		{
-			get => priorityForDesired;
-			set
-			{
-				SoldiersDispenser.Priority oldPriority = priorityForDesired;
-				priorityForDesired = value;
-				PriorityChangedEvent?.Invoke(this, oldPriority);
-			}
-		}
 
 		public Specialization.Type Specialization;
 		[SerializeField] SpecializationsSettings SpecDataAsset;
 
-		protected Weapon Weapon;
-		// [HideInInspector] public TowerCanvas Canvas;
-		protected Transform SpriteTransform;
+		protected Weapon weapon;
+		protected Transform spriteTransform;
 
 		public virtual int[] Damage
 		{
 			get
 			{
-				return new []{Weapon.DamageMin, Weapon.DamageMax};
+				return new []{weapon.DamageMin, weapon.DamageMax};
 			}
 		}
 
-		public virtual float AttackSpeed => Weapon.AttackInterval;
+		public virtual float AttackSpeed => weapon.AttackInterval;
 
 
 		protected virtual void Awake()
 		{
-			Weapon = GetComponentInChildren<Weapon>();
-			// Canvas = GetComponentInChildren<TowerCanvas>();
-			SpriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
+			weapon = GetComponentInChildren<Weapon>();
+			spriteTransform = GetComponentInChildren<SpriteRenderer>().transform;
 		}
 
 		protected override void Start()
 		{
 			base.Start();
 
-			Weapon.gameObject.SetActive(false);
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
+			weapon.gameObject.SetActive(false);
 		}
 
-		public virtual void AddDesired()
-		{
-			if (DesiredCount >= MaxDesired)
-				return;
-
-			DesiredCount += 1;
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
-
-			DesiredChangedEvent?.Invoke(this);
-		}
-
-		public virtual void RemoveDesired()
-		{
-			if (DesiredCount <= 0)
-				return;
-
-			DesiredCount -= 1;
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
-
-			DesiredChangedEvent?.Invoke(this);
-		}
-
-		public override void ActivateSoldier()
-		{
-			base.ActivateSoldier();
-			
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
-		}
-
-		public override Soldier RemoveLastSoldier()
-		{
-			Soldier soldier = base.RemoveLastSoldier();
-			
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
-			
-			return soldier;
-		}
-
-		public override List<Soldier> RemoveSoldiers(List<bool> indexes)
-		{
-			List<Soldier> soldiers = base.RemoveSoldiers(indexes);
-
-			// Canvas.UpdateCounterText(SoldiersCountInBuilding, DesiredCount);
-
-			return soldiers;
-		}
-		
-		public void HideCanvas()
-		{
-			// Canvas.gameObject.SetActive(false);
-		}
-
-		public void ShowCanvas()
-		{
-			// Canvas.gameObject.SetActive(true);
-		}
-		
 		public void SetSpec(Specialization.Type spec)
 		{
 			Specialization = spec;
@@ -137,17 +57,6 @@ namespace TowerDefense
 			{
 				Soldiers[i].Specialization.Modify(Specialization, value);
 			}
-		}
-
-        public void OnTap()
-        {
-            // ClickedEvent?.Invoke(this);
-            throw new NotImplementedException();
-		}
-
-        public void OnLongTap()
-        {
-			throw new NotImplementedException();
 		}
     }
 }

@@ -24,13 +24,13 @@ namespace TowerDefense
 
 		void OnEnable()
 		{
-			Unit.DiedEvent += ChangeValue;
+			Unit.AnyDiedEvent += ChangeValue;
 			PlayerController.FoodAmountChangedEvent += FoodAmountChanged;
 		}
 
 		void OnDisable()
 		{
-			Unit.DiedEvent -= ChangeValue;
+			Unit.AnyDiedEvent -= ChangeValue;
             PlayerController.FoodAmountChangedEvent -= FoodAmountChanged;
 		}
 

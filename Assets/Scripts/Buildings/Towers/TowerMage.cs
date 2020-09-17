@@ -17,11 +17,11 @@ namespace TowerDefense
 		{
 			get
 			{
-				return new []{Weapon.DamageMin, Weapon.DamageMax};
+				return new []{weapon.DamageMin, weapon.DamageMax};
 			}
 		}
 		
-		public override float AttackSpeed => Weapon.AttackInterval;
+		public override float AttackSpeed => weapon.AttackInterval;
 
 		protected override void Awake()
 		{
@@ -30,35 +30,39 @@ namespace TowerDefense
 			damageOriginal = Damage;
 		}
 
-		public override void ActivateSoldier()
+		public override void LoadSoldier(int index)
 		{
-			if (!Weapon.gameObject.activeSelf && Soldiers.Count > 0)
-				Weapon.gameObject.SetActive(true);
+			if (!weapon.gameObject.activeSelf && Soldiers.Count > 0)
+				weapon.gameObject.SetActive(true);
 			else
 			{
-				Weapon.DamageMin += (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
-				Weapon.DamageMax += (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
+				weapon.DamageMin += (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+				weapon.DamageMax += (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 			}
 
-			base.ActivateSoldier();
+			base.LoadSoldier(index);
 		}
 
-		public override Soldier RemoveLastSoldier()
+		public override Soldier UnloadSoldier(int index)
 		{
-			Soldier soldier = base.RemoveLastSoldier();
-
-			if (soldier.InBuilding)
+			if (Soldiers.Count <= 0)
+			{
+				weapon.gameObject.SetActive(false);
+			}
+			else
 			{
 				if (Soldiers.Count <= 0)
-					Weapon.gameObject.SetActive(false);
+				{
+					weapon.gameObject.SetActive(false);
+				}
 				else
 				{
-					Weapon.DamageMin -= (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
-					Weapon.DamageMax -= (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
+					weapon.DamageMin -= (int)(damageOriginal[0] * damageMultiplierFromSoldiersCount);
+					weapon.DamageMax -= (int)(damageOriginal[1] * damageMultiplierFromSoldiersCount);
 				}
 			}
 
-			return soldier;
+			return base.UnloadSoldier(index);
 		}
 	}
 }

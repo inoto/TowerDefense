@@ -19,7 +19,7 @@ namespace TowerDefense
 
 		public List<Soldier> Soldiers;
 		public int SoldiersCount => Soldiers.Count;
-		public int SoldiersCountInBuilding => Soldiers.Count(s => s.InBuilding);
+		public int SoldiersCountInBuilding => Soldiers.Count(s => s.CurrentlyInBuilding);
 		public int MaxSoldiersCount => maxSoldiersCount;
 		public UISoldiersCountCloud SoldiersCountCloud;
 		
@@ -32,41 +32,93 @@ namespace TowerDefense
 			if (initialized)
 				return;
 
-			Wave.EndedEvent += OnWaveEndedEvent;
+			Wave.EndedEvent += OnWaveEnded;
 
 			Soldiers = new List<Soldier>(maxSoldiersCount);
+
 			for (int i = 0; i < startSoldiersCount; i++)
 			{
 				var soldier = UnitFactory.Instance.CreateSoldier();
 				soldier.transform.position = transform.position;
-				soldier.AssignToBuilding(this);
+				AddSoldier(soldier, true);
+				// soldier.AssignToBuilding(this, true);
 			}
+
 			initialized = true;
 		}
 
-        void OnWaveEndedEvent(int waveNumber)
+        void OnWaveEnded(int waveNumber)
         {
-            // int counter = 0;
-            // foreach (var soldier in Soldiers.Where(s => s.InBuilding))
-            //     counter += 1;
-			if (SoldiersCountInBuilding > 0)
+	        if (SoldiersCountInBuilding > 0)
 			    PlayerController.Instance.SpendFood(SoldiersCountInBuilding, transform);
 		}
 
-        public virtual void AddSoldier(Soldier soldier)
+        public virtual void AddSoldier(Soldier soldier, bool instantly = false)
+        {
+	        Soldiers.Add(soldier);
+	        soldier.AssignToBuilding(this, instantly);
+
+	        AnySoldiersCountChangedEvent?.Invoke(this);
+	        SoldiersCountChangedEvent?.Invoke();
+        }
+
+        public virtual void AddSoldiers(List<Soldier> soldiers, bool instantly = false)
+        {
+	        for (int i = 0; i < soldiers.Count; i++)
+	        {
+		        Soldiers.Add(soldiers[i]);
+		        soldiers[i].AssignToBuilding(this, instantly);
+	        }
+
+	        AnySoldiersCountChangedEvent?.Invoke(this);
+	        SoldiersCountChangedEvent?.Invoke();
+        }
+
+        public virtual void LoadSoldier(int index)
+        {
+			Soldiers[index].EnterBuilding();
+        }
+
+        public virtual void LoadSoldier(Soldier soldier)
+        {
+			LoadSoldier(Soldiers.IndexOf(soldier));
+        }
+
+        public virtual Soldier UnloadSoldier(int index)
+        {
+			Soldiers[index].ExitBuilding();
+			return Soldiers[index];
+        }
+
+		public virtual Soldier UnloadSoldier(Soldier soldier)
 		{
-			Soldiers.Add(soldier);
-			SoldiersCountChangedEvent?.Invoke();
+			return UnloadSoldier(Soldiers.IndexOf(soldier));
 		}
 
-		public virtual void ActivateSoldier()
+		public virtual Soldier UnloadLastSoldier()
 		{
-			AnySoldiersCountChangedEvent?.Invoke(this);
-			SoldiersCountChangedEvent?.Invoke();
+			return UnloadSoldier(Soldiers.Count - 1);
 		}
 
-		public virtual Soldier RemoveSoldier(int index)
+		public virtual List<Soldier> UnloadSoldiers(List<int> indexes)
 		{
+			List<Soldier> unloadedSoldiers = new List<Soldier>();
+			for (int i = 0; i < indexes.Count; i++)
+			{
+				if (Soldiers[indexes[i]].CurrentlyInBuilding)
+					UnloadSoldier(i);
+
+				unloadedSoldiers.Add(Soldiers[indexes[i]]);
+			}
+
+			return unloadedSoldiers;
+		}
+
+        public virtual Soldier RemoveSoldier(int index)
+		{
+			if (Soldiers[index].CurrentlyInBuilding)
+				UnloadSoldier(index);
+
 			Soldier soldier = Soldiers[index];
 			Soldiers.RemoveAt(index);
 
@@ -76,13 +128,15 @@ namespace TowerDefense
 			return soldier;
 		}
 
-		public virtual List<Soldier> RemoveSoldiers(List<bool> indexes)
+		public virtual List<Soldier> RemoveSoldiers(List<int> indexes)
 		{
 			List<Soldier> soldiersToRemove = new List<Soldier>();
 			for (int i = 0; i < indexes.Count; i++)
 			{
-				if (indexes[i])
-					soldiersToRemove.Add(Soldiers[i]);
+				if (Soldiers[indexes[i]].CurrentlyInBuilding)
+					UnloadSoldier(i);
+
+				soldiersToRemove.Add(Soldiers[indexes[i]]);
 			}
 			for (int i = 0; i < soldiersToRemove.Count; i++)
 			{

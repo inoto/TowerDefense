@@ -6,6 +6,7 @@ namespace TowerDefense
 	{
 		public int Amount;
 		public bool IsUsed = false;
+		public bool SoldierAssigned = false;
 		[SerializeField] FoodMerger foodMerger = null;
 
 		void Start()

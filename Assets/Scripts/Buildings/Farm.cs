@@ -63,14 +63,14 @@ namespace TowerDefense
 
 		public void RaiseDamagedEvent(int damage, DamageType type)
 		{
-			// DamagedEvent?.Invoke(this, damage, type);
+			// AnyDamagedEvent?.Invoke(this, damage, type);
 		}
 
 		public void RaiseDiedEvent()
 		{
 			Corpse();
-			// DiedEvent?.Invoke(this);
-			// DiedInstanceEvent?.Invoke();
+			// AnyDiedEvent?.Invoke(this);
+			// DiedEvent?.Invoke();
 		}
 		
 #endregion

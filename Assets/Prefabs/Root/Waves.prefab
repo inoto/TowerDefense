@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2643362790956912113}
   - component: {fileID: 201463541627832952}
   m_Layer: 0
-  m_Name: Wave02
+  m_Name: Wave02_Wizards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5626906073761719311}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &201463541627832952
 MonoBehaviour:
@@ -50,6 +50,8 @@ MonoBehaviour:
     Mobs: []
     Wizards:
     - Stone: {fileID: 0}
+    TimeAfterWave: 0
+  EndDelay: 10
 --- !u!1 &5626906072133032264
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +81,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5626906073761719311}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3987559407900803064
 MonoBehaviour:
@@ -109,6 +111,7 @@ MonoBehaviour:
       Interval: 2
       PathName: Path1
     Wizards: []
+    TimeAfterWave: 0
 --- !u!1 &5626906073761719310
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,8 +140,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5626906072133032265}
   - {fileID: 2643362790956912113}
+  - {fileID: 5626906072133032265}
   - {fileID: 4980415265094628826}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -156,7 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentWaveNumber: 0
-  CurrentWave: {fileID: 0}
 --- !u!1 &8340353669954819826
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,3 +209,5 @@ MonoBehaviour:
     Mobs: []
     Wizards:
     - Stone: {fileID: 0}
+    TimeAfterWave: 0
+  EndDelay: 10

@@ -29,7 +29,6 @@ namespace TowerDefense
 		
 		public void AssignTransform(Transform trans)
 		{
-			isMoving = false;
 			destination = trans;
             isMoving = true;
 
@@ -38,7 +37,7 @@ namespace TowerDefense
 		
 		void StartMoving()
 		{
-            weapon.TargetInRangeEvent -= StartMoving;
+            weapon.TargetNowInRangeEvent -= StartMoving;
 
 			isMoving = true;
 
@@ -51,7 +50,7 @@ namespace TowerDefense
 
 			isMoving = false;
 
-            weapon.TargetInRangeEvent += StartMoving;
+            weapon.TargetNowInRangeEvent += StartMoving;
         }
 
 		void Update()
@@ -77,7 +76,6 @@ namespace TowerDefense
 
 		void ArrivedDestination()
 		{
-			isMoving = false;
 			_unit.ArrivedDestination();
 		}
 

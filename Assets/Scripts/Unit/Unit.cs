@@ -9,12 +9,12 @@ namespace TowerDefense
 {
 	public class Unit : MonoBehaviour, IAlive, ITargetable
 	{
-		public static event Action<Unit> DiedEvent;
-		public event Action DiedInstanceEvent;
-		public static event Action<Unit, int, DamageType> DamagedEvent;
-        public event Action<int, DamageType> DamagedInstanceEvent;
-		public static event Action<Unit> ArrivedDestinationEvent;
-		public event Action ArrivedDestinationInstanceEvent;
+		public static event Action<Unit> AnyDiedEvent;
+		public event Action DiedEvent;
+		public static event Action<Unit, int, DamageType> AnyDamagedEvent;
+        public event Action<int, DamageType> DamagedEvent;
+		public static event Action<Unit> AnyArrivedDestinationEvent;
+		public event Action ArrivedDestinationEvent;
 		public event Action OrderEndedEvent;
 		public event Action OrderChangedEvent;
 		
@@ -39,12 +39,7 @@ namespace TowerDefense
 			_collider = GetComponent<Collider2D>();
         }
 
-   //      void Start()
-   //      {
-			// Reset();
-   //      }
-
-		void OnEnable()
+		void Start()
 		{
             Reset();
         }
@@ -65,8 +60,8 @@ namespace TowerDefense
         public virtual void ArrivedDestination()
 		{
 			StopMoving();
-			ArrivedDestinationEvent?.Invoke(this);
-			ArrivedDestinationInstanceEvent?.Invoke();
+			AnyArrivedDestinationEvent?.Invoke(this);
+			ArrivedDestinationEvent?.Invoke();
 		}
 
 		protected void StopMoving()
@@ -81,21 +76,21 @@ namespace TowerDefense
 
 		public void RaiseDamagedEvent(int damage, DamageType type)
 		{
-			DamagedEvent?.Invoke(this, damage, type);
-			DamagedInstanceEvent?.Invoke(damage, type);
+			AnyDamagedEvent?.Invoke(this, damage, type);
+			DamagedEvent?.Invoke(damage, type);
 		}
 
 		public void RaiseDiedEvent()
         {
             Corpse();
-			DiedEvent?.Invoke(this);
-			DiedInstanceEvent?.Invoke();
+			AnyDiedEvent?.Invoke(this);
+			DiedEvent?.Invoke();
 		}
 
-		// used by Animator
+		// using by Animator
 		protected virtual void Corpse()
 		{
-            LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
+			LeanTween.alpha(gameObject, 0f, 2f).setOnComplete(() => SimplePool.Despawn(gameObject));
 		}
 
 #region ITargetable

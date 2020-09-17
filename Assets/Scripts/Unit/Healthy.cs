@@ -11,9 +11,9 @@ namespace TowerDefense
 	
 	public class Healthy : MonoBehaviour
 	{
-        // public static event Action<Unit> DiedEvent;
+        // public static event Action<Unit> AnyDiedEvent;
         public event Action DiedInstanceEvent;
-        // public static event Action<Unit, int, DamageType> DamagedEvent;
+        // public static event Action<Unit, int, DamageType> AnyDamagedEvent;
         public event Action<int, DamageType> DamagedInstanceEvent;
 
 		[SerializeField] HealthBar HealthBar;

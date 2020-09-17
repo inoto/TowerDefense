@@ -25,12 +25,12 @@ namespace TowerDefense
 
 		void OnEnable()
 		{
-			Unit.ArrivedDestinationEvent += ChangeValue;
+			Unit.AnyArrivedDestinationEvent += ChangeValue;
 		}
 
 		void OnDisable()
 		{
-			Unit.ArrivedDestinationEvent -= ChangeValue;
+			Unit.AnyArrivedDestinationEvent -= ChangeValue;
 		}
 
 		void ChangeValue(Unit unit)

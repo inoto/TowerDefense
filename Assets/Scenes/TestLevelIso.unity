@@ -5078,6 +5078,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
+        type: 3}
+      propertyPath: startSoldiersCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
 --- !u!4 &1294821680 stripped
@@ -6038,6 +6043,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499469566575801297, guid: f94f55b98de5327438489d0223c2f362,
+        type: 3}
+      propertyPath: startSoldiersCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f94f55b98de5327438489d0223c2f362, type: 3}
@@ -9829,6 +9839,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Camp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310346753822730505, guid: 23fbd61b62f9a494c943fd6ebac0dcca,
+        type: 3}
+      propertyPath: dragEndFilter.m_Bits
+      value: 279040
       objectReference: {fileID: 0}
     - target: {fileID: 9117269054925674500, guid: 23fbd61b62f9a494c943fd6ebac0dcca,
         type: 3}

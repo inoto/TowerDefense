@@ -7,7 +7,7 @@ namespace TowerDefense
 {
 	public class UISoldierChoice : UILevelControl
 	{
-		public event Action<UISoldierChoice, List<bool>> GoButtonClickedEvent;
+		public event Action<UISoldierChoice, List<int>> GoButtonClickedEvent;
 
 		[SerializeField] Color greyColor = Color.grey;
 		[SerializeField] GridLayoutGroup grid = null;
@@ -76,7 +76,12 @@ namespace TowerDefense
 
 		void OnGoButtonClicked()
 		{
-			GoButtonClickedEvent?.Invoke(this, soldiersMarkers);
+			List<int> indexes = new List<int>();
+			for (int i = 0; i < soldiersMarkers.Count; i++)
+				if (soldiersMarkers[i])
+					indexes.Add(i);
+
+			GoButtonClickedEvent?.Invoke(this, indexes);
 			Hide();
 		}
 

@@ -21,9 +21,9 @@ namespace TowerDefense
 		void OnEnable()
 		{
 			Projectile.MissedEvent += SpawnMissFloatingText;
-			Unit.DiedEvent += SpawnFoodFloatingText;
+			Unit.AnyDiedEvent += SpawnFoodFloatingText;
 			PlayerController.FoodAmountChangedEvent += SpawnFoodFloatingText;
-//			Enemy.DamagedEvent += ShowDamageFloatingText;
+//			Enemy.AnyDamagedEvent += ShowDamageFloatingText;
 			RangeIndicator.ShowEvent += ShowLocator;
 			RangeIndicator.HideEvent += HideLocator;
 
@@ -52,9 +52,9 @@ namespace TowerDefense
   //       void OnDisable()
 		// {
 		// 	Projectile.MissedEvent -= SpawnMissFloatingText;
-		// 	Unit.DiedEvent -= SpawnFoodFloatingText;
+		// 	Unit.AnyDiedEvent -= SpawnFoodFloatingText;
   //           PlayerController.FoodAmountChangedEvent -= SpawnFoodFloatingText;
-		// 	//			Enemy.DamagedEvent -= ShowDamageFloatingText;
+		// 	//			Enemy.AnyDamagedEvent -= ShowDamageFloatingText;
 		// 	RangeIndicator.ShowEvent -= ShowLocator;
 		// 	RangeIndicator.HideEvent -= HideLocator;
 		// }

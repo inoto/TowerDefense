@@ -22,7 +22,7 @@ namespace TowerDefense
         public event Action TargetAcquiredEvent;
         public event Action TargetDiedEvent;
         public event Action TargetOutOfRangeEvent;
-        public event Action TargetInRangeEvent;
+        public event Action TargetNowInRangeEvent;
 
 
 		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
@@ -169,7 +169,7 @@ namespace TowerDefense
 
         protected void RaiseTargetInRangeEvent()
         {
-            TargetInRangeEvent?.Invoke();
+            TargetNowInRangeEvent?.Invoke();
 
 		}
 

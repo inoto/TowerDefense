@@ -73,7 +73,7 @@ namespace TowerDefense
 
 							if (building.SoldiersCount == 1)
 							{
-								building.RemoveLastSoldier().AssignToBuilding(targetBuilding);
+								targetBuilding.AddSoldier(building.RemoveLastSoldier());
 							}
 							else
 							{
@@ -88,7 +88,7 @@ namespace TowerDefense
 						{
 							if (building.SoldiersCount == 1)
 							{
-								building.RemoveLastSoldier().AttackWizard(targetWizard);
+								building.UnloadLastSoldier().AttackWizard(targetWizard);
 							}
 							else
 							{
@@ -99,11 +99,11 @@ namespace TowerDefense
 						}
 
 						targetFood = target.GetComponent<Food>();
-						if (targetFood != null)
+						if (targetFood != null && !targetFood.SoldierAssigned)
 						{
 							if (building.SoldiersCount == 1)
 							{
-								building.RemoveLastSoldier().TakeFood(targetFood);
+								building.UnloadLastSoldier().TakeFood(targetFood);
 							}
 							else
 							{
@@ -120,33 +120,30 @@ namespace TowerDefense
 			}
 		}
 
-		void OnGoButtonClicked(UISoldierChoice control, List<bool> soldiersMarkers)
+		void OnGoButtonClicked(UISoldierChoice control, List<int> indexes)
 		{
 			control.GoButtonClickedEvent -= OnGoButtonClicked;
 
 			if (targetBuilding != null)
 			{
-				var soldiers = building.RemoveSoldiers(soldiersMarkers);
-				for (int i = 0; i < soldiers.Count; i++)
-				{
-					soldiers[i].AssignToBuilding(targetBuilding);
-				}
-				
+				var soldiers = building.RemoveSoldiers(indexes);
+				targetBuilding.AddSoldiers(soldiers);
+
 			}
 			else if (targetWizard != null)
 			{
-				var soldiers = building.RemoveSoldiers(soldiersMarkers);
+				var soldiers = building.UnloadSoldiers(indexes);
 				for (int i = 0; i < soldiers.Count; i++)
 				{
-					soldiers[i].AttackWizard(targetWizard);
+					soldiers[indexes[i]].AttackWizard(targetWizard);
 				}
 			}
 			else if (targetFood != null)
 			{
-				var soldiers = building.RemoveSoldiers(soldiersMarkers);
+				var soldiers = building.UnloadSoldiers(indexes);
 				for (int i = 0; i < soldiers.Count; i++)
 				{
-					soldiers[i].TakeFood(targetFood);
+					soldiers[indexes[i]].TakeFood(targetFood);
 				}
 			}
 		}

@@ -9,16 +9,14 @@ namespace TowerDefense
 		public static event Action<Soldier, Building> ChangedBuildingEvent;
 		public static event Action<Soldier> FreeSoldierEvent;
 		
-		public bool InBuilding = false;
+		public bool CurrentlyInBuilding = false;
 		public Specialization Specialization;
         public bool AttackingWizard = false;
         public bool IsBusy = false;
 
-		[SerializeField] bool Movable = true;
-		
-		Building building;
+        Building building;
+		bool movingToBuilding = false;
         SoldierWeapon weapon;
-
         Food targetFood;
 		
 		protected override void Awake()
@@ -29,92 +27,86 @@ namespace TowerDefense
             weapon = GetComponentInChildren<SoldierWeapon>();
         }
 
-		void Start()
-		{
-			StartCoroutine(CheckCreatedManually());
-		}
-
-		IEnumerator CheckCreatedManually()
-		{
-			yield return new WaitForSeconds(0.2f);
-			if (Movable)
-			{
-				FreeSoldierEvent?.Invoke(this);
-			}
-		}
-
-        public void AssignToBuilding(Building building)
+		public void AssignToBuilding(Building newBuilding, bool instantly = false)
         {
-            if (AttackingWizard)
-                return;
-
-			if (this.building != null)
+	        if (building != null)
 				UnAssignFromBuilding();
 			
-			this.building = building;
-			building.AddSoldier(this);
-			ChangedBuildingEvent?.Invoke(this, this.building);
+			building = newBuilding;
 
-			_moveByTransform.AssignTransform(building.transform);
-		}
-		
-		public void NowFree()
-		{
-            if (AttackingWizard)
-                return;
+			if (instantly)
+			{
+				EnterBuilding();
+				return;
+			}
 
-			if (building != null)
-				UnAssignFromBuilding();
-			
-			FreeSoldierEvent?.Invoke(this);
+			GoToAssignedBuilding();
+
+			ChangedBuildingEvent?.Invoke(this, building);
 		}
 
-		void UnAssignFromBuilding()
-		{
-			building = null;
-			
-			if (InBuilding)
-				ExitTower();
-			else
-				StopMoving();
-		}
+        void UnAssignFromBuilding()
+        {
+	        if (CurrentlyInBuilding)
+		        ExitBuilding();
+	        else
+		        StopMoving();
 
-		void ExitTower()
-		{
-			InBuilding = false;
-			
-			gameObject.SetActive(true);
-		}
+	        building = null;
+        }
 
-		public override void ArrivedDestination()
-		{
-			base.ArrivedDestination();
-			
-			// if (building != null)
-			// {
-			// 	InBuilding = true;
-			// 	building.ActivateSoldier();
-			// }
+        void GoToAssignedBuilding()
+        {
+	        movingToBuilding = true;
+	        _moveByTransform.AssignTransform(building.transform);
 
-   //          if (AttackingWizard)
-   //          {
-   //              Weapon weapon = GetComponentInChildren<SoldierWeapon>();
-   //          }
-			// else
-   //              gameObject.SetActive(false);
-		}
+	        ArrivedDestinationEvent += EnterBuilding;
+        }
+
+        public void EnterBuilding()
+        {
+	        if (movingToBuilding)
+	        {
+		        ArrivedDestinationEvent -= EnterBuilding;
+		        movingToBuilding = false;
+	        }
+
+	        CurrentlyInBuilding = true;
+
+	        gameObject.SetActive(false);
+        }
+
+        public void ExitBuilding()
+        {
+	        CurrentlyInBuilding = false;
+
+	        gameObject.SetActive(true);
+        }
 
         public void AttackWizard(Wizard wizard)
         {
-            if (AttackingWizard)
+            if (IsBusy || AttackingWizard)
                 return;
 
-            if (building != null)
-                UnAssignFromBuilding();
+            IsBusy = true;
+            if (CurrentlyInBuilding)
+	            ExitBuilding();
+            else
+	            StopMoving();
 
             AttackingWizard = true;
 			_moveByTransform.AssignTransform(wizard.transform);
-            weapon.TargetDiedEvent += TargetDiedEvent;
+            weapon.TargetDiedEvent += WizardDiedEvent;
+        }
+
+        void WizardDiedEvent()
+        {
+	        weapon.TargetDiedEvent -= WizardDiedEvent;
+
+	        AttackingWizard = false;
+	        IsBusy = false;
+
+	        GoToAssignedBuilding();
         }
 
         public void TakeFood(Food food)
@@ -122,63 +114,36 @@ namespace TowerDefense
 	        if (IsBusy)
 		        return;
 
-	        if (InBuilding)
-		        ExitTower();
+	        IsBusy = true;
+	        if (CurrentlyInBuilding)
+		        ExitBuilding();
 	        else
 		        StopMoving();
+
 	        targetFood = food;
-	        IsBusy = true;
+	        targetFood.SoldierAssigned = true;
 
 	        _moveByTransform.AssignTransform(food.transform);
-	        ArrivedDestinationInstanceEvent += GetFood;
+	        ArrivedDestinationEvent += GetFood;
         }
 
         void GetFood()
         {
-	        ArrivedDestinationInstanceEvent -= GetFood;
+	        ArrivedDestinationEvent -= GetFood;
 
 	        PlayerController.Instance.AddFood(targetFood.Amount, targetFood.transform);
 	        targetFood.IsUsed = true;
 	        Destroy(targetFood.gameObject);
+	        targetFood = null;
 	        IsBusy = false;
 
-	        _moveByTransform.AssignTransform(building.transform);
-	        ArrivedDestinationInstanceEvent += EnterBuilding;
+	        GoToAssignedBuilding();
         }
 
-        void EnterBuilding()
+        protected override void Corpse()
         {
-	        ArrivedDestinationInstanceEvent -= EnterBuilding;
-
-	        InBuilding = true;
-			gameObject.SetActive(false);
+	        StopMoving();
+	        base.Corpse();
         }
-
-        void TargetDiedEvent()
-        {
-            weapon.TargetDiedEvent -= TargetDiedEvent;
-
-            AttackingWizard = false;
-			NowFree();
-        }
-
-		// void OnTriggerEnter2D(Collider2D other)
-		// {
-		// 	var food = other.GetComponent<Food>();
-		// 	if (food != null)
-		// 	{
-		// 		PlayerController.Instance.Food += food.Amount;
-		// 		food.IsUsed = true;
-		// 		Destroy(food.gameObject);
-		// 		ArrivedDestination();
-		// 	}
-		// }
-
-		protected override void Corpse()
-        {
-			base.Corpse();
-
-			StopMoving();
-        }
-    }
+	}
 }
