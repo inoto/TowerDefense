@@ -65,7 +65,7 @@ public static class SimplePool {
 			this.prefab = prefab;
 			
 			parent = new GameObject(prefab.name + "_pool");
-            parent.transform.parent = root.transform;
+			if (parent.transform.parent != null) parent.transform.parent = root.transform;
 
 			// If Stack uses a linked list internally, then this
 			// whole initialQty thing is a placebo that we could
@@ -77,7 +77,7 @@ public static class SimplePool {
 			this.prefab = prefab;
 			
 			parent = new GameObject(prefab.name + "_pool");
-			parent.transform.parent = par;
+			if (parent.transform.parent != null)  parent.transform.parent = par;
 			parent.transform.localScale = Vector3.one;
 
 			// If Stack uses a linked list internally, then this
@@ -118,7 +118,7 @@ public static class SimplePool {
 
 			obj.transform.position = pos;
 			obj.transform.rotation = rot;
-			obj.transform.SetParent(parent.transform, false);
+			if (parent != null) obj.transform.SetParent(parent.transform, false);
 			obj.SetActive(true);
 			return obj;
 
@@ -153,7 +153,7 @@ public static class SimplePool {
 				}
 			}
 
-			obj.transform.SetParent(parent.transform, false);
+			if (parent != null) obj.transform.SetParent(parent.transform, false);
 			obj.SetActive(true);
 			return obj;
 
