@@ -5,7 +5,6 @@ namespace TowerDefense
 {
 	public class SoldierWeapon : Weapon
 	{
-		// [SerializeField][ReadOnly] bool followingTarget = false;
 		Order followingOrder;
 
         protected override bool TrackTarget()
@@ -15,33 +14,22 @@ namespace TowerDefense
 
 			if (Target.IsDied || !Target.GameObj.activeSelf)
 			{
-				// if (followingTarget)
-				// {
-				// 	followingTarget = false;
-					// _unit.OrderEnded(followingOrder);
-				// }
-
-                RaiseTargetDiedEvent();
+				RaiseTargetDiedEvent();
 				Target = null;
-                // _unit.OrderEnded(this);
+
 				return false;
 			}
 
 			if (!Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				// followingTarget = true;
-
-                moveByTransform.AssignTransform(Target.GameObj.transform);
+				moveByTransform.AssignTransform(Target.GameObj.transform);
+				followingOrder = moveByTransform;
                 RaiseTargetOutOfRangeEvent();
-				// _unit.AddOrder(mbt);
-				// followingOrder = mbt;
+                return false;
 			}
-			else if (Physics2D.IsTouching(_collider, Target.Collider))
+			if (followingOrder != null && Physics2D.IsTouching(_collider, Target.Collider))
 			{
-				// followingTarget = false;
-
-				// _unit.OrderEnded(followingOrder);
-                RaiseTargetInRangeEvent();
+				RaiseTargetInRangeEvent();
 				followingOrder = null;
 			}
 
@@ -50,15 +38,13 @@ namespace TowerDefense
 		
 		protected override bool AcquireTarget()
 		{
-			_targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
 			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
 			if (targetsCount > 0)
 			{
 				Target = DefineTarget();
                 if (Target == null)
 					return false;
-				
-				// _unit.AddOrder(this);
+                
                 RaiseTargetAcquiredEvent();
                 moveByTransform.StopMoving();
 				return true;

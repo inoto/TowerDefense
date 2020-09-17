@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.49038538, g: 0.39208794, b: 0.9339623, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -442,6 +443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 4615459229906887790}
+  SpriteYSpeed: 1
+  SpriteMaxY: 0.03
   _healthy: {fileID: 4699917861362664297}
   _moveByTransform: {fileID: 5559644260269843571}
   StatsData: {fileID: 11400000, guid: 4f683ceb5eea1be478dd4e8982971d56, type: 2}
@@ -464,7 +467,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.06}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -475,7 +478,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.39, y: 0.51}
+  m_Size: {x: 0.26, y: 0.33}
   m_EdgeRadius: 0
 --- !u!1001 &5236068915660334463
 PrefabInstance:

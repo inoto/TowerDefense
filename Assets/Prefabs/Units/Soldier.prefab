@@ -58,11 +58,10 @@ MonoBehaviour:
   SpriteMaxY: 0.03
   _healthy: {fileID: 6247893295143434781}
   _moveByTransform: {fileID: 8455721943437846746}
-  InBuilding: 0
+  CurrentlyInBuilding: 0
   Specialization: {fileID: 8486752623184486061}
   AttackingWizard: 0
   IsBusy: 0
-  Movable: 1
 --- !u!114 &8486752623184486061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +143,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.05}
@@ -215,7 +214,7 @@ GameObject:
   - component: {fileID: 7900505702978108595}
   - component: {fileID: 8035631720970679110}
   - component: {fileID: 1956109872}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +250,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.3
 --- !u!114 &1956109872
 MonoBehaviour:
   m_ObjectHideFlags: 0

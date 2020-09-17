@@ -74,6 +74,7 @@ namespace TowerDefense
 			{
 				SimplePool.Preload(ProjectilePrefab, 5);
 			}
+			_targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
 		}
 
 		void OnDisable()
@@ -114,7 +115,6 @@ namespace TowerDefense
 
 		protected virtual bool AcquireTarget()
 		{
-			_targetsBuffer = new Collider2D[GameController.MAX_TARGETS_BUFFER];
 			targetsCount = Physics2D.OverlapCollider(_collider, filter, _targetsBuffer);
 			if (targetsCount > 0)
 			{
@@ -123,6 +123,11 @@ namespace TowerDefense
 			}
 			Target = null;
 			return false;
+		}
+
+		public void SetTarget(ITargetable target)
+		{
+			Target = target;
 		}
 
 		protected virtual void Attack()

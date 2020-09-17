@@ -32,25 +32,25 @@ namespace TowerDefense
 			destination = trans;
             isMoving = true;
 
-			weapon.TargetOutOfRangeEvent += StopMoving;
+			weapon.TargetOutOfRangeEvent += StartMoving;
         }
 		
 		void StartMoving()
 		{
-            weapon.TargetNowInRangeEvent -= StartMoving;
+			weapon.TargetOutOfRangeEvent -= StartMoving;
 
 			isMoving = true;
 
-            weapon.TargetOutOfRangeEvent += StopMoving;
+            weapon.TargetNowInRangeEvent += StopMoving;
 		}
 		
 		public void StopMoving()
 		{
-            weapon.TargetOutOfRangeEvent -= StopMoving;
+            weapon.TargetNowInRangeEvent -= StopMoving;
 
 			isMoving = false;
 
-            weapon.TargetNowInRangeEvent += StartMoving;
+            weapon.TargetOutOfRangeEvent += StartMoving;
         }
 
 		void Update()

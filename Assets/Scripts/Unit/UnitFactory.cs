@@ -5,6 +5,9 @@ namespace TowerDefense
 {
 	public class UnitFactory : Singleton<UnitFactory>
 	{
+		[System.Serializable]
+		public class PreloadDict : SerializableDictionaryBase<GameObject, int> { }
+
 		[SerializeField] PreloadDict preloadUnits = new PreloadDict();
 
 		[SerializeField] GameObject soldierPrefab = null;
@@ -24,7 +27,4 @@ namespace TowerDefense
 			return go.GetComponent<Soldier>();
 		}
 	}
-
-	[System.Serializable]
-	public class PreloadDict : SerializableDictionaryBase<GameObject, int> { }
 }

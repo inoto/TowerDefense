@@ -95,7 +95,8 @@ namespace TowerDefense
 	            StopMoving();
 
             AttackingWizard = true;
-			_moveByTransform.AssignTransform(wizard.transform);
+			// _moveByTransform.AssignTransform(wizard.transform);
+			weapon.SetTarget(wizard);
             weapon.TargetDiedEvent += WizardDiedEvent;
         }
 
