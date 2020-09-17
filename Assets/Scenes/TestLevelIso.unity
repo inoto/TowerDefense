@@ -12363,6 +12363,32 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7132983652673548671, guid: 7ff39e9be62a0c445b213f5fcf271c17,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6,
+        type: 2}
+    - target: {fileID: 7132983652673548671, guid: 7ff39e9be62a0c445b213f5fcf271c17,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+    - target: {fileID: 7132983652673548671, guid: 7ff39e9be62a0c445b213f5fcf271c17,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7132983652673548671, guid: 7ff39e9be62a0c445b213f5fcf271c17,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7132983652673548671, guid: 7ff39e9be62a0c445b213f5fcf271c17,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7371826186580905844, guid: 7ff39e9be62a0c445b213f5fcf271c17,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -16647,6 +16673,11 @@ PrefabInstance:
     - target: {fileID: 1123939366993688698, guid: 10ca4bcf27b214145b3612a01d21b775,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831428087164872093, guid: 10ca4bcf27b214145b3612a01d21b775,
+        type: 3}
+      propertyPath: m_overflowMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2728725729246835122, guid: 10ca4bcf27b214145b3612a01d21b775,

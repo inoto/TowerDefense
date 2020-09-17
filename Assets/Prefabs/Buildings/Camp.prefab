@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 9117269054925674500}
   - component: {fileID: 8198346725571613127}
   - component: {fileID: 8774561207161834584}
-  - component: {fileID: 6479964499301800850}
   - component: {fileID: 7310346753822730505}
   - component: {fileID: 9128434325999179366}
   m_Layer: 16
@@ -78,20 +77,6 @@ MonoBehaviour:
   startSoldiersCount: 3
   Soldiers: []
   SoldiersCountCloud: {fileID: 0}
---- !u!114 &6479964499301800850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1738599816406478243}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4ca34cac67f4ae49b5f57a57f577ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  Balance: 1
 --- !u!114 &7310346753822730505
 MonoBehaviour:
   m_ObjectHideFlags: 0
