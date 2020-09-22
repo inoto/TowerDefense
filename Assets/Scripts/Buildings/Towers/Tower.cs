@@ -40,9 +40,9 @@ namespace TowerDefense
 
 		protected override void Start()
 		{
-			base.Start();
-
 			weapon.gameObject.SetActive(false);
+
+			base.Start();
 		}
 
 		public void SetSpec(Specialization.Type spec)

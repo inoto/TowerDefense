@@ -1,4 +1,7 @@
-﻿using RotaryHeart.Lib.SerializableDictionary;
+﻿using System;
+using System.Collections.Generic;
+using NaughtyAttributes;
+using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
 namespace TowerDefense
@@ -6,25 +9,35 @@ namespace TowerDefense
 	public class UnitFactory : Singleton<UnitFactory>
 	{
 		[System.Serializable]
-		public class PreloadDict : SerializableDictionaryBase<GameObject, int> { }
+		public enum Type
+		{
+			Soldier,
+			Food
+		}
 
-		[SerializeField] PreloadDict preloadUnits = new PreloadDict();
+		[System.Serializable]
+		public class PreloadObject
+		{
+			public Type Type;
+			public GameObject Prefab;
+			public int Amount;
+		}
 
-		[SerializeField] GameObject soldierPrefab = null;
+		[SerializeField] List<PreloadObject> objects = new List<PreloadObject>();
 
 		void Start()
 		{
-			foreach (var kvp in preloadUnits)
+			foreach (var obj in objects)
 			{
-				SimplePool.Preload(kvp.Key, kvp.Value);
+				SimplePool.Preload(obj.Prefab, obj.Amount);
 			}
 		}
 
-		public Soldier CreateSoldier()
+		public T SpawnObject<T>(Type type) where T : class
 		{
-			var go = SimplePool.Spawn(soldierPrefab);
+			var go = SimplePool.Spawn(objects.Find(e => e.Type == type).Prefab);
 			go.transform.SetParent(transform);
-			return go.GetComponent<Soldier>();
+			return go.GetComponent<T>();
 		}
 	}
 }

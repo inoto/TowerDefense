@@ -20,6 +20,8 @@ namespace TowerDefense
 		{
 			switch (TargetingTo)
 			{
+				case Priority.None:
+				case Priority.RandomTarget:
 				case Priority.ClosestToExit:
 					return FindClosestToExitTarget();
 				case Priority.LowHealth:

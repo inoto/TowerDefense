@@ -36,7 +36,6 @@ namespace TowerDefense
 
 			if (instantly)
 			{
-				EnterBuilding();
 				return;
 			}
 

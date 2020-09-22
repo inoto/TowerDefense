@@ -55,6 +55,9 @@ namespace TowerDefense
             base.Corpse();
 
             StopMoving();
+            var food = UnitFactory.Instance.SpawnObject<Food>(UnitFactory.Type.Food);
+            food.transform.position = transform.position;
+            food.Amount = FoodReward;
         }
     }
 }

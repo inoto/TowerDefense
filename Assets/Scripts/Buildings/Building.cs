@@ -38,7 +38,7 @@ namespace TowerDefense
 
 			for (int i = 0; i < startSoldiersCount; i++)
 			{
-				var soldier = UnitFactory.Instance.CreateSoldier();
+				var soldier = UnitFactory.Instance.SpawnObject<Soldier>(UnitFactory.Type.Soldier);
 				soldier.transform.position = transform.position;
 				AddSoldier(soldier, true);
 				// soldier.AssignToBuilding(this, true);
@@ -57,6 +57,7 @@ namespace TowerDefense
         {
 	        Soldiers.Add(soldier);
 	        soldier.AssignToBuilding(this, instantly);
+			if (instantly) LoadSoldier(soldier);
 
 	        AnySoldiersCountChangedEvent?.Invoke(this);
 	        SoldiersCountChangedEvent?.Invoke();
@@ -68,6 +69,7 @@ namespace TowerDefense
 	        {
 		        Soldiers.Add(soldiers[i]);
 		        soldiers[i].AssignToBuilding(this, instantly);
+		        if (instantly) LoadSoldier(soldiers[i]);
 	        }
 
 	        AnySoldiersCountChangedEvent?.Invoke(this);

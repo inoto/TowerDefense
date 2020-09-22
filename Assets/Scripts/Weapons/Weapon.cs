@@ -12,11 +12,12 @@ namespace TowerDefense
 	{
 		public enum Priority
 		{
-			RandomTarget,
+			None,
 			ClosestToExit,
 			LowHealth,
 			MostDangerous,
-			LargestBunch
+			LargestBunch,
+			RandomTarget
 		}
 
         public event Action TargetAcquiredEvent;
