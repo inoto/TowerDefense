@@ -170,8 +170,6 @@ MonoBehaviour:
   SoldiersCountCloud: {fileID: 0}
   Cost: 4
   Icon: {fileID: 0}
-  MaxDesired: 3
-  DesiredCount: 1
   Specialization: 0
   SpecDataAsset: {fileID: 0}
   weaponPrefab: {fileID: 1085882470352526}
@@ -216,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 344576
+    m_Bits: 352768
 --- !u!114 &7528139707303107055
 MonoBehaviour:
   m_ObjectHideFlags: 0

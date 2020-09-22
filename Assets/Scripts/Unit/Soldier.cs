@@ -47,7 +47,7 @@ namespace TowerDefense
         void UnAssignFromBuilding()
         {
 	        if (CurrentlyInBuilding)
-		        ExitBuilding();
+		        building.UnloadSoldier(this);
 	        else
 		        StopMoving();
 
@@ -59,7 +59,12 @@ namespace TowerDefense
 	        movingToBuilding = true;
 	        _moveByTransform.AssignTransform(building.transform);
 
-	        ArrivedDestinationEvent += EnterBuilding;
+	        ArrivedDestinationEvent += LoadToBuilding;
+        }
+
+        void LoadToBuilding()
+        {
+			building.LoadSoldier(this);
         }
 
         public void EnterBuilding()
@@ -89,7 +94,7 @@ namespace TowerDefense
 
             IsBusy = true;
             if (CurrentlyInBuilding)
-	            ExitBuilding();
+	            building.UnloadSoldier(this);
             else
 	            StopMoving();
 
@@ -116,7 +121,7 @@ namespace TowerDefense
 
 	        IsBusy = true;
 	        if (CurrentlyInBuilding)
-		        ExitBuilding();
+		        building.UnloadSoldier(this);
 	        else
 		        StopMoving();
 

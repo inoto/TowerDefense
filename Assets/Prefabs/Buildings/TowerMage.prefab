@@ -170,8 +170,6 @@ MonoBehaviour:
   SoldiersCountCloud: {fileID: 0}
   Cost: 6
   Icon: {fileID: 0}
-  MaxDesired: 3
-  DesiredCount: 1
   Specialization: 0
   SpecDataAsset: {fileID: 0}
   damageMultiplierFromSoldiersCount: 0.25
@@ -215,7 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 344576
+    m_Bits: 352768
 --- !u!114 &6072786071088706591
 MonoBehaviour:
   m_ObjectHideFlags: 0

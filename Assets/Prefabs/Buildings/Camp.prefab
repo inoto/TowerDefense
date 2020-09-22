@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragEndFilter:
     serializedVersion: 2
-    m_Bits: 262656
+    m_Bits: 270848
 --- !u!114 &9128434325999179366
 MonoBehaviour:
   m_ObjectHideFlags: 0
