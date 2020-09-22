@@ -32,7 +32,7 @@ namespace TowerDefense
 			if (initialized)
 				return;
 
-			Wave.EndedEvent += OnWaveEnded;
+			WaveManager.WaveEndedEvent += OnWaveWaveEnded;
 
 			Soldiers = new List<Soldier>(maxSoldiersCount);
 
@@ -47,7 +47,7 @@ namespace TowerDefense
 			initialized = true;
 		}
 
-        void OnWaveEnded(int waveNumber)
+        void OnWaveWaveEnded(int waveNumber)
         {
 	        if (SoldiersCountInBuilding > 0)
 			    PlayerController.Instance.SpendFood(SoldiersCountInBuilding, transform);

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949c9697d7f696a43922f64d6f6bced9, type: 3}
+  m_Name: Wave_01_Goblins
+  m_EditorClassIdentifier: 
+  Active: 1
+  BeforeWaveDelay: 0
+  AfterWaveDelay: 0
+  Mobs:
+  - Delay: 0
+    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+      type: 3}
+    MobCount: 5
+    Interval: 1
+    PathName: Path0
+  Wizards: []

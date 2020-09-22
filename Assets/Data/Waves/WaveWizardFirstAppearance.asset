@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949c9697d7f696a43922f64d6f6bced9, type: 3}
+  m_Name: WaveWizardFirstAppearance
+  m_EditorClassIdentifier: 
+  Active: 1
+  BeforeWaveDelay: 0
+  AfterWaveDelay: 1
+  Mobs: []
+  Wizards:
+  - Delay: 0
+    WizardPrefab: {fileID: 8630762654974033817, guid: bf51c2b72d6ffb94e801845c126fe95a,
+      type: 3}
+    CaveIndex: 0

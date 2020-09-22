@@ -2,7 +2,7 @@
 
 namespace TowerDefense
 {
-    public class BigSkyStone : MonoBehaviour
+    public class WizardCave : MonoBehaviour
     {
         [SerializeField] GameObject WizardTemplate;
         public Vector2 SpawnOffset = Vector2.zero;
@@ -12,7 +12,7 @@ namespace TowerDefense
             SimplePool.Preload(WizardTemplate, 4);
         }
 
-        public void SpawnWizard()
+        public void Init()
         {
             GameObject go = SimplePool.Spawn(WizardTemplate);
             go.transform.parent = transform;

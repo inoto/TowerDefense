@@ -20,12 +20,12 @@ namespace TowerDefense
 
 		void OnEnable()
 		{
-			Wave.StartedEvent += ChangeValue;
+			WaveManager.WaveStartedEvent += ChangeValue;
 		}
 
 		void OnDisable()
 		{
-			Wave.StartedEvent -= ChangeValue;
+			WaveManager.WaveStartedEvent -= ChangeValue;
 		}
 
 		void ChangeValue(int waveNumber)

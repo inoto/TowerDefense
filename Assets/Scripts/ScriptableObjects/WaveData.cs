@@ -4,16 +4,19 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-    [Serializable]
-    public class WaveData
+	[CreateAssetMenu(fileName = "WaveData", menuName = "TowerDefense/WaveData", order = 0)]
+    public class WaveData : ScriptableObject
     {
+	    public bool Active;
+	    public float BeforeWaveDelay;
+	    public float AfterWaveDelay;
         public List<MobData> Mobs;
         public List<WizardData> Wizards;
-        public float TimeAfterWave;
 
         [Serializable]
         public class MobData
         {
+	        public float Delay;
             public GameObject MobPrefab;
             public int MobCount;
             public float Interval;
@@ -21,6 +24,7 @@ namespace TowerDefense
 
             public MobData()
             {
+	            Delay = 0f;
                 MobPrefab = null;
                 MobCount = 5;
                 Interval = 2;
@@ -31,7 +35,9 @@ namespace TowerDefense
         [Serializable]
         public class WizardData
         {
-            public BigSkyStone Stone;
+	        public float Delay;
+            public GameObject WizardPrefab;
+            public int CaveIndex;
         }
     }
 }

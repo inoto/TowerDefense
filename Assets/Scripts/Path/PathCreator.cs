@@ -22,13 +22,13 @@ namespace TowerDefense
 		void OnEnable()
 		{
 			MoveByPath.LookingForPathEvent += ProvidePath;
-			Wave.LookingForSpawnPointsEvent += ProvideSpawnPoints;
+			// WaveManager.LookingForSpawnPointsEvent += ProvideSpawnPoints;
 		}
 
 		void OnDisable()
 		{
 			MoveByPath.LookingForPathEvent -= ProvidePath;
-			Wave.LookingForSpawnPointsEvent -= ProvideSpawnPoints;
+			// WaveManager.LookingForSpawnPointsEvent -= ProvideSpawnPoints;
 		}
 
 		void ProvidePath(MoveByPath move, string pathName)
@@ -42,14 +42,14 @@ namespace TowerDefense
 			}
 		}
 
-		void ProvideSpawnPoints(Wave wave)
-		{
-			wave.SpawnPoints = new Dictionary<string, Vector2>();
-			for (int i = 0; i < Curves.Count; i++)
-			{
-				wave.SpawnPoints.Add(Curves[i].name, Curves[i].FirstSegment);
-			}
-		}
+		// void ProvideSpawnPoints(WaveManager waveManager)
+		// {
+		// 	waveManager.SpawnPoints = new Dictionary<string, Vector2>();
+		// 	for (int i = 0; i < Curves.Count; i++)
+		// 	{
+		// 		waveManager.SpawnPoints.Add(Curves[i].name, Curves[i].FirstSegment);
+		// 	}
+		// }
 
 		public void AddCurve()
 		{
