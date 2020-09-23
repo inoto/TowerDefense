@@ -29,9 +29,7 @@ namespace TowerDefense
 
             _healthy.ArmorType = StatsData.Armor;
 
-            MoveByPath mbp = GetComponent<MoveByPath>();
-            // StatsData.SpeedType;
-            mbp.Speed = (float) StatsData.Speed;
+            _moveByPath.Speed = (float) StatsData.Speed;
 
             MoveByTransform mbt = GetComponent<MoveByTransform>();
             mbt.Speed = (float) StatsData.Speed;
@@ -44,8 +42,7 @@ namespace TowerDefense
 			yield return new WaitForSeconds(2f);
             if (CreatedManually)
             {
-                MoveByPath mbp = GetComponent<MoveByPath>();
-                mbp.SetPath("Path0");
+	            _moveByPath.SetPath("Path0");
                 // AddOrder(mbp, CurrentOrder == null);
 			}
         }
@@ -55,6 +52,7 @@ namespace TowerDefense
             base.Corpse();
 
             StopMoving();
+            _moveByPath.Pause();
             var food = UnitFactory.Instance.SpawnObject<Food>(UnitFactory.Type.Food);
             food.transform.position = transform.position;
             food.Amount = FoodReward;
