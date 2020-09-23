@@ -15,6 +15,8 @@ namespace TowerDefense
 		[SerializeField] GameObject soldier = null;
 		[SerializeField] Button goButton = null;
 		[SerializeField] Button cancelButton = null;
+		// [SerializeField] Image suitableIcon = null;
+		// [SerializeField] Image notSuitableIcon = null;
 
 		List<Image> images = new List<Image>();
 		List<Button> buttons = new List<Button>();

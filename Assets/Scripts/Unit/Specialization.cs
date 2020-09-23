@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace TowerDefense
 		public int[] SpecPoints;
 		public int[] SpecLevel;
 		public int PointsForLevel = 500;
+		public int OverallLevel = 0;
 
 		void Start()
 		{
@@ -29,8 +31,11 @@ namespace TowerDefense
 			int count = Enum.GetNames(typeof(Type)).Length;
 			SpecPoints = new int[count];
 			SpecLevel = new int[count];
-			
-			
+
+			for (int i = 0; i < SpecLevel.Length; i++)
+			{
+				OverallLevel += SpecLevel[i];
+			}
 		}
 
 		public void Modify(Type spec, int value)

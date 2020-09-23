@@ -22,10 +22,11 @@ namespace TowerDefense
 		Vector2 waypoint;
 		public Vector2 WaypointPoint => waypoint;
 		Vector2 desired;
-		Quaternion quat;
+		Vector3 rotation;
 		Vector2 offset;
 		Vector2 footPoint;
         float spriteYoffset = 0.01f;
+        float initialYRotation;
 
 		AttachmentPoints _attachments;
         Weapon weapon;
@@ -39,9 +40,9 @@ namespace TowerDefense
 			_attachments.Points.TryGetValue("Foot", out footPoint);
             weapon = GetComponentInChildren<Weapon>();
             moveByTransform = GetComponent<MoveByTransform>();
-        }
+		}
 
-		public void SetPath(string pathName)
+        public void SetPath(string pathName)
 		{
 			segment = 0;
 			isMoving = false;
@@ -101,9 +102,9 @@ namespace TowerDefense
 			
 			desired = waypoint - (Vector2)_transform.position - footPoint;
 			
-			quat = _unit.RotationTransform.rotation;
-			quat.y = desired.x < 0 ? 180f : 0f;
-			_unit.RotationTransform.rotation = quat;
+			rotation = _unit.RotationTransform.rotation.eulerAngles;
+			rotation.y = desired.x < 0 ? _unit.InitialYRotation + 180f : _unit.InitialYRotation;
+			_unit.RotationTransform.rotation = Quaternion.Euler(rotation);
 			
 			float distance = desired.magnitude;
 			desired.Normalize();

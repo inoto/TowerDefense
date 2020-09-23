@@ -25,6 +25,7 @@ namespace TowerDefense
         public Transform RotationTransform;
         public float SpriteYSpeed = 1f;
         public float SpriteMaxY = 0.03f;
+        public float InitialYRotation;
 
         Transform _transform;
 		Collider2D _collider;
@@ -37,11 +38,13 @@ namespace TowerDefense
 		{
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
-        }
+
+			InitialYRotation = RotationTransform.rotation.eulerAngles.y;
+		}
 
 		void Start()
 		{
-            Reset();
+			Reset();
         }
 
 		void OnDisable()
