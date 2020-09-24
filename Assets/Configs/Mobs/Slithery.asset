@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631059ef9e783f94aa3f0246db39b728, type: 3}
-  m_Name: Stormtrooper
+  m_Name: Slithery
   m_EditorClassIdentifier: 
-  Hp: 800
-  DamageMin: 60
-  DamageMax: 80
-  AttackRate: 2.1
-  Armor: 1
+  Hp: 56
+  DamageMin: 20
+  DamageMax: 30
+  AttackRate: 1.3
+  Armor: 0
   SpeedType: 0
-  Speed: 30
-  FoodReward: 20
+  Speed: 50
+  FoodReward: 4
   ReagentReward: 0

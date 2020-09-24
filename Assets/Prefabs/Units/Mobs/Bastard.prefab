@@ -22,15 +22,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1773084378477652540}
+  - component: {fileID: 1554915614503469926}
+  - component: {fileID: 9098928705200843329}
   - component: {fileID: 5090799088823660724}
   - component: {fileID: 5978640524102946824}
-  - component: {fileID: 1554915614503469926}
   - component: {fileID: 1676540822217163681}
-  - component: {fileID: 9098928705200843329}
   - component: {fileID: 6840562128410674061}
   - component: {fileID: 8545540718028535666}
   m_Layer: 10
-  m_Name: Goblin
+  m_Name: Bastard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,43 +53,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5090799088823660724
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993218058550423989}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.09
---- !u!50 &5978640524102946824
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993218058550423989}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &1554915614503469926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,29 +69,13 @@ MonoBehaviour:
   RotationTransform: {fileID: 9003081776647942279}
   SpriteYSpeed: 1
   SpriteMaxY: 0.02
+  InitialYRotation: 0
   _healthy: {fileID: 8545540718028535666}
   _moveByTransform: {fileID: 6840562128410674061}
   CreatedManually: 0
   FoodReward: 1
   StatsData: {fileID: 11400000, guid: 9a324c556f01f5f41851b2c5c3f12b00, type: 2}
   _moveByPath: {fileID: 1676540822217163681}
---- !u!114 &1676540822217163681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993218058550423989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2332605085333d947828eb4e3ae3bed9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsActive: 0
-  PathName: 
-  Speed: 40
-  path: {fileID: 0}
-  isMoving: 0
 --- !u!114 &9098928705200843329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +117,60 @@ MonoBehaviour:
     - Foot
     _values:
     - {x: -0.0034079552, y: -0.16358006}
+--- !u!58 &5090799088823660724
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.09
+--- !u!50 &5978640524102946824
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1676540822217163681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993218058550423989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2332605085333d947828eb4e3ae3bed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsActive: 0
+  PathName: 
+  Speed: 40
+  path: {fileID: 0}
+  isMoving: 0
 --- !u!114 &6840562128410674061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,12 +365,12 @@ PrefabInstance:
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.023
+      value: -0.023
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.181
+      value: 0.178
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
@@ -611,6 +612,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -8630886842355845947, guid: 25838e2a749bda7428980015b4620001,
         type: 3}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.754717
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49f955e6240cff34b8147f78f67f3499, type: 3}
 --- !u!224 &9003081776647942279 stripped

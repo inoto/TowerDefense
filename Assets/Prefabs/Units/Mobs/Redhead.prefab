@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 5888148378769355624}
   - component: {fileID: 4874873044416620702}
   m_Layer: 10
-  m_Name: Ogre
+  m_Name: Redhead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 0
   RotationTransform: {fileID: 8618036464056410988}
+  SpriteYSpeed: 1
+  SpriteMaxY: 0.03
+  InitialYRotation: 0
   _healthy: {fileID: 1881558741405918776}
   _moveByTransform: {fileID: 5888148378769355624}
   CreatedManually: 0
@@ -275,7 +278,7 @@ MonoBehaviour:
     _keys:
     - Foot
     _values:
-    - {x: -0.01874423, y: -0.30615664}
+    - {x: 0.040751457, y: -0.38548398}
 --- !u!1001 &2331277024091336861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,12 +354,12 @@ PrefabInstance:
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.013
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.238
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 8449993676005669449, guid: 54297fae1dc332847b94eb0d7fc8d541,
         type: 3}
@@ -550,12 +553,12 @@ PrefabInstance:
     - target: {fileID: 623510334883479825, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 623510334883479825, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 623510334883479825, guid: 49f955e6240cff34b8147f78f67f3499,
         type: 3}
@@ -596,8 +599,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0566fd3bd74710d4a982b92c43f2c90f,
+      objectReference: {fileID: -2689843577385165920, guid: 25838e2a749bda7428980015b4620001,
         type: 3}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.7924528
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.26539695
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.26539695
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036349951713662940, guid: 49f955e6240cff34b8147f78f67f3499,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49f955e6240cff34b8147f78f67f3499, type: 3}
 --- !u!224 &8618036464056410988 stripped
