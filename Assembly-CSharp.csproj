@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Buildings\Gates.cs" />
     <Compile Include="Assets\Scripts\Buildings\Input\DragArrowMaker.cs" />
     <Compile Include="Assets\Scripts\Buildings\Input\LongTapAble.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\OccupiedByEnemy.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Tower.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />

@@ -87,6 +87,12 @@ namespace TowerDefense
 	        gameObject.SetActive(true);
         }
 
+        protected override void Corpse()
+        {
+	        StopMoving();
+	        base.Corpse();
+        }
+
         public void AttackWizard(Wizard wizard)
         {
             if (IsBusy || AttackingWizard)
@@ -99,8 +105,7 @@ namespace TowerDefense
 	            StopMoving();
 
             AttackingWizard = true;
-			// _moveByTransform.AssignTransform(wizard.transform);
-			weapon.SetTarget(wizard);
+            weapon.SetTarget(wizard);
             weapon.TargetDiedEvent += WizardDiedEvent;
         }
 
@@ -145,10 +150,31 @@ namespace TowerDefense
 	        GoToAssignedBuilding();
         }
 
-        protected override void Corpse()
+        OccupiedByEnemy occupied;
+
+        public void FreedOccupiedTower(OccupiedByEnemy occupied)
         {
-	        StopMoving();
-	        base.Corpse();
+	        _moveByTransform.AssignTransform(occupied.transform, 0.9f);
+	        this.occupied = occupied;
+	        ArrivedDestinationEvent += OccupiedArrived;
+        }
+
+        void OccupiedArrived()
+        {
+			if (occupied.NumberOfAliveMobs > 0)
+			{
+				var mob = occupied.DefineMob(this);
+				// weapon.SetTarget(mob);
+			}
+			else
+			{
+				var occupiedBuilding = occupied.GetComponent<Building>();
+				if (occupiedBuilding.SoldiersCount < occupiedBuilding.MaxSoldiersCount)
+					occupiedBuilding.AddSoldier(this);
+				else
+					GoToAssignedBuilding();
+				
+			}
         }
 	}
 }

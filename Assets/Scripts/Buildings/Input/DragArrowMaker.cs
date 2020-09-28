@@ -14,9 +14,16 @@ namespace TowerDefense
 		Building targetBuilding;
 		Wizard targetWizard;
 		Food targetFood;
+		Tower targetTower;
 
 		public void OnDragStarted(Vector2 point)
 		{
+			var tower = GetComponent<Tower>();
+			if (tower != null && tower.OccupiedByEnemy)
+			{
+				return;
+			}
+
 			_dragArrow = UILevelControlsManager.Instance.GetControl<UIDragArrow>(UILevelControlsManager.LevelControl.DragArrow);
 			if (UILevelControlsManager.Instance.IsSomeControlShown)
 				UILevelControlsManager.Instance.Clear();
@@ -65,6 +72,30 @@ namespace TowerDefense
 					{
 						building = GetComponent<Building>();
 
+						targetTower = target.GetComponent<Tower>();
+						if (targetTower != null)
+						{
+							if (targetTower.OccupiedByEnemy)
+							{
+								if (building.SoldiersCount == 1)
+								{
+									building.RemoveLastSoldier().FreedOccupiedTower(targetTower.GetComponent<OccupiedByEnemy>());
+								}
+								else
+								{
+									var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(
+											UILevelControlsManager.LevelControl.SoldierChoice);
+									control.Show(building);
+									control.GoButtonClickedEvent += OnGoButtonClicked;
+									control.HiddenEvent += OnControlHidden;
+
+									_dragArrow.End();
+									_dragArrow = null;
+									return;
+								}
+							}
+						}
+
 						targetBuilding = target.GetComponent<Building>();
 						if (targetBuilding != null)
 						{
@@ -84,6 +115,7 @@ namespace TowerDefense
 								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
 								control.Show(building, targetBuilding);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
+								control.HiddenEvent += OnControlHidden;
 							}
 						}
 
@@ -99,6 +131,7 @@ namespace TowerDefense
 								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
+								control.HiddenEvent += OnControlHidden;
 							}
 						}
 
@@ -114,6 +147,7 @@ namespace TowerDefense
 								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
+								control.HiddenEvent += OnControlHidden;
 							}
 						}
 					}
@@ -124,15 +158,30 @@ namespace TowerDefense
 			}
 		}
 
+		void OnControlHidden(UILevelControl control)
+		{
+			var uiSoldierChoice = control as UISoldierChoice;
+			uiSoldierChoice.HiddenEvent -= OnControlHidden;
+			uiSoldierChoice.GoButtonClickedEvent -= OnGoButtonClicked;
+		}
+
 		void OnGoButtonClicked(UISoldierChoice control, List<int> indexes)
 		{
+			control.HiddenEvent -= OnControlHidden;
 			control.GoButtonClickedEvent -= OnGoButtonClicked;
 
-			if (targetBuilding != null)
+			if (targetTower != null && targetTower.OccupiedByEnemy)
+			{
+				var soldiers = building.RemoveSoldiers(indexes);
+				for (int i = 0; i < soldiers.Count; i++)
+				{
+					soldiers[indexes[i]].FreedOccupiedTower(targetTower.GetComponent<OccupiedByEnemy>());
+				}
+			}
+			else if (targetBuilding != null)
 			{
 				var soldiers = building.RemoveSoldiers(indexes);
 				targetBuilding.AddSoldiers(soldiers);
-
 			}
 			else if (targetWizard != null)
 			{

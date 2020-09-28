@@ -6,12 +6,15 @@ namespace TowerDefense
 {
 	public class MoveByTransform : Order
 	{
+		const float CommonDistanceToDestination = 0.1f;
+
 		public float Speed = 40f;
 		[SerializeField] [ReadOnly] bool isMoving;
 
 		Transform destination;
 		Vector2 desired, offset, footPoint;
 		Quaternion quat;
+		float distanceToDestination;
 
 		AttachmentPoints _attachments;
         Weapon weapon;
@@ -27,10 +30,11 @@ namespace TowerDefense
             moveByPath = GetComponent<MoveByPath>();
         }
 		
-		public void AssignTransform(Transform trans)
+		public void AssignTransform(Transform trans, float distance = CommonDistanceToDestination)
 		{
 			destination = trans;
             isMoving = true;
+            distanceToDestination = distance;
 
 			weapon.TargetOutOfRangeEvent += StartMoving;
         }
@@ -65,7 +69,7 @@ namespace TowerDefense
 				
 				float distance = desired.magnitude;
 				desired.Normalize();
-				if (distance < 0.1f)
+				if (distance < distanceToDestination)
 				{
 					ArrivedDestination();
 					return;

@@ -10,9 +10,9 @@ namespace TowerDefense
         public static event Action<Tower> ClickedEvent;
 
         public event Action SpecChangedSingleEvent;
-		
-		[Header("Tower")]
-		public int Cost = 0;
+
+        [Header("Tower")]
+        public bool OccupiedByEnemy = false;
 		public Sprite Icon;
 
 		public Specialization.Type Specialization;
