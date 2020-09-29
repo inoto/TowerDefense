@@ -70,7 +70,7 @@ namespace TowerDefense
             weapon.TargetAcquiredEvent += TargetAcquiredEvent;
         }
 
-        void TargetAcquiredEvent()
+        void TargetAcquiredEvent(Weapon weapon1)
         {
             weapon.TargetAcquiredEvent -= TargetAcquiredEvent;
 
@@ -80,7 +80,7 @@ namespace TowerDefense
             weapon.TargetOutOfRangeEvent += ContinueMoving;
 		}
 
-        void ContinueMoving()
+        void ContinueMoving(Weapon weapon1)
         {
             weapon.TargetDiedEvent -= ContinueMoving;
             weapon.TargetOutOfRangeEvent -= ContinueMoving;

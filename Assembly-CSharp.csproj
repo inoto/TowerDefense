@@ -175,7 +175,6 @@
     <Compile Include="Assets\Scripts\UI\UISoldiersCountCloudManager.cs" />
     <Compile Include="Assets\Scripts\UI\UISpecChoiceClouds.cs" />
     <Compile Include="Assets\Scripts\UI\UITowerInfo.cs" />
-    <Compile Include="Assets\Scripts\Unit\Armor.cs" />
     <Compile Include="Assets\Scripts\Unit\AttachmentPoints.cs" />
     <Compile Include="Assets\Scripts\Unit\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Unit\Healthy.cs" />
@@ -203,10 +202,10 @@
     <Compile Include="Assets\Scripts\Utils\UnitSortingDepth.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\Waves\WaveManager.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Enums.cs" />
     <Compile Include="Assets\Scripts\Weapons\MobWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\SoldierWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\TowerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\UnitWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\WeaponCannon.cs" />
     <Compile Include="Assets\Scripts\WizardCave.cs" />

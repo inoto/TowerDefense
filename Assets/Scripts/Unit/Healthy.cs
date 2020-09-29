@@ -22,7 +22,7 @@ namespace TowerDefense
 		public int MaxHealth = 10;
 		public int CurrentHealth = 10;
 		[Range(0, 1f)] public float HealthPercent = 1f;
-		public Armor ArmorType = Armor.None;
+		public ArmorType ArmorType = ArmorType.None;
 		public bool Damaged = false;
 		public bool IsDied = false;
 		
@@ -82,8 +82,8 @@ namespace TowerDefense
 			if (IsDied || !Damageable)
 				return;
 
-			if (type == DamageType.Magical && ArmorType == Armor.Spiritual
-			    || type == DamageType.Physical && ArmorType == Armor.Fortified)
+			if (type == DamageType.Magical && ArmorType == ArmorType.Spiritual
+			    || type == DamageType.Physical && ArmorType == ArmorType.Fortified)
 				damage = Mathf.RoundToInt(damage * 0.5f);
 			
 			CurrentHealth = CurrentHealth - damage;

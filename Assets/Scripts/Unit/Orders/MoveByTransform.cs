@@ -30,16 +30,21 @@ namespace TowerDefense
             moveByPath = GetComponent<MoveByPath>();
         }
 		
-		public void AssignTransform(Transform trans, float distance = CommonDistanceToDestination)
+		public void AssignTransform(Transform trans, float distanceToDestination = CommonDistanceToDestination)
 		{
 			destination = trans;
             isMoving = true;
-            distanceToDestination = distance;
+            this.distanceToDestination = distanceToDestination;
 
 			weapon.TargetOutOfRangeEvent += StartMoving;
         }
+
+		public void StopMoving()
+		{
+			isMoving = false;
+		}
 		
-		void StartMoving()
+		void StartMoving(Weapon weapon1)
 		{
 			weapon.TargetOutOfRangeEvent -= StartMoving;
 
@@ -48,7 +53,7 @@ namespace TowerDefense
             weapon.TargetNowInRangeEvent += StopMoving;
 		}
 		
-		public void StopMoving()
+		void StopMoving(Weapon weapon1)
 		{
             weapon.TargetNowInRangeEvent -= StopMoving;
 

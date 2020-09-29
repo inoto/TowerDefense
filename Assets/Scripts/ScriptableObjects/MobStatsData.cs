@@ -10,7 +10,7 @@ namespace TowerDefense
         public int DamageMin;
         public int DamageMax;
         public float AttackRate;
-        public Armor Armor;
+        public ArmorType Armor;
         public MoveSpeedType SpeedType;
         public MoveSpeed Speed;
         public int FoodReward;

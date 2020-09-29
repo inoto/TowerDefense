@@ -34,12 +34,11 @@ namespace TowerDefense
 				MobsInFight.Add(mob, new List<Soldier>() {soldier});
 				mob.gameObject.SetActive(true);
 
-				var mbt = mob.GetComponent<MoveByTransform>();
-				mbt.AssignTransform(soldier.transform);
-				mbt.Activate();
+				mob.Weapon.SetTarget(soldier);
 				mob.DiedEvent += () =>
 				{
 					MobsInFight.Remove(mob);
+					DefineMob(soldier);
 				};
 			}
 			else if (MobsInFight.Count > 0)

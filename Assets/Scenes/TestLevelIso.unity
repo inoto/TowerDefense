@@ -2936,7 +2936,7 @@ PrefabInstance:
     - target: {fileID: 1728940651765670936, guid: 1c3f7445c9bd8bb45a8f96a3119f6f56,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1728940651765670936, guid: 1c3f7445c9bd8bb45a8f96a3119f6f56,
         type: 3}
@@ -6019,7 +6019,7 @@ PrefabInstance:
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
       propertyPath: startSoldiersCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9fd08a2048013844a6203775bccc84c, type: 3}
@@ -12529,7 +12529,7 @@ PrefabInstance:
     - target: {fileID: 1728940651765670936, guid: 1c3f7445c9bd8bb45a8f96a3119f6f56,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1728940651765670936, guid: 1c3f7445c9bd8bb45a8f96a3119f6f56,
         type: 3}

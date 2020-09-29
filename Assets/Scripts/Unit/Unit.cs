@@ -29,8 +29,10 @@ namespace TowerDefense
 
         Transform _transform;
 		Collider2D _collider;
+		Weapon _weapon;
+		public Weapon Weapon => _weapon;
 
-		[Header("Orders")]
+		[Header("Components")]
 		[SerializeField] protected Healthy _healthy;
         [SerializeField] protected MoveByTransform _moveByTransform;
 
@@ -38,6 +40,7 @@ namespace TowerDefense
 		{
 			_transform = GetComponent<Transform>();
 			_collider = GetComponent<Collider2D>();
+			_weapon = GetComponentInChildren<Weapon>();
 
 			InitialYRotation = RotationTransform.rotation.eulerAngles.y;
 		}
@@ -84,7 +87,9 @@ namespace TowerDefense
 		}
 
 		public void RaiseDiedEvent()
-        {
+		{
+			// TODO: stop all orders
+			this.Weapon.IsActive = false;
             Corpse();
 			AnyDiedEvent?.Invoke(this);
 			DiedEvent?.Invoke();

@@ -47,6 +47,11 @@ namespace TowerDefense
 			initialized = true;
 		}
 
+		void OnDestroy()
+		{
+			WaveManager.WaveEndedEvent -= OnWaveWaveEnded;
+		}
+
         void OnWaveWaveEnded(int waveNumber)
         {
 	        if (SoldiersCountInBuilding > 0)

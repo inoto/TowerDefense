@@ -109,7 +109,7 @@ namespace TowerDefense
             weapon.TargetDiedEvent += WizardDiedEvent;
         }
 
-        void WizardDiedEvent()
+        void WizardDiedEvent(Weapon weapon1)
         {
 	        weapon.TargetDiedEvent -= WizardDiedEvent;
 
@@ -154,17 +154,18 @@ namespace TowerDefense
 
         public void FreedOccupiedTower(OccupiedByEnemy occupied)
         {
-	        _moveByTransform.AssignTransform(occupied.transform, 0.9f);
+	        _moveByTransform.AssignTransform(occupied.transform, 1.2f);
 	        this.occupied = occupied;
 	        ArrivedDestinationEvent += OccupiedArrived;
         }
 
         void OccupiedArrived()
         {
+	        ArrivedDestinationEvent -= OccupiedArrived;
 			if (occupied.NumberOfAliveMobs > 0)
 			{
 				var mob = occupied.DefineMob(this);
-				// weapon.SetTarget(mob);
+				weapon.SetTarget(mob, false); // DOES NOT WORK
 			}
 			else
 			{
@@ -176,5 +177,10 @@ namespace TowerDefense
 				
 			}
         }
+
+        // void OccupiedInRange(Weapon weapon)
+        // {
+	       //  weapon.SetTarget(mob);
+        // }
 	}
 }

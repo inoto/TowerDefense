@@ -8,8 +8,36 @@ using UnityEngine.Serialization;
 
 namespace TowerDefense
 {
+	public enum DamageType
+	{
+		Physical,
+		Magical
+	}
+
+	public enum ArmorType
+	{
+		None,
+		Fortified,
+		Spiritual
+	}
+
+	public enum ArmorLevel
+	{
+		Weak,
+		Good,
+		Strong
+	}
+
 	public class Weapon : Order
 	{
+		public enum AttackState
+		{
+			NonAttacking,
+			TargetInRange,
+			TargetOutOfRange,
+			TargetDied
+		}
+
 		public enum Priority
 		{
 			None,
@@ -20,13 +48,11 @@ namespace TowerDefense
 			RandomTarget
 		}
 
-        public event Action TargetAcquiredEvent;
-        public event Action TargetDiedEvent;
-        public event Action TargetOutOfRangeEvent;
-        public event Action TargetNowInRangeEvent;
+        public event Action<Weapon> TargetAcquiredEvent;
+        public event Action<Weapon> TargetDiedEvent;
+        public event Action<Weapon> TargetOutOfRangeEvent;
+        public event Action<Weapon> TargetNowInRangeEvent;
 
-
-		public CanAttackTarget CanAttackTarget = CanAttackTarget.GroundAndAir;
 		public DamageType DamageType = DamageType.Physical;
 		public LayerMask LayerMask;
 		
@@ -42,6 +68,7 @@ namespace TowerDefense
 		[ShowNativeProperty] float DamagePerSecond => (float)(DamageMin + DamageMax) / 2 / AttackInterval;
 
 		public ITargetable Target = null;
+		[ReadOnly] public AttackState CurrentAttackState = AttackState.NonAttacking;
 
 		[SerializeField] protected GameObject ProjectilePrefab;
 		public Vector2 ProjectileStartPointOffset;
@@ -52,10 +79,11 @@ namespace TowerDefense
 		
 		protected Collider2D _collider;
 
+		// orders
         protected MoveByTransform moveByTransform;
         protected MoveByPath moveByPath;
 
-		protected override void Awake()
+        protected override void Awake()
 		{
 			base.Awake();
 
@@ -126,7 +154,7 @@ namespace TowerDefense
 			return false;
 		}
 
-		public void SetTarget(ITargetable target)
+		public virtual void SetTarget(ITargetable target, bool moveToTarget = true)
 		{
 			Target = target;
 		}
@@ -160,22 +188,26 @@ namespace TowerDefense
 
         protected void RaiseTargetAcquiredEvent()
         {
-			TargetAcquiredEvent?.Invoke();
+	        CurrentAttackState = AttackState.NonAttacking;
+			TargetAcquiredEvent?.Invoke(this);
         }
 
         protected void RaiseTargetDiedEvent()
         {
-			TargetDiedEvent?.Invoke();
+	        CurrentAttackState = AttackState.TargetDied;
+			TargetDiedEvent?.Invoke(this);
         }
 
         protected void RaiseTargetOutOfRangeEvent()
         {
-			TargetOutOfRangeEvent?.Invoke();
+	        CurrentAttackState = AttackState.TargetOutOfRange;
+			TargetOutOfRangeEvent?.Invoke(this);
         }
 
         protected void RaiseTargetInRangeEvent()
         {
-            TargetNowInRangeEvent?.Invoke();
+	        CurrentAttackState = AttackState.TargetInRange;
+            TargetNowInRangeEvent?.Invoke(this);
 
 		}
 
