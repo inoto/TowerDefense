@@ -10,7 +10,7 @@ namespace TowerDefense
 	public class Unit : MonoBehaviour, IAlive, ITargetable
 	{
 		public static event Action<Unit> AnyDiedEvent;
-		public event Action DiedEvent;
+		public event Action<Unit> DiedEvent;
 		public static event Action<Unit, int, DamageType> AnyDamagedEvent;
         public event Action<int, DamageType> DamagedEvent;
 		public static event Action<Unit> AnyArrivedDestinationEvent;
@@ -92,7 +92,7 @@ namespace TowerDefense
 			this.Weapon.IsActive = false;
             Corpse();
 			AnyDiedEvent?.Invoke(this);
-			DiedEvent?.Invoke();
+			DiedEvent?.Invoke(this);
 		}
 
 		// using by Animator

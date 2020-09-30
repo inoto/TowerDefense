@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace TowerDefense
@@ -9,10 +11,15 @@ namespace TowerDefense
         public bool CreatedManually = false;
 		public int FoodReward = 0;
 
-        [SerializeField] MobStatsData StatsData;
+		Tower DefendingTower;
+        Queue<Soldier> soldiersQueue = new Queue<Soldier>();
+
+        [ShowNativeProperty] public int NumberOfSoldiersInQueue => soldiersQueue.Count;
+
+		[SerializeField] MobStatsData StatsData;
         [SerializeField] MoveByPath _moveByPath;
 
-		void Start()
+        void Start()
         {
             LoadData();
             StartCoroutine(CheckCreatedManually());
@@ -53,9 +60,61 @@ namespace TowerDefense
 
             StopMoving();
             _moveByPath.Pause();
-            var food = UnitFactory.Instance.SpawnObject<Food>(UnitFactory.Type.Food);
-            food.transform.position = transform.position;
-            food.Amount = FoodReward;
+            SpawnFood();
+        }
+
+        void SpawnFood()
+        {
+	        var food = UnitFactory.Instance.SpawnObject<Food>(UnitFactory.Type.Food);
+	        food.transform.position = transform.position;
+	        food.Amount = FoodReward;
+        }
+
+        public void DefendTower(Tower tower, Soldier soldier)
+        {
+	        DefendingTower = tower;
+            if (soldiersQueue.Count == 0)
+				this.Weapon.SetTarget(soldier);
+            soldiersQueue.Enqueue(soldier);
+            soldier.DiedEvent += OnSoldierDied;
+        }
+
+        public void AddToQueue(Soldier soldier)
+        {
+	        soldiersQueue.Enqueue(soldier);
+        }
+
+        void OnSoldierDied(Unit soldier)
+        {
+	        soldier.DiedEvent -= OnSoldierDied;
+
+	        soldiersQueue.Dequeue();
+	        if (soldiersQueue.Count > 0)
+	        {
+		        var nextSoldier = soldiersQueue.Peek();
+		        this.Weapon.SetTarget(nextSoldier);
+		        nextSoldier.DiedEvent += OnSoldierDied;
+	        }
+            else
+	        {
+                if (DefendingTower.OccupiedByEnemy)
+                {
+	                _moveByTransform.AssignTransform(DefendingTower.transform);
+	                ArrivedDestinationEvent += EnterTower;
+                }
+                else
+                    _moveByPath.AssignToClosestWaypoint();
+	        }
+        }
+
+        void EnterTower()
+        {
+	        ArrivedDestinationEvent -= EnterTower;
+
+	        if (DefendingTower.OccupiedByEnemy)
+				DefendingTower.GetComponent<OccupiedByEnemy>().ReturnMob(this);
+            else
+		        _moveByPath.AssignToClosestWaypoint();
         }
     }
 }

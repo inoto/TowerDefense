@@ -12,6 +12,7 @@ namespace TowerDefense
 			base.SetTarget(target, moveToTarget);
 
 			this.moveToTarget = moveToTarget;
+			CurrentAttackState = AttackState.NonAttacking;
 		}
 
 		protected override bool TrackTarget()

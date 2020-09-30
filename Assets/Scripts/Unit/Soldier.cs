@@ -164,11 +164,13 @@ namespace TowerDefense
 	        ArrivedDestinationEvent -= OccupiedArrived;
 			if (occupied.NumberOfAliveMobs > 0)
 			{
-				var mob = occupied.DefineMob(this);
-				weapon.SetTarget(mob, false); // DOES NOT WORK
+				var mob = occupied.CallMob(this);
+				weapon.SetTarget(mob, false);
+				mob.DiedEvent += OccupiedMobDied;
 			}
 			else
 			{
+				occupied.GetComponent<Tower>().OccupiedByEnemy = false;
 				var occupiedBuilding = occupied.GetComponent<Building>();
 				if (occupiedBuilding.SoldiersCount < occupiedBuilding.MaxSoldiersCount)
 					occupiedBuilding.AddSoldier(this);
@@ -178,9 +180,10 @@ namespace TowerDefense
 			}
         }
 
-        // void OccupiedInRange(Weapon weapon)
-        // {
-	       //  weapon.SetTarget(mob);
-        // }
+        void OccupiedMobDied(Unit mob)
+        {
+	        mob.DiedEvent -= OccupiedMobDied;
+	        if (!IsDied) OccupiedArrived();
+        }
 	}
 }

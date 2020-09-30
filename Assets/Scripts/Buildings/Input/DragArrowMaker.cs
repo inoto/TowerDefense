@@ -88,11 +88,10 @@ namespace TowerDefense
 									control.Show(building);
 									control.GoButtonClickedEvent += OnGoButtonClicked;
 									control.HiddenEvent += OnControlHidden;
-
-									_dragArrow.End();
-									_dragArrow = null;
-									return;
 								}
+								_dragArrow.End();
+								_dragArrow = null;
+								return;
 							}
 						}
 
