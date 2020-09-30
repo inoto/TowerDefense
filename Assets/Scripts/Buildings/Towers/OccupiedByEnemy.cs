@@ -8,9 +8,8 @@ namespace TowerDefense
 		[SerializeField] Weapon weapon = null;
 		[SerializeField] List<Mob> mobPrefabs = new List<Mob>();
 
-		public int NumberOfAliveMobs => mobs.Count + mobsInFight.Count;
+		public int NumberOfAliveMobs => mobs.Count;
 
-		[SerializeField] List<Mob> mobsInFight = new List<Mob>();
 		[SerializeField] List<Mob> mobs = new List<Mob>();
 
 		Tower _tower;
@@ -32,6 +31,7 @@ namespace TowerDefense
 				mobs.Add(go.GetComponent<Mob>());
 				mobs[mobs.Count - 1].DiedEvent += OnMobDied;
 			}
+			_tower.SoldiersCountCloud.TowerOccupied(this);
 		}
 
 		void OnMobDied(Unit mob)
@@ -39,6 +39,7 @@ namespace TowerDefense
 			mob.DiedEvent -= OnMobDied;
 
 			mobs.Remove(mob as Mob);
+			_tower.SoldiersCountCloud.TowerOccupied(this);
 		}
 
 		public Mob CallMob(Soldier soldier)
@@ -59,35 +60,11 @@ namespace TowerDefense
 			{
 				mob.gameObject.SetActive(true);
 				mob.DefendTower(_tower, soldier);
+
 			}
 			else
 				mob.AddToQueue(soldier);
 
-			// if (mobs.Count > 0)
-			// {
-			// 	mob = mobs[mobs.Count - 1];
-			// 	mob.gameObject.SetActive(true);
-			// 	mob.DefendTower(_tower, soldier);
-			//
-			// 	mobs.Remove(mob);
-			// 	mobsInFight.Add(mob);
-			// 	mob.Weapon.eve // mobsInFight вроде бы конфликтует с очередью моба, может надо как-то соединить иил что-то убртаь
-			// }
-			// else if (mobsInFight.Count > 0)
-			// {
-			// 	int lowestNumberOfSoldiers = int.MaxValue;
-			// 	Mob suitableMob = null;
-			// 	for (int i = 0; i < mobsInFight.Count; i++)
-			// 	{
-			// 		if (mobsInFight[i].NumberOfSoldiersInQueue < lowestNumberOfSoldiers)
-			// 		{
-			// 			lowestNumberOfSoldiers = mobsInFight[i].NumberOfSoldiersInQueue;
-			// 			suitableMob = mobsInFight[i];
-			// 		}
-			// 	}
-			// 	mob = suitableMob;
-			// 	mob?.AddToQueue(soldier);
-			// }
 			return mob;
 		}
 

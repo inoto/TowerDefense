@@ -290,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5f7aec9e448a547ad30318a346bebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cloudImage: {fileID: 8492224578850781556}
   textMeshPro: {fileID: 8492224579644137941}
   specEmptyIcon: {fileID: 8141424847168229530}
 --- !u!1 &8492224579644137939

@@ -5107,6 +5107,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerCannon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1347750961285234, guid: f94f55b98de5327438489d0223c2f362, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 273512743853799483, guid: f94f55b98de5327438489d0223c2f362,
         type: 3}
       propertyPath: Ranged
@@ -5212,6 +5216,7 @@ MonoBehaviour:
   mobPrefabs:
   - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
   - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
+  mobs: []
 --- !u!43 &1114091512
 Mesh:
   m_ObjectHideFlags: 0
