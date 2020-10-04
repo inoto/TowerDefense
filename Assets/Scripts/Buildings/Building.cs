@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TowerDefense
 {
@@ -39,7 +40,7 @@ namespace TowerDefense
 			for (int i = 0; i < startSoldiersCount; i++)
 			{
 				var soldier = UnitFactory.Instance.SpawnObject<Soldier>(UnitFactory.Type.Soldier);
-				soldier.transform.position = transform.position;
+				soldier.transform.position = transform.position + new Vector3(Random.Range(0.0f, 0.1f), Random.Range(0.0f, 0.1f));
 				AddSoldier(soldier, true);
 				// soldier.AssignToBuilding(this, true);
 			}

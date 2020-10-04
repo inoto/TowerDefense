@@ -28,9 +28,10 @@ namespace TowerDefense
         public float InitialYRotation;
 
         Transform _transform;
-		Collider2D _collider;
+		CircleCollider2D _collider;
 		Weapon _weapon;
 		public Weapon Weapon => _weapon;
+		public Vector2 Velocity;
 
 		[Header("Components")]
 		[SerializeField] protected Healthy _healthy;
@@ -39,7 +40,7 @@ namespace TowerDefense
         protected virtual void Awake()
 		{
 			_transform = GetComponent<Transform>();
-			_collider = GetComponent<Collider2D>();
+			_collider = GetComponent<CircleCollider2D>();
 			_weapon = GetComponentInChildren<Weapon>();
 
 			InitialYRotation = RotationTransform.rotation.eulerAngles.y;

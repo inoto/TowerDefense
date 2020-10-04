@@ -96,7 +96,7 @@ MonoBehaviour:
   InitialYRotation: 0
   _healthy: {fileID: 3266943506491149637}
   _moveByTransform: {fileID: 2398210044233116255}
-  CreatedManually: 1
+  CreatedManually: 0
   FoodReward: 1
   StatsData: {fileID: 11400000, guid: 77956c0d70a2df34f921150091180889, type: 2}
   _moveByPath: {fileID: 7156492306397247108}
@@ -254,7 +254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
-  CanAttackTarget: 2
   DamageType: 0
   LayerMask:
     serializedVersion: 2
@@ -264,6 +263,7 @@ MonoBehaviour:
   LaunchProgress: 0
   DamageMin: 2
   DamageMax: 3
+  CurrentAttackState: 0
   ProjectilePrefab: {fileID: 1471061530720506, guid: e81c982555ff45c4d903a030978c5beb,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}

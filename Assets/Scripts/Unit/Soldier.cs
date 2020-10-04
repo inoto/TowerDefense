@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TowerDefense
 {
 	public class Soldier : Unit
 	{
+		public static List<Unit> Instances = new List<Unit>(10);
+
 		public static event Action<Soldier, Building> ChangedBuildingEvent;
 		public static event Action<Soldier> FreeSoldierEvent;
 		
@@ -13,6 +16,7 @@ namespace TowerDefense
 		public Specialization Specialization;
         public bool AttackingWizard = false;
         public bool IsBusy = false;
+        public CircleCollider2D CircleCollider;
 
         Building building;
 		bool movingToBuilding = false;
@@ -25,7 +29,8 @@ namespace TowerDefense
 			
 			Specialization = GetComponent<Specialization>();
             weapon = GetComponentInChildren<SoldierWeapon>();
-        }
+            CircleCollider = (CircleCollider2D)Collider;
+		}
 
 		public void AssignToBuilding(Building newBuilding, bool instantly = false)
         {
@@ -78,6 +83,7 @@ namespace TowerDefense
 	        CurrentlyInBuilding = true;
 
 	        gameObject.SetActive(false);
+	        Instances.Remove(this);
         }
 
         public void ExitBuilding()
@@ -85,12 +91,14 @@ namespace TowerDefense
 	        CurrentlyInBuilding = false;
 
 	        gameObject.SetActive(true);
+	        Instances.Add(this);
         }
 
         protected override void Corpse()
         {
 	        StopMoving();
 	        base.Corpse();
+	        Instances.Remove(this);
         }
 
         public void AttackWizard(Wizard wizard)

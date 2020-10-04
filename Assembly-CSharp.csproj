@@ -147,6 +147,7 @@
     <Compile Include="Assets\Scripts\Projectiles\ProjectileMagicSphere.cs" />
     <Compile Include="Assets\Scripts\Road\Road.cs" />
     <Compile Include="Assets\Scripts\Road\RoadCreator.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\GameConfig.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\LevelData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\MobStatsData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SpecializationsData.cs" />
