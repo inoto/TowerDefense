@@ -6,13 +6,13 @@ namespace TowerDefense
 	public class Gates : MonoBehaviour, IAlive, ITargetable
 	{
 		Transform _transform;
-		Collider2D _collider;
+		CircleCollider2D _collider;
 		Healthy _healthy;
 
 		void Awake()
 		{
 			_transform = GetComponent<Transform>();
-			_collider = GetComponent<Collider2D>();
+			_collider = GetComponent<CircleCollider2D>();
 			_healthy = GetComponent<Healthy>();
 		}
 		
@@ -60,7 +60,7 @@ namespace TowerDefense
 		public int PathIndex => 0;
 		public float Health => _healthy.CurrentHealth;
 		public int MaxHealth => _healthy.MaxHealth;
-		public Collider2D Collider => _collider;
+		public CircleCollider2D Collider => _collider;
 		public Vector2 PointToDamage => Position;
 
 #endregion

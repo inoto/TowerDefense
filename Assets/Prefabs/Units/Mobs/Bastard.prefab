@@ -70,6 +70,7 @@ MonoBehaviour:
   SpriteYSpeed: 1
   SpriteMaxY: 0.02
   InitialYRotation: 0
+  Velocity: {x: 0, y: 0}
   _healthy: {fileID: 8545540718028535666}
   _moveByTransform: {fileID: 6840562128410674061}
   CreatedManually: 0
@@ -185,6 +186,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 1
   Speed: 40
+  Steering:
+    Seek: 1
+    SeekWeight: 1
+    Separate: 0
+    SeparateWeight: 1
+    Align: 0
+    AlignWeight: 1
+    Cohesion: 0
+    CohesionWeight: 1
   isMoving: 0
 --- !u!114 &8545540718028535666
 MonoBehaviour:
@@ -267,7 +277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 1
-  CanAttackTarget: 2
   DamageType: 0
   LayerMask:
     serializedVersion: 2
@@ -277,6 +286,7 @@ MonoBehaviour:
   LaunchProgress: 0
   DamageMin: 2
   DamageMax: 4
+  CurrentAttackState: 0
   ProjectilePrefab: {fileID: 0}
   ProjectileStartPointOffset: {x: 0, y: 0}
 --- !u!1001 &7619524975237950567

@@ -14,7 +14,7 @@ namespace TowerDefense
 		// int PathIndex { get; }
 		float Health { get; }
 		int MaxHealth { get; }
-		Collider2D Collider { get; }
+		CircleCollider2D Collider { get; }
 		Vector2 PointToDamage { get; }
 	}
 }

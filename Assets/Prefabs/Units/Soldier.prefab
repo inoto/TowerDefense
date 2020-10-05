@@ -56,12 +56,14 @@ MonoBehaviour:
   RotationTransform: {fileID: 6807698820096271209}
   SpriteYSpeed: 1
   SpriteMaxY: 0.03
+  InitialYRotation: 0
   _healthy: {fileID: 6247893295143434781}
   _moveByTransform: {fileID: 8455721943437846746}
   CurrentlyInBuilding: 0
   Specialization: {fileID: 8486752623184486061}
   AttackingWizard: 0
   IsBusy: 0
+  CircleCollider: {fileID: 0}
 --- !u!114 &8486752623184486061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +79,7 @@ MonoBehaviour:
   SpecPoints: 
   SpecLevel: 
   PointsForLevel: 500
+  OverallLevel: 0
 --- !u!114 &8455721943437846746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +94,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsActive: 1
   Speed: 60
+  Steering:
+    Seek: 1
+    SeekWeight: 4
+    Separate: 1
+    SeparateWeight: 0.5
+    Align: 1
+    AlignWeight: 0.5
+    Cohesion: 1
+    CohesionWeight: 0.5
   isMoving: 0
 --- !u!114 &9165510485623413685
 MonoBehaviour:
@@ -264,7 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 1
-  CanAttackTarget: 2
   DamageType: 0
   LayerMask:
     serializedVersion: 2
@@ -274,6 +285,7 @@ MonoBehaviour:
   LaunchProgress: 1
   DamageMin: 5
   DamageMax: 10
+  CurrentAttackState: 0
   ProjectilePrefab: {fileID: 0}
   ProjectileStartPointOffset: {x: 0, y: 0}
 --- !u!1001 &114352862156269913

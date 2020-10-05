@@ -31,7 +31,6 @@ namespace TowerDefense
 		CircleCollider2D _collider;
 		Weapon _weapon;
 		public Weapon Weapon => _weapon;
-		public Vector2 Velocity;
 
 		[Header("Components")]
 		[SerializeField] protected Healthy _healthy;
@@ -46,16 +45,18 @@ namespace TowerDefense
 			InitialYRotation = RotationTransform.rotation.eulerAngles.y;
 		}
 
-		void Start()
+		void OnEnable()
 		{
 			Reset();
+			// Instances.Add(this);
         }
 
 		void OnDisable()
 		{
 			IsActive = false;
 			StopAllCoroutines();
-        }
+			// Instances.Remove(this);
+		}
 
         void Reset()
         {
@@ -123,7 +124,7 @@ namespace TowerDefense
 		// public int PathIndex => _moveByPath.PathIndex;
 		public float Health => _healthy.CurrentHealth;
 		public int MaxHealth => _healthy.MaxHealth;
-		public Collider2D Collider => _collider;
+		public CircleCollider2D Collider => _collider;
 		public Vector2 PointToDamage => Position;
 
 #endregion

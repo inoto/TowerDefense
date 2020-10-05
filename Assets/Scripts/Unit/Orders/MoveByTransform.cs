@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using NaughtyAttributes;
 using UnityEngine;
@@ -7,11 +8,32 @@ namespace TowerDefense
 {
 	public class MoveByTransform : Order
 	{
+		[System.Serializable]
+		public class SteeringSettings
+		{
+			public bool Seek = true;
+			public float SeekWeight = 1f;
+
+			public bool Separate = true;
+			public float SeparateWeight = 1f;
+
+			public bool Align = true;
+			public float AlignWeight = 1f;
+
+			public bool Cohesion = true;
+			public float CohesionWeight = 1f;
+		}
+
 		const float CommonDistanceToDestination = 0.1f;
 
-		public float Speed = 40f;
-		[SerializeField] [ReadOnly] bool isMoving;
+		public static List<MoveByTransform> Instances = new List<MoveByTransform>(30);
 
+		public float Speed = 40f;
+		[SerializeField] SteeringSettings Steering = null;
+		[SerializeField] [ReadOnly] bool isMoving = false;
+
+		Vector2 velocity = Vector2.zero;
+		public Vector2 Velocity => velocity;
 		Transform destination;
 		Vector2 offset, footPoint;
 		Quaternion quat;
@@ -20,9 +42,8 @@ namespace TowerDefense
 		AttachmentPoints _attachments;
         Weapon weapon;
         MoveByPath moveByPath;
-        Soldier soldier;
-		
-		protected override void Awake()
+
+        protected override void Awake()
 		{
 			base.Awake();
 
@@ -30,8 +51,16 @@ namespace TowerDefense
 			_attachments.Points.TryGetValue("Foot", out footPoint);
             weapon = GetComponentInChildren<Weapon>();
             moveByPath = GetComponent<MoveByPath>();
-			if (_unit is Soldier unit)
-				soldier = unit;
+		}
+
+		void OnEnable()
+		{
+			Instances.Add(this);
+		}
+
+		void OnDisable()
+		{
+			Instances.Remove(this);
 		}
 		
 		public void AssignTransform(Transform trans, float distanceToDestination = CommonDistanceToDestination)
@@ -70,15 +99,12 @@ namespace TowerDefense
 		{
 			if (IsActive && isMoving)
 			{
-				_unit.Velocity = destination.position - _transform.position - (Vector3)footPoint;
+				// _unit.Velocity = destination.position - _transform.position - (Vector3)footPoint;
 
-				if (soldier != null)
-				{
-					Flock();
-				}
+				UpdateSteering();
 
 				quat = _unit.RotationTransform.rotation;
-				quat.y = _unit.Velocity.x < 0 ? 180f : 0f;
+				quat.y = velocity.x < 0 ? 180f : 0f;
 				_unit.RotationTransform.rotation = quat;
 				
 				if (_unit.Collider.bounds.Contains(destination.position))
@@ -87,14 +113,14 @@ namespace TowerDefense
 					Debug.Log($"{gameObject.name} ArrivedDestination by collider");
 					return;
 				}
-				float distance = _unit.Velocity.magnitude;
+				float distance = Vector2.Distance(_transform.position, destination.position);
 				if (distance < distanceToDestination)
 				{
 					ArrivedDestination();
 					Debug.Log($"{gameObject.name} ArrivedDestination by distance");
 					return;
 				}
-				_transform.position += (Vector3)_unit.Velocity * Time.fixedDeltaTime * Speed / 100;
+				_transform.position += (Vector3)velocity * Time.fixedDeltaTime * Speed / 100;
 			}
 		}
 
@@ -103,38 +129,40 @@ namespace TowerDefense
 			_unit.ArrivedDestination();
 		}
 
-		Vector2 Seek(Vector2 destination)
+		void UpdateSteering()
 		{
-			Vector2 desired = destination - (Vector2)soldier.transform.position - footPoint;
-			desired.Normalize();
-			return desired - _unit.Velocity;
-		}
-
-		void Flock()
-		{
+			Vector2 seek = Seek(destination.position);
 			Vector2 sep = Separate();
 			Vector2 ali = Align();
 			Vector2 coh = Cohesion();
 
-			sep *= 1f;
-			ali *= 1f;
-			coh *= 1f;
+			seek *= Steering.Seek ? Steering.SeekWeight : 0f;
+			sep *= Steering.Separate ? Steering.SeparateWeight : 0f;
+			ali *= Steering.Align ? Steering.AlignWeight : 0f;
+			coh *= Steering.Cohesion ? Steering.CohesionWeight : 0f;
 
-			_unit.Velocity += sep + ali + coh;
-			_unit.Velocity.Normalize();
+			velocity += seek + sep + ali + coh;
+			velocity.Normalize();
 			// _unit.Velocity = Vector2.ClampMagnitude(_unit.Velocity, 1f);
+		}
+
+		Vector2 Seek(Vector2 dest)
+		{
+			Vector2 desired = dest - (Vector2)_transform.position - footPoint;
+			desired.Normalize();
+			return desired - velocity;
 		}
 
 		Vector2 Separate()
 		{
 			Vector2 sum = Vector2.zero;
 			int count = 0;
-			foreach (var other in Soldier.Instances)
+			foreach (var other in Instances)
 			{
-				float dist = Vector2.Distance(soldier.transform.position, other.transform.position);
-				if (dist > 0 && dist < soldier.CircleCollider.radius)
+				float dist = Vector2.Distance(_transform.position, other.transform.position);
+				if (dist > 0 && dist < _unit.Collider.radius)
 				{
-					Vector2 diff = soldier.transform.position - other.transform.position;
+					Vector2 diff = _transform.position - other.transform.position;
 					diff.Normalize();
 					diff /= dist;
 					sum += diff;
@@ -145,7 +173,7 @@ namespace TowerDefense
 			{
 				sum /= count;
 				sum.Normalize();
-				return sum - _unit.Velocity;
+				return sum - velocity;
 			}
 			else
 				return Vector2.zero;
@@ -153,12 +181,12 @@ namespace TowerDefense
 
 		Vector2 Align()
 		{
-			float neighborDist = 10f;
+			float neighborDist = 3f;
 			Vector2 sum = Vector2.zero;
 			int count = 0;
-			foreach (var other in Soldier.Instances)
+			foreach (var other in Instances)
 			{
-				float dist = Vector2.Distance(soldier.transform.position, other.transform.position);
+				float dist = Vector2.Distance(_transform.position, other.transform.position);
 				if (dist > 0 && dist < neighborDist)
 				{
 					sum += other.Velocity;
@@ -169,7 +197,7 @@ namespace TowerDefense
 			{
 				sum /= count;
 				sum.Normalize();
-				return sum - _unit.Velocity;
+				return sum - velocity;
 			}
 			else
 				return Vector2.zero;
@@ -177,15 +205,15 @@ namespace TowerDefense
 
 		Vector2 Cohesion()
 		{
-			float neighborDist = 10f;
+			float neighborDist = 3f;
 			Vector2 sum = Vector2.zero;
 			int count = 0;
-			foreach (var other in Soldier.Instances)
+			foreach (var other in Instances)
 			{
-				float dist = Vector2.Distance(soldier.transform.position, other.transform.position);
+				float dist = Vector2.Distance(_transform.position, other.transform.position);
 				if (dist > 0 && dist < neighborDist)
 				{
-					sum += other.Velocity;
+					sum += velocity;
 					count++;
 				}
 			}
@@ -205,7 +233,7 @@ namespace TowerDefense
 				Gizmos.color = Color.green;
 				Gizmos.DrawLine((Vector2)_transform.position + footPoint, destination.position);
 				Gizmos.color = Color.blue;
-				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position + _unit.Velocity);
+				Gizmos.DrawLine((Vector2)_transform.position + footPoint, (Vector2)_transform.position + velocity);
 			}
 		}
     }
