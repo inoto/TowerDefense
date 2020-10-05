@@ -154,6 +154,7 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\WaveData.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
+    <Compile Include="Assets\Scripts\Trap.cs" />
     <Compile Include="Assets\Scripts\UI\CampCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />

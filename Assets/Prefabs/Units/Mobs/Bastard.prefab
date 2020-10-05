@@ -70,7 +70,6 @@ MonoBehaviour:
   SpriteYSpeed: 1
   SpriteMaxY: 0.02
   InitialYRotation: 0
-  Velocity: {x: 0, y: 0}
   _healthy: {fileID: 8545540718028535666}
   _moveByTransform: {fileID: 6840562128410674061}
   CreatedManually: 0
@@ -280,7 +279,7 @@ MonoBehaviour:
   DamageType: 0
   LayerMask:
     serializedVersion: 2
-    m_Bits: 14336
+    m_Bits: 1062912
   Ranged: 0
   AttackInterval: 2
   LaunchProgress: 0

@@ -117,12 +117,8 @@ namespace TowerDefense
 
 		public GameObject GameObj => gameObject;
 		public bool IsDied => _healthy.IsDied;
-
-        public Vector2 Position => _transform.position;
-
-        // public Vector2 Waypoint => _moveByPath.WaypointPoint;
-		// public int PathIndex => _moveByPath.PathIndex;
-		public float Health => _healthy.CurrentHealth;
+		public Vector2 Position => _transform.position;
+        public float Health => _healthy.CurrentHealth;
 		public int MaxHealth => _healthy.MaxHealth;
 		public CircleCollider2D Collider => _collider;
 		public Vector2 PointToDamage => Position;
