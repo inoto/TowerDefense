@@ -129,6 +129,9 @@
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerMage.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapBarricade.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapHole.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapSnare.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />
@@ -154,7 +157,6 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\SpecializationsData.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\WaveData.cs" />
     <Compile Include="Assets\Scripts\Selectable.cs" />
-    <Compile Include="Assets\Scripts\Trap.cs" />
     <Compile Include="Assets\Scripts\UI\CampCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\FPSCounter.cs" />
     <Compile Include="Assets\Scripts\UI\FloatingText.cs" />

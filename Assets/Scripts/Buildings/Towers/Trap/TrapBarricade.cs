@@ -2,7 +2,7 @@
 
 namespace TowerDefense
 {
-	public class Trap : MonoBehaviour, IAlive, ITargetable
+	public class TrapBarricade : MonoBehaviour, IAlive, ITargetable
 	{
 		Tower tower;
 		Healthy healthy;
