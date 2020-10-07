@@ -23,7 +23,7 @@ TagManager:
   - Wizard
   - Weapon
   - Camp
-  - BuildPlace
+  - TrapPlace
   - Food
   - FoodMerger
   - Trap

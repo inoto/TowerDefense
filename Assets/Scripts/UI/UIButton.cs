@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace TowerDefense
 {
+	[System.Serializable]
 	public class UIButton : MonoBehaviour
 	{
 		public event Action OnClickedEvent;

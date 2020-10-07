@@ -129,8 +129,10 @@
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerArcher.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerCannon.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\TowerMage.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\Trap\Trap.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapBarricade.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapHole.cs" />
+    <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapPlace.cs" />
     <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapSnare.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
@@ -180,6 +182,8 @@
     <Compile Include="Assets\Scripts\UI\UISoldiersCountCloudManager.cs" />
     <Compile Include="Assets\Scripts\UI\UISpecChoiceClouds.cs" />
     <Compile Include="Assets\Scripts\UI\UITowerInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UITrapChoiceClouds.cs" />
+    <Compile Include="Assets\Scripts\UICamera.cs" />
     <Compile Include="Assets\Scripts\Unit\AttachmentPoints.cs" />
     <Compile Include="Assets\Scripts\Unit\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Unit\Healthy.cs" />

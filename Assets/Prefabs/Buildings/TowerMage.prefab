@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 1
-  CanAttackTarget: 2
   DamageType: 0
   LayerMask:
     serializedVersion: 2
@@ -110,6 +109,7 @@ MonoBehaviour:
   LaunchProgress: 0
   DamageMin: 5
   DamageMax: 10
+  CurrentAttackState: 0
   ProjectilePrefab: {fileID: 1697831707011706, guid: 1bfad3bb73dbb8c4891865d46586de20,
     type: 3}
   ProjectileStartPointOffset: {x: 0, y: 0}
@@ -168,8 +168,9 @@ MonoBehaviour:
   startSoldiersCount: 0
   Soldiers: []
   SoldiersCountCloud: {fileID: 0}
-  Cost: 6
-  Icon: {fileID: 0}
+  OccupiedByEnemy: 0
+  trapPlaces: []
+  currentTraps: []
   Specialization: 0
   SpecDataAsset: {fileID: 0}
   damageMultiplierFromSoldiersCount: 0.25

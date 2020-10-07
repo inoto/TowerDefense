@@ -2,7 +2,7 @@
 
 namespace TowerDefense
 {
-	public class TrapSnare : MonoBehaviour
+	public class TrapSnare : Trap
 	{
 		[SerializeField] int damage = 5;
 		[SerializeField] int charges = 5;
@@ -20,6 +20,7 @@ namespace TowerDefense
 			charges -= 1;
 			if (charges <= 0)
 			{
+				RaiseFullyUsedEvent();
 				Corpse();
 			}
 		}

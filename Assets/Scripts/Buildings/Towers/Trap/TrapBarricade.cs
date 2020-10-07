@@ -2,7 +2,7 @@
 
 namespace TowerDefense
 {
-	public class TrapBarricade : MonoBehaviour, IAlive, ITargetable
+	public class TrapBarricade : Trap, IAlive, ITargetable
 	{
 		Tower tower;
 		Healthy healthy;
@@ -38,6 +38,7 @@ namespace TowerDefense
 
 		public void RaiseDiedEvent()
 		{
+			RaiseFullyUsedEvent();
 			Corpse();
 			// AnyDiedEvent?.Invoke(this);
 			// DiedEvent?.Invoke(this);

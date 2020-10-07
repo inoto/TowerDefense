@@ -13,9 +13,13 @@ namespace TowerDefense
 
         [Header("Tower")]
         public bool OccupiedByEnemy = false;
-		public Sprite Icon;
 
-		public Specialization.Type Specialization;
+		[Header("Traps")]
+		[SerializeField] List<TrapPlace> trapPlaces = new List<TrapPlace>();
+		[SerializeField] List<Trap> currentTraps = new List<Trap>();
+
+		[Header("Specialization")]
+        public Specialization.Type Specialization;
 		[SerializeField] SpecializationsSettings SpecDataAsset;
 
 		protected Weapon weapon;
@@ -42,6 +46,11 @@ namespace TowerDefense
 		{
 			weapon.gameObject.SetActive(false);
 
+			for (int i = 0; i < trapPlaces.Count; i++)
+			{
+				trapPlaces[i].Tower = this;
+			}
+
 			base.Start();
 		}
 
@@ -57,6 +66,20 @@ namespace TowerDefense
 			{
 				Soldiers[i].Specialization.Modify(Specialization, value);
 			}
+		}
+
+		public void AddTrap(Trap trap)
+		{
+			currentTraps.Add(trap);
+			trap.FullyUsedEvent += OnTrapUsed;
+		}
+
+		void OnTrapUsed(Trap trap)
+		{
+			trap.FullyUsedEvent -= OnTrapUsed;
+
+			trap.TrapPlace.IsBusy = false;
+			currentTraps.Remove(trap);
 		}
     }
 }

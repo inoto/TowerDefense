@@ -15,6 +15,7 @@ namespace TowerDefense
 		Wizard targetWizard;
 		Food targetFood;
 		Tower targetTower;
+		TrapPlace targetTrapPlace;
 
 		public void OnDragStarted(Vector2 point)
 		{
@@ -149,6 +150,15 @@ namespace TowerDefense
 								control.HiddenEvent += OnControlHidden;
 							}
 						}
+
+						targetTrapPlace = target.GetComponent<TrapPlace>();
+						if (targetTrapPlace != null && !targetTrapPlace.IsBusy)
+						{
+							var control = UILevelControlsManager.Instance.GetControl<UITrapChoiceClouds>(UILevelControlsManager.LevelControl.TrapChoice);
+							control.Show(point, targetTrapPlace);
+							// control.GoButtonClickedEvent += OnGoButtonClicked;
+							control.HiddenEvent += OnControlHidden;
+						}
 					}
 				}
 
@@ -159,9 +169,15 @@ namespace TowerDefense
 
 		void OnControlHidden(UILevelControl control)
 		{
-			var uiSoldierChoice = control as UISoldierChoice;
-			uiSoldierChoice.HiddenEvent -= OnControlHidden;
-			uiSoldierChoice.GoButtonClickedEvent -= OnGoButtonClicked;
+			if (control is UISoldierChoice uiSoldierChoice)
+			{
+				uiSoldierChoice.HiddenEvent -= OnControlHidden;
+				uiSoldierChoice.GoButtonClickedEvent -= OnGoButtonClicked;
+			}
+			else
+			{
+				control.HiddenEvent -= OnControlHidden;
+			}
 		}
 
 		void OnGoButtonClicked(UISoldierChoice control, List<int> indexes)

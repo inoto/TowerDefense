@@ -14,9 +14,12 @@ namespace TowerDefense
 			TowerInfo,
 			RaidInfo,
 			SoldierChoice,
-			SpecChoice
+			SpecChoice,
+			TrapChoice
 		}
 
+		[SerializeField] Camera uiCamera = null;
+		public Camera UICamera => uiCamera;
 		[SerializeField] UIDragArrow dragArrow = null;
 		[SerializeField] UITowerInfo towerInfo = null;
 		[SerializeField] UIRaidInfo raidInfo = null;

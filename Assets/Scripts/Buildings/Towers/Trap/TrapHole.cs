@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TowerDefense
 {
-	public class TrapHole : MonoBehaviour
+	public class TrapHole : Trap
 	{
 		[SerializeField] int maxHp = 30;
 		[SerializeField] int charges = 3;
@@ -27,6 +27,7 @@ namespace TowerDefense
 			charges -= 1;
 			if (charges <= 0)
 			{
+				RaiseFullyUsedEvent();
 				Corpse();
 			}
 		}
