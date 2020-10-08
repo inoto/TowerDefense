@@ -193,5 +193,40 @@ namespace TowerDefense
 	        mob.DiedEvent -= OccupiedMobDied;
 	        if (!IsDied) OccupiedArrived();
         }
+
+        TrapPlace trapPlace;
+        GameObject trapPrefab;
+
+        public void SetTrap(TrapPlace trapPlace, GameObject trapPrefab)
+        {
+	        if (IsBusy)
+		        return;
+
+	        IsBusy = true;
+	        if (CurrentlyInBuilding)
+		        building.UnloadSoldier(this);
+	        else
+		        StopMoving();
+
+	        this.trapPlace = trapPlace;
+	        this.trapPrefab = trapPrefab;
+
+	        _moveByTransform.AssignTransform(trapPlace.transform);
+	        ArrivedDestinationEvent += PutTrapInPlace;
+        }
+
+        void PutTrapInPlace()
+        {
+	        ArrivedDestinationEvent -= GetFood;
+
+	        var trap = Instantiate(trapPrefab, trapPlace.Tower.transform).GetComponent<Trap>();
+	        trap.transform.position = trapPlace.transform.position;
+	        trap.TrapPlace = trapPlace;
+	        trapPlace.Tower.AddTrap(trap);
+	        trapPlace.Take();
+
+	        IsBusy = false;
+	        GoToAssignedBuilding();
+        }
 	}
 }

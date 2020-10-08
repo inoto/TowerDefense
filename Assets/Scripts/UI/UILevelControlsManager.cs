@@ -13,9 +13,10 @@ namespace TowerDefense
 			DragArrow = 0,
 			TowerInfo,
 			RaidInfo,
-			SoldierChoice,
+			SoldierChoiceMultiple,
 			SpecChoice,
-			TrapChoice
+			TrapChoice,
+			SoldierChoice
 		}
 
 		[SerializeField] Camera uiCamera = null;
@@ -24,7 +25,7 @@ namespace TowerDefense
 		[SerializeField] UITowerInfo towerInfo = null;
 		[SerializeField] UIRaidInfo raidInfo = null;
 		[SerializeField] UISpecChoiceClouds _specChoiceClouds = null;
-		[SerializeField] UISoldierChoice soldierChoice = null;
+		[SerializeField] UISoldierChoiceMultiple _soldierChoiceMultiple = null;
 
 		public bool IsSomeControlShown => currentlyShownControl != null;
 		public UILevelControl CurrentlyShownControl => currentlyShownControl;
@@ -43,7 +44,7 @@ namespace TowerDefense
 			// towerInfo.ShownEvent += OnControlShown;
 			// raidInfo.ShownEvent += OnControlShown;
 			// // _specChoiceClouds.ShownEvent += OnControlShown;
-			// soldierChoice.ShownEvent += OnControlShown;
+			// _soldierChoiceMultiple.ShownEvent += OnControlShown;
 			foreach (var kvp in LevelControls)
 			{
 				kvp.Value.Hide();
@@ -60,7 +61,7 @@ namespace TowerDefense
 			// towerInfo.ShownEvent -= OnControlShown;
 			// raidInfo.ShownEvent -= OnControlShown;
 			// // _specChoiceClouds.ShownEvent -= OnControlShown;
-			// soldierChoice.ShownEvent -= OnControlShown;
+			// _soldierChoiceMultiple.ShownEvent -= OnControlShown;
 			foreach (var kvp in LevelControls)
 			{
 				if (kvp.Key == LevelControl.SpecChoice)

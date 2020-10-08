@@ -84,8 +84,8 @@ namespace TowerDefense
 								}
 								else
 								{
-									var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(
-											UILevelControlsManager.LevelControl.SoldierChoice);
+									var control = UILevelControlsManager.Instance.GetControl<UISoldierChoiceMultiple>(
+											UILevelControlsManager.LevelControl.SoldierChoiceMultiple);
 									control.Show(building);
 									control.GoButtonClickedEvent += OnGoButtonClicked;
 									control.HiddenEvent += OnControlHidden;
@@ -112,7 +112,7 @@ namespace TowerDefense
 							}
 							else
 							{
-								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoiceMultiple>(UILevelControlsManager.LevelControl.SoldierChoiceMultiple);
 								control.Show(building, targetBuilding);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 								control.HiddenEvent += OnControlHidden;
@@ -128,7 +128,7 @@ namespace TowerDefense
 							}
 							else
 							{
-								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoiceMultiple>(UILevelControlsManager.LevelControl.SoldierChoiceMultiple);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 								control.HiddenEvent += OnControlHidden;
@@ -144,7 +144,8 @@ namespace TowerDefense
 							}
 							else
 							{
-								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(UILevelControlsManager.LevelControl.SoldierChoice);
+								var control = UILevelControlsManager.Instance.GetControl<UISoldierChoiceMultiple>(
+									UILevelControlsManager.LevelControl.SoldierChoiceMultiple);
 								control.Show(building);
 								control.GoButtonClickedEvent += OnGoButtonClicked;
 								control.HiddenEvent += OnControlHidden;
@@ -154,9 +155,10 @@ namespace TowerDefense
 						targetTrapPlace = target.GetComponent<TrapPlace>();
 						if (targetTrapPlace != null && !targetTrapPlace.IsBusy)
 						{
-							var control = UILevelControlsManager.Instance.GetControl<UITrapChoiceClouds>(UILevelControlsManager.LevelControl.TrapChoice);
+							var control = UILevelControlsManager.Instance.GetControl<UITrapChoiceClouds>(
+								UILevelControlsManager.LevelControl.TrapChoice);
 							control.Show(point, targetTrapPlace);
-							// control.GoButtonClickedEvent += OnGoButtonClicked;
+							control.TrapChosenEvent += OnTrapChosen;
 							control.HiddenEvent += OnControlHidden;
 						}
 					}
@@ -169,18 +171,22 @@ namespace TowerDefense
 
 		void OnControlHidden(UILevelControl control)
 		{
-			if (control is UISoldierChoice uiSoldierChoice)
+			control.HiddenEvent -= OnControlHidden;
+			if (control is UISoldierChoiceMultiple uiSoldierChoiceMultiple)
 			{
-				uiSoldierChoice.HiddenEvent -= OnControlHidden;
-				uiSoldierChoice.GoButtonClickedEvent -= OnGoButtonClicked;
+				uiSoldierChoiceMultiple.GoButtonClickedEvent -= OnGoButtonClicked;
 			}
-			else
+			else if (control is UITrapChoiceClouds uiTrapChoice)
 			{
-				control.HiddenEvent -= OnControlHidden;
+				uiTrapChoice.TrapChosenEvent -= OnTrapChosen;
+			}
+			else if (control is UISoldierChoice uiSoldierChoice)
+			{
+				uiSoldierChoice.SoldierClickedEvent -= OnSoldierClicked;
 			}
 		}
 
-		void OnGoButtonClicked(UISoldierChoice control, List<int> indexes)
+		void OnGoButtonClicked(UISoldierChoiceMultiple control, List<int> indexes)
 		{
 			control.HiddenEvent -= OnControlHidden;
 			control.GoButtonClickedEvent -= OnGoButtonClicked;
@@ -213,6 +219,28 @@ namespace TowerDefense
 				{
 					soldiers[indexes[i]].TakeFood(targetFood);
 				}
+			}
+		}
+
+		void OnTrapChosen(UITrapChoiceClouds uiTrapChoiceClouds, GameObject trapPrefab)
+		{
+			uiTrapChoiceClouds.TrapChosenEvent -= OnTrapChosen;
+			uiTrapChoiceClouds.HiddenEvent -= OnControlHidden;
+
+			var newControl = UILevelControlsManager.Instance.GetControl<UISoldierChoice>(
+				UILevelControlsManager.LevelControl.SoldierChoice);
+			newControl.Show(building, trapPrefab);
+			newControl.SoldierClickedEvent += OnSoldierClicked;
+		}
+
+		void OnSoldierClicked(UISoldierChoice uiSoldierChoice, int index, GameObject trapPrefab)
+		{
+			uiSoldierChoice.HiddenEvent -= OnControlHidden;
+			uiSoldierChoice.SoldierClickedEvent -= OnSoldierClicked;
+
+			if (targetTrapPlace != null)
+			{
+				building.UnloadSoldier(index).SetTrap(targetTrapPlace, trapPrefab);
 			}
 		}
 	}

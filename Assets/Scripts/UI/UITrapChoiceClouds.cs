@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace TowerDefense
 {
 	public class UITrapChoiceClouds : UILevelControl
 	{
+		public event Action<UITrapChoiceClouds, GameObject> TrapChosenEvent;
+
 		[System.Serializable]
 		public class TrapsDict : SerializableDictionaryBase<UIButton, string> {};
 
@@ -80,11 +83,13 @@ namespace TowerDefense
 		{
 			Debug.Log($"TrapButtonClicked {index}");
 
-			var trap = Instantiate(trapPrefabs[index], trapPlace.Tower.transform).GetComponent<Trap>();
-			trap.transform.position = trapPlace.transform.position;
-			trap.TrapPlace = trapPlace;
-			trapPlace.Tower.AddTrap(trap);
-			trapPlace.Take();
+			// var trap = Instantiate(trapPrefabs[index], trapPlace.Tower.transform).GetComponent<Trap>();
+			// trap.transform.position = trapPlace.transform.position;
+			// trap.TrapPlace = trapPlace;
+			// trapPlace.Tower.AddTrap(trap);
+			// trapPlace.Take();
+
+			TrapChosenEvent?.Invoke(this, trapPrefabs[index]);
 
 			Hide();
 		}

@@ -9,6 +9,8 @@ namespace TowerDefense
 
 		public static int MAX_TARGETS_BUFFER = 50;
 
+		public GameConfig Config = null;
+
         bool isGameOver = false;
 
         void Start()

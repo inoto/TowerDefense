@@ -13,5 +13,6 @@ namespace TowerDefense
 		}
 
 		public SteeringSettings Steering;
+		public bool SimpleTrapsLogic = false;
 	}
 }
