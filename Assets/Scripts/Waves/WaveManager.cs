@@ -38,12 +38,6 @@ namespace TowerDefense
 
 		void NextWave()
 		{
-			if (waveIndex >= Waves.Count)
-			{
-				Debug.Log("# Wave # No more waves");
-				return;
-			}
-
 			Invoke("StartWave", Waves[waveIndex].BeforeWaveDelay);
 		}
 
@@ -78,9 +72,14 @@ namespace TowerDefense
             WaveEndedEvent?.Invoke(waveIndex);
 			Debug.Log($"# Wave # Wave {waveIndex} ended");
 
-			Invoke("NextWave", Waves[waveIndex].AfterWaveDelay);
+			if (Waves.Count >= waveIndex)
+			{
+				Debug.Log("# Wave # No more waves");
+				return;
+			}
 
 			waveIndex += 1;
+			Invoke("NextWave", Waves[waveIndex].AfterWaveDelay);
 		}
 
 		protected void SpawnMobs(WaveData.MobData mobData)

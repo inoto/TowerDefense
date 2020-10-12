@@ -19,13 +19,37 @@ MonoBehaviour:
   - Delay: 0
     MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
       type: 3}
-    MobCount: 10
+    MobCount: 2
     Interval: 1
     PathName: Path0
-  - Delay: 0
+  - Delay: 5
     MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
       type: 3}
-    MobCount: 10
+    MobCount: 2
     Interval: 1
+    PathName: Path1
+  - Delay: 15
+    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+      type: 3}
+    MobCount: 5
+    Interval: 1
+    PathName: Path0
+  - Delay: 20
+    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+      type: 3}
+    MobCount: 5
+    Interval: 1
+    PathName: Path1
+  - Delay: 30
+    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+      type: 3}
+    MobCount: 5
+    Interval: 0.5
+    PathName: Path0
+  - Delay: 35
+    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
+      type: 3}
+    MobCount: 5
+    Interval: 0.5
     PathName: Path1
   Wizards: []

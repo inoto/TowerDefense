@@ -15,7 +15,9 @@ namespace TowerDefense
 
         void Start()
         {
-            AncientMagicTree.DiedEvent += GameOver;
+	        AncientMagicTree.DiedEvent += GameOver;
+
+	        Application.targetFrameRate = 60;
         }
 
         public void GameOver()

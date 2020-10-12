@@ -7695,7 +7695,7 @@ PrefabInstance:
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
       propertyPath: startSoldiersCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
@@ -7780,6 +7780,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804314584400920786, guid: b857d2d547f13f045833f1ff298540c6,
+        type: 3}
+      propertyPath: OccupiedByEnemy
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b857d2d547f13f045833f1ff298540c6, type: 3}
@@ -8352,6 +8357,29 @@ MonoBehaviour:
     Prefab: {fileID: 1728940651765670937, guid: 1c3f7445c9bd8bb45a8f96a3119f6f56,
       type: 3}
     Amount: 10
+--- !u!1 &1028797040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1219004363690880, guid: b857d2d547f13f045833f1ff298540c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 956051690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1028797041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028797040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136b1847bec3d2342b6c094e2a56bbc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
+  mobPrefabs:
+  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
+  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
+  mobs: []
 --- !u!1 &1046671733
 GameObject:
   m_ObjectHideFlags: 0
@@ -9217,7 +9245,7 @@ PrefabInstance:
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
       propertyPath: startSoldiersCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
@@ -9325,7 +9353,7 @@ PrefabInstance:
     - target: {fileID: 6499469566575801297, guid: f94f55b98de5327438489d0223c2f362,
         type: 3}
       propertyPath: OccupiedByEnemy
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f94f55b98de5327438489d0223c2f362, type: 3}
@@ -9335,29 +9363,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1108116378}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1108116380 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1347750961285234, guid: f94f55b98de5327438489d0223c2f362,
-    type: 3}
-  m_PrefabInstance: {fileID: 1108116378}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1108116381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108116380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136b1847bec3d2342b6c094e2a56bbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  mobPrefabs:
-  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
-  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
-  mobs: []
 --- !u!1 &1115154565
 GameObject:
   m_ObjectHideFlags: 0
@@ -10022,7 +10027,7 @@ PrefabInstance:
     - target: {fileID: 6499469566575801297, guid: f94f55b98de5327438489d0223c2f362,
         type: 3}
       propertyPath: OccupiedByEnemy
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f94f55b98de5327438489d0223c2f362, type: 3}
@@ -10032,29 +10037,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1167318569}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1167318571 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1347750961285234, guid: f94f55b98de5327438489d0223c2f362,
-    type: 3}
-  m_PrefabInstance: {fileID: 1167318569}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1167318572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167318571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 136b1847bec3d2342b6c094e2a56bbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
-  mobPrefabs:
-  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
-  - {fileID: 1554915614503469926, guid: 96f2d3a50c661034ca496ce412755716, type: 3}
-  mobs: []
 --- !u!1001 &1167382704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10945,7 +10927,7 @@ PrefabInstance:
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
       propertyPath: startSoldiersCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7828427511425486444, guid: a9fd08a2048013844a6203775bccc84c,
         type: 3}
