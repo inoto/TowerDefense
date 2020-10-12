@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949c9697d7f696a43922f64d6f6bced9, type: 3}
-  m_Name: Wave_01_Goblins
+  m_Name: Wave_02_Goblins
   m_EditorClassIdentifier: 
   Active: 1
   BeforeWaveDelay: 0
@@ -22,10 +22,4 @@ MonoBehaviour:
     MobCount: 10
     Interval: 1
     PathName: Path0
-  - Delay: 0
-    MobPrefab: {fileID: 1993218058550423989, guid: 96f2d3a50c661034ca496ce412755716,
-      type: 3}
-    MobCount: 10
-    Interval: 1
-    PathName: Path1
   Wizards: []

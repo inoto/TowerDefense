@@ -437,6 +437,7 @@
     <None Include="Assets\unity-ui-extensions\Shaders\UI Particle Premultiply Blend.shader" />
     <None Include="Assets\unity-ui-extensions\Shaders\UI Particle VertexLit Blended.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Shaders\Outline.shader" />
     <None Include="Assets\unity-ui-extensions\Shaders\UI Particle MultiplyDouble.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\unity-ui-extensions\Shaders\UI Particle AddMultiply.shader" />

@@ -59,6 +59,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -70,6 +71,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -109,4 +111,4 @@ MonoBehaviour:
   RoadWidth: 1
   AutoUpdate: 0
   Tiling: 3.16
-  Texture: {fileID: 2800000, guid: 29b3c85299447be479ea5ca8cfa17073, type: 3}
+  Texture: {fileID: 2800000, guid: aeb2d4faeef19d6469b4649dcbf88cba, type: 3}
