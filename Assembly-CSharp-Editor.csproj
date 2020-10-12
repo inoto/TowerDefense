@@ -706,6 +706,14 @@
       <Project>{75F0E70D-8FEE-D80A-639C-49FBA6B9ECDF}</Project>
       <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="UnityExtensions.ArrayDrawer.csproj">
+      <Project>{B82D1464-D925-5148-FBC9-8D3CE15B70E9}</Project>
+      <Name>UnityExtensions.ArrayDrawer</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityExtensions.ArrayDrawer.Editor.csproj">
+      <Project>{971865C4-4348-F26E-E886-7EFD21F30732}</Project>
+      <Name>UnityExtensions.ArrayDrawer.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
