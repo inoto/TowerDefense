@@ -173,6 +173,7 @@
     <Compile Include="Assets\Scripts\UI\TowerCanvas.cs" />
     <Compile Include="Assets\Scripts\UI\UIButton.cs" />
     <Compile Include="Assets\Scripts\UI\UIController.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDialogCloud.cs" />
     <Compile Include="Assets\Scripts\UI\UIDragArrow.cs" />
     <Compile Include="Assets\Scripts\UI\UILevelControl.cs" />
     <Compile Include="Assets\Scripts\UI\UILevelControlsManager.cs" />
