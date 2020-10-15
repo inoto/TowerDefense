@@ -10,18 +10,11 @@ namespace TowerDefense
 		public static event Action<Soldier> SoldierAssignedEvent;
 		public static event Action<Soldier> SoldierUnassignedEvent;
 
-		[SerializeField] List<DialogData> dialogs = new List<DialogData>();
-
 		protected override void Start()
 		{
 			base.Start();
 
-			UIDialogCloud.Instance.transform.position = transform.position;
-			for (int i = 0; i < dialogs.Count; i++)
-			{
-				UIDialogCloud.Instance.Show(dialogs[i]);
-			}
-			
+			DialogMaker.RunDialogs("1st");
 		}
 
 		public override void AddSoldier(Soldier soldier, bool instantly = false)

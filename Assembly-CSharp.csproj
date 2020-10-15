@@ -136,6 +136,7 @@
     <Compile Include="Assets\Scripts\Buildings\Towers\Trap\TrapSnare.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheel.cs" />
     <Compile Include="Assets\Scripts\Construction\ConstructionWheelSlot.cs" />
+    <Compile Include="Assets\Scripts\DialogMaker.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\FoodMerger.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />

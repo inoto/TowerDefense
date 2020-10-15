@@ -36,6 +36,11 @@ namespace TowerDefense
 			Invoke("NextWave", StartDelay);
 		}
 
+		void OnDestroy()
+		{
+			LeanTween.cancel(gameObject);
+		}
+
 		void NextWave()
 		{
 			Invoke("StartWave", Waves[waveIndex].BeforeWaveDelay);
