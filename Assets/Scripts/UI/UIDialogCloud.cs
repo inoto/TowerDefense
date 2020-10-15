@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,10 @@ namespace TowerDefense
 		[SerializeField] float animationDuration = 0.5f;
 		[SerializeField] LeanTweenType animationEase = LeanTweenType.notUsed;
 		[SerializeField] RectTransform positionControl = null;
+		[SerializeField] Image fillingImage = null;
+		[SerializeField] Image fillingImageIcon = null;
+		[SerializeField] Image nextImage = null;
+		[SerializeField] Image nextSameImage = null;
 
 		[Space]
 		[SerializeField] float textSpeed = 1f;
@@ -50,6 +55,7 @@ namespace TowerDefense
 		bool completed = false;
 		DialogData current;
 		Queue<DialogData> queue = new Queue<DialogData>(5);
+		float timer;
 
 		public void Show(DialogData data, bool clearQueue = false)
 		{
@@ -95,12 +101,15 @@ namespace TowerDefense
 		void SetCurrentData()
 		{
 			completed = false;
+			timer = 0f;
 			nameTMP.text = $"{current.Name}";
 			portrait.sprite = current.Portrait;
 		}
 
 		void StartCurrentData()
 		{
+			nextImage.gameObject.SetActive(queue.Count > 1);
+			nextSameImage.gameObject.SetActive(queue.Count > 1 && queue.ElementAt(1).Name.Equals(current.Name));
 			StartCoroutine(CheckDuration());
 			StartCoroutine(ShowText());
 		}
@@ -164,13 +173,18 @@ namespace TowerDefense
 
 		IEnumerator CheckDuration()
 		{
-			yield return new WaitForSeconds(current.Duration);
+			while (timer < current.Duration)
+			{
+				timer += Time.deltaTime;
+				fillingImage.fillAmount = fillingImageIcon.fillAmount = 1f - (timer / current.Duration);
+				yield return null;
+			}
 			Complete();
 		}
 
 		void Update()
 		{
-			if (Input.anyKey)
+			if (!completed && Input.anyKey)
 			{
 				Complete();
 			}
